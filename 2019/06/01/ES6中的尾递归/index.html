@@ -143,7 +143,7 @@
 <meta property="og:site_name" content="Ilirus">
 <meta property="og:description" content="假设要用JavaScript实现一个阶乘函数，很容易想到用递归实现:12345678function factorial(n) &amp;#123;  if(n === 1) &amp;#123;    return 1  &amp;#125;  return n * factorial(n-1)&amp;#125;console.log(factorial(4))   // 24 在上述代码中，由于最后一步返回了一个表达式(n">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-06-01T10:20:24.253Z">
+<meta property="og:updated_time" content="2019-06-01T15:49:06.234Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ES6中的尾递归">
 <meta name="twitter:description" content="假设要用JavaScript实现一个阶乘函数，很容易想到用递归实现:12345678function factorial(n) &amp;#123;  if(n === 1) &amp;#123;    return 1  &amp;#125;  return n * factorial(n-1)&amp;#125;console.log(factorial(4))   // 24 在上述代码中，由于最后一步返回了一个表达式(n">
@@ -391,7 +391,7 @@
                 
               
 
-              <time title="创建时间：2019-06-01 15:29:46 / 修改时间：18:20:24" itemprop="dateCreated datePublished" datetime="2019-06-01T15:29:46+08:00">2019-06-01</time>
+              <time title="创建时间：2019-06-01 15:29:46 / 修改时间：23:49:06" itemprop="dateCreated datePublished" datetime="2019-06-01T15:29:46+08:00">2019-06-01</time>
             
 
             
@@ -457,6 +457,11 @@
 <li>caller: 返回调用当前函数的那个函数。</li>
 </ul>
 <p>尾调用优化发生时，函数的调用栈会改写，因此上面两个变量就会失真。严格模式禁用这两个变量，所以尾调用模式仅在严格模式下生效。</p>
+<p>参考:  </p>
+<blockquote>
+<p><a href="https://github.com/tc39/proposal-ptc-syntax/blob/master/README.md" target="_blank" rel="noopener">https://github.com/tc39/proposal-ptc-syntax/blob/master/README.md</a></p>
+</blockquote>
+<p><strong>PS: 出于某些因素的考虑，V8引擎中的尾递归优化已经被去掉了</strong></p>
 <h1 id="尾递归优化的实现"><a href="#尾递归优化的实现" class="headerlink" title="尾递归优化的实现"></a>尾递归优化的实现</h1><p>正常模式下如何实现尾递归优化呢?</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sum</span>(<span class="params">x,y</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (y &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> sum(x + <span class="number">1</span>, y - <span class="number">1</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> x;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">sum(<span class="number">1</span>,<span class="number">100000</span>)</span><br></pre></td></tr></table></figure>
 <p>尾递归之所以需要优化，原因是调用栈太多，造成溢出，那么只要减少调用栈，就不会溢出。</p>
