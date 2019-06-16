@@ -143,15 +143,15 @@
 <meta property="og:site_name" content="Ilirus">
 <meta property="og:description" content="VHD/VHDX简介什么是VHDVHD 是Microsoft Virtual Hard Disk format（微软虚拟磁盘文件）的简称。可以由Windows Vista/7/8/10，Windows Server 2008R2 等系统创建。一个VHD文件可以被虚拟为一块硬盘，并且可以像操作一块硬盘一样操作VHD文件，例如：读取、写入、创建分区、格式化等等。 什么是VHDX随着虚拟环境的企业工作负">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://ouh8krmm8.bkt.clouddn.com/18-5-20/86101380.jpg">
-<meta property="og:image" content="http://ouh8krmm8.bkt.clouddn.com/18-5-20/85280875.jpg">
-<meta property="og:image" content="http://ouh8krmm8.bkt.clouddn.com/18-5-20/41324331.jpg">
-<meta property="og:image" content="http://ouh8krmm8.bkt.clouddn.com/18-5-20/75848156.jpg">
-<meta property="og:updated_time" content="2018-12-05T21:46:00.456Z">
+<meta property="og:image" content="https://s2.ax1x.com/2019/06/16/V7kaxH.jpg">
+<meta property="og:image" content="https://s2.ax1x.com/2019/06/16/V7kwMd.jpg">
+<meta property="og:image" content="https://s2.ax1x.com/2019/06/16/V7k0sA.jpg">
+<meta property="og:image" content="https://s2.ax1x.com/2019/06/16/V7kBqI.jpg">
+<meta property="og:updated_time" content="2019-06-16T12:08:02.667Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用VHD创建本地虚拟系统">
 <meta name="twitter:description" content="VHD/VHDX简介什么是VHDVHD 是Microsoft Virtual Hard Disk format（微软虚拟磁盘文件）的简称。可以由Windows Vista/7/8/10，Windows Server 2008R2 等系统创建。一个VHD文件可以被虚拟为一块硬盘，并且可以像操作一块硬盘一样操作VHD文件，例如：读取、写入、创建分区、格式化等等。 什么是VHDX随着虚拟环境的企业工作负">
-<meta name="twitter:image" content="http://ouh8krmm8.bkt.clouddn.com/18-5-20/86101380.jpg">
+<meta name="twitter:image" content="https://s2.ax1x.com/2019/06/16/V7kaxH.jpg">
 
 
 
@@ -413,7 +413,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-12-06 05:46:00" itemprop="dateModified" datetime="2018-12-06T05:46:00+08:00">2018-12-06</time>
+                <time title="修改时间：2019-06-16 20:08:02" itemprop="dateModified" datetime="2019-06-16T20:08:02+08:00">2019-06-16</time>
               
             
           </span>
@@ -493,10 +493,10 @@
 <p>如果没有也没关系，下面将会介绍如何从零开始部署VHD系统</p>
 <h2 id="创建VHD-VHDX文件"><a href="#创建VHD-VHDX文件" class="headerlink" title="创建VHD/VHDX文件"></a>创建VHD/VHDX文件</h2><p><strong>以下命令均在Windows10环境下进行，Windows7可能略有不同</strong></p>
 <p>使用Windows磁盘管理创建</p>
-<p>创建vhdx文件<br><img src="http://ouh8krmm8.bkt.clouddn.com/18-5-20/86101380.jpg" alt></p>
-<p>设置大小<br><img src="http://ouh8krmm8.bkt.clouddn.com/18-5-20/85280875.jpg" alt></p>
-<p>初始化磁盘，GPT还是MBR看个人情况，推荐选GPT格式<br><img src="http://ouh8krmm8.bkt.clouddn.com/18-5-20/41324331.jpg" alt></p>
-<p>新建分区<br><img src="http://ouh8krmm8.bkt.clouddn.com/18-5-20/75848156.jpg" alt></p>
+<p>创建vhdx文件<br><img src="https://s2.ax1x.com/2019/06/16/V7kaxH.jpg" alt></p>
+<p>设置大小<br><img src="https://s2.ax1x.com/2019/06/16/V7kwMd.jpg" alt></p>
+<p>初始化磁盘，GPT还是MBR看个人情况，推荐选GPT格式<br><img src="https://s2.ax1x.com/2019/06/16/V7k0sA.jpg" alt></p>
+<p>新建分区<br><img src="https://s2.ax1x.com/2019/06/16/V7kBqI.jpg" alt></p>
 <p>完成</p>
 <p>使用命令行创建<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#启动diskpart工具</span></span><br><span class="line">diskpart</span><br><span class="line"></span><br><span class="line"><span class="comment">#创建一个大小为25600MB的固定大小的vhdx文件</span></span><br><span class="line"><span class="comment">#如果想创建动态拓展大小的vhdx文件，换成type=expandable即可</span></span><br><span class="line">create vdisk file=E:\vhd.vhdx maximum=25600 <span class="built_in">type</span>=fixed</span><br><span class="line"></span><br><span class="line"><span class="comment">#选中刚才创建的vhdx文件</span></span><br><span class="line">select vdisk file=E:\vhd.vhdx</span><br><span class="line"></span><br><span class="line"><span class="comment">#挂载硬盘</span></span><br><span class="line">attach vdisk</span><br><span class="line"></span><br><span class="line"><span class="comment">#创建主分区</span></span><br><span class="line">create partition primary</span><br><span class="line"></span><br><span class="line"><span class="comment">#设置卷标</span></span><br><span class="line">assign letter=V</span><br><span class="line"></span><br><span class="line"><span class="comment">#格式化分区</span></span><br><span class="line">format quick label=vhdx</span><br><span class="line"></span><br><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure></p>
 <p>完成</p>
