@@ -4,136 +4,58 @@
 
 
 
-
-
-
-
-
-
-
-  
-
-
-<html class="theme-next muse use-motion" lang="zh-CN">
-<head><meta name="generator" content="Hexo 3.8.0">
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
   <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hexo 3.8.0">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
 
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
 
-
-
-  
-  
-    
-    
-  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
-  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-
-  
-
-  
-    
-      
-    
-
-    
-  
-
-  
-    
-    
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Fira Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
-  
-
-
-
-
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
-
-<link rel="stylesheet" href="/css/main.css?v=7.1.0">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.0">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.0">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.0">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=7.1.0" color="#222">
-
-
-
-
-
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Fira Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
 
 
 <script id="hexo.configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
-    version: '7.1.0',
-    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
-    back2top: true,
-    back2top_sidebar: false,
+    scheme: 'Pisces',
+    version: '7.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
     fancybox: false,
-    fastclick: false,
+    mediumzoom: false,
     lazyload: false,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    pangu: false,
     algolia: {
       applicationID: '',
       apiKey: '',
       indexName: '',
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    search: {
+      root: '/',
+      path: ''
+    },
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
     }
   };
 </script>
-
-
-  
-
-
-
 
   <meta name="description" content="使用Vue-cli搭建Vue项目安装Vue-cli在安装Vue-cli之前需要先安装node环境以及npm包管理工具 安装好之后可以通过以下命令查看版本12345:: 查看node版本node -v:: 查看npm版本npm -v 全局安装Vue-cli123npm install @vue/cli -g:: 或者yarn global add @vue/cli 安装后使用vue --versio">
 <meta name="keywords" content="JavaScript,Vue.js">
@@ -143,19 +65,11 @@
 <meta property="og:site_name" content="Ilirus">
 <meta property="og:description" content="使用Vue-cli搭建Vue项目安装Vue-cli在安装Vue-cli之前需要先安装node环境以及npm包管理工具 安装好之后可以通过以下命令查看版本12345:: 查看node版本node -v:: 查看npm版本npm -v 全局安装Vue-cli123npm install @vue/cli -g:: 或者yarn global add @vue/cli 安装后使用vue --versio">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-01T14:49:28.788Z">
+<meta property="og:updated_time" content="2019-08-02T17:56:43.384Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用Vue-cli搭建Vue项目">
 <meta name="twitter:description" content="使用Vue-cli搭建Vue项目安装Vue-cli在安装Vue-cli之前需要先安装node环境以及npm包管理工具 安装好之后可以通过以下命令查看版本12345:: 查看node版本node -v:: 查看npm版本npm -v 全局安装Vue-cli123npm install @vue/cli -g:: 或者yarn global add @vue/cli 安装后使用vue --versio">
-
-
-
-
-
-  
-  
   <link rel="canonical" href="https://chaosalphard.github.io/2018/12/10/使用Vue-cli搭建Vue项目/">
-
 
 
 <script id="page.configurations">
@@ -166,10 +80,6 @@
 
   <title>使用Vue-cli搭建Vue项目 | Ilirus</title>
   
-
-
-
-
 
 
 
@@ -207,18 +117,12 @@
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
 
-  
-  
-    
-  
-
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta">
-    
 
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
@@ -227,8 +131,6 @@
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
-    
-    
   </div>
 
   <div class="site-nav-toggle">
@@ -243,21 +145,13 @@
 
 
 <nav class="site-nav">
-  
     <ul id="menu" class="menu">
-      
         
         
         
           
           <li class="menu-item menu-item-home">
-
-    
-    
-    
       
-    
-
     
 
     <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
@@ -268,13 +162,7 @@
         
           
           <li class="menu-item menu-item-tags">
-
-    
-    
-    
       
-    
-
     
 
     <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
@@ -284,38 +172,26 @@
         
         
           
-          <li class="menu-item menu-item-archives">
-
-    
-    
-    
+          <li class="menu-item menu-item-categories">
       
     
 
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+      
     
 
     <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
 
   </li>
-
-      
-      
     </ul>
-  
-
-  
-    
-
-  
-
-  
 </nav>
-
-
-
-  
-
-
 
 </div>
     </header>
@@ -326,22 +202,13 @@
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          
+            
+
           <div id="content" class="content">
             
 
   <div id="posts" class="posts-expand">
     
-
-  
-
-  
-  
-  
-
-  
-    <div class="reading-progress-bar"></div>
-  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
@@ -359,11 +226,8 @@
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Ilirus">
     </span>
-
-    
       <header class="post-header">
 
-        
         
           <h1 class="post-title" itemprop="name headline">使用Vue-cli搭建Vue项目
 
@@ -373,13 +237,7 @@
         
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
@@ -392,54 +250,47 @@
               
 
               <time title="创建时间：2018-12-10 12:20:20" itemprop="dateCreated datePublished" datetime="2018-12-10T12:20:20+08:00">2018-12-10</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-01 22:49:28" itemprop="dateModified" datetime="2019-08-01T22:49:28+08:00">2019-08-01</time>
+                <time title="修改时间：2019-08-03 01:56:43" itemprop="dateModified" datetime="2019-08-03T01:56:43+08:00">2019-08-03</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
               
-            
-          </span>
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Vue-js/" itemprop="url" rel="index"><span itemprop="name">Vue.js</span></a></span>
 
-          
-
-          
-            
-            
-          
-
-          
+                
+                
+              
+            </span>
           
 
-          
-
-          
-
-          
+          <br>
 
         </div>
       </header>
-    
 
     
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
-      
 
       
         <h1 id="使用Vue-cli搭建Vue项目"><a href="#使用Vue-cli搭建Vue项目" class="headerlink" title="使用Vue-cli搭建Vue项目"></a>使用Vue-cli搭建Vue项目</h1><h2 id="安装Vue-cli"><a href="#安装Vue-cli" class="headerlink" title="安装Vue-cli"></a>安装Vue-cli</h2><p>在安装Vue-cli之前需要先安装<code>node</code>环境以及<code>npm</code>包管理工具</p>
@@ -470,43 +321,23 @@
 <p>父组件中绑定事件后，当子组件触发事件后，会执行对应的函数，使用<code>$event</code> 来获取到子组件传递过来的值</p>
 <p>定义函数来处理子组件传递过来的值，这里的<code>para</code>对应的是<code>$event</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fun(para) &#123;</span><br><span class="line">  <span class="keyword">this</span>.title = para</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h2 id="组件的生命周期-钩子函数"><a href="#组件的生命周期-钩子函数" class="headerlink" title="组件的生命周期(钩子函数)"></a>组件的生命周期(钩子函数)</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  name: <span class="string">'app'</span>,</span><br><span class="line">  data() &#123; ... &#125;,</span><br><span class="line">  methods: &#123; ... &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 组件实例化之前</span></span><br><span class="line">  <span class="comment">// 数据观测(data observer)和event/watcher 事件配置之前被调用</span></span><br><span class="line">  beforeCreate() &#123;&#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 组件实例化完毕, 但页面还没显示</span></span><br><span class="line">  <span class="comment">// 实例创建完成后立即被调用, 数据观测(data observer)和event/watcher 已配置, $el属性不可见</span></span><br><span class="line">  created() &#123;&#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 组件挂载之前, 页面依然未显示, (但虚拟Dom 已经配置  (存疑))</span></span><br><span class="line">  <span class="comment">// 在挂载前被调用, 相关render 函数首次被调用</span></span><br><span class="line">  beforeMount() &#123;&#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 组件挂载后, 此方法执行完成后, 页面显示</span></span><br><span class="line">  <span class="comment">// el 被新创建的vm.$el替换并挂载到实例上之后调用</span></span><br><span class="line">  mounted() &#123;&#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 组件更新前调用(此时仍然可以访问到更新前的Dom)</span></span><br><span class="line">  beforeUpdate() &#123;&#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 组件更新后调用(Dom 更新后调用)</span></span><br><span class="line">  updated() &#123;&#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// keep-alive 组件激活时调用</span></span><br><span class="line">  activated() &#123;&#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// keep-alive 组件停用时调用</span></span><br><span class="line">  deactivated() &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 组件销毁前</span></span><br><span class="line">  beforeDestroy() &#123;&#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 组件销毁</span></span><br><span class="line">  destroyed() &#123;&#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 捕获来自子组件的错误时调用</span></span><br><span class="line">  <span class="comment">// 可以返回false 以阻止错误继续向上传播</span></span><br><span class="line">  errorCaptured(<span class="built_in">Error</span>, Component, InfoString) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
     </div>
 
     
-
     
-    
-    
-
-    
-
-    
-      
-    
-    
-
     
 
     <footer class="post-footer">
-      
+          
+        
         <div class="post-tags">
+            <a href="/tags/JavaScript/" rel="tag"><i class="fa fa-tag"></i> JavaScript</a>
           
-            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
-          
-            <a href="/tags/Vue-js/" rel="tag"># Vue.js</a>
+            <a href="/tags/Vue-js/" rel="tag"><i class="fa fa-tag"></i> Vue.js</a>
           
         </div>
-      
-
-      
-      
-      
-
-      
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
-            
               <a href="/2018/12/08/Kotlin学习笔记03/" rel="next" title="Kotlin学习笔记03">
                 <i class="fa fa-chevron-left"></i> Kotlin学习笔记03
               </a>
@@ -516,17 +347,12 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/01/25/Vue-Router/" rel="prev" title="Vue Router">
-                Vue Router <i class="fa fa-chevron-right"></i>
+              <a href="/2019/01/25/Vue-Router的安装与使用/" rel="prev" title="Vue Router的安装与使用">
+                Vue Router的安装与使用 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
         </div>
-      
-
-      
-      
     </footer>
   </div>
   
@@ -534,24 +360,21 @@
   
   </article>
 
-
   </div>
 
 
           </div>
           
-
+    
+    
+  <div class="comments" id="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC80NTMxNi8yMTgyOQ=="></div>
+  </div>
   
-    <div class="comments" id="comments">
-      <div id="lv-container" data-id="city" data-uid="MTAyMC80NTMxNi8yMTgyOQ=="></div>
-    </div>
-
   
-
 
 
         </div>
-        
           
   
   <div class="sidebar-toggle">
@@ -564,10 +387,6 @@
 
   <aside id="sidebar" class="sidebar">
     <div class="sidebar-inner">
-
-      
-
-      
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
@@ -580,127 +399,142 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
+
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <p class="site-author-name" itemprop="name">Ilirus</p>
-              <div class="site-description motion-element" itemprop="description">兴趣使然的个人博客</div>
-          </div>
+  <p class="site-author-name" itemprop="name">Ilirus</p>
+  <div class="site-description motion-element" itemprop="description">兴趣使然的个人博客</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/ChaosAlphard" title="GitHub &rarr; https://github.com/ChaosAlphard" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+  </div>
 
-          
-            <nav class="site-state motion-element">
-              
-                <div class="site-state-item site-state-posts">
-                
-                  <a href="/archives/">
-                
-                    <span class="site-state-item-count">22</span>
-                    <span class="site-state-item-name">日志</span>
-                  </a>
-                </div>
-              
 
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-tags">
-                  
-                    
-                      <a href="/tags/">
-                    
-                  
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">20</span>
-                    <span class="site-state-item-name">标签</span>
-                  </a>
-                </div>
-              
-            </nav>
-          
-
-          
-
-          
-
-          
-            <div class="links-of-author motion-element">
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <a href="https://github.com/chaosalphard" title="GitHub &rarr; https://github.com/chaosalphard" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
-                </span>
-              
-            </div>
-          
-
-          
-
-          
-          
-
-          
-            
-          
-          
 
         </div>
       </div>
-
-      
       <!--noindex-->
         <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
           <div class="post-toc">
@@ -719,14 +553,11 @@
       <!--/noindex-->
       
 
-      
-
     </div>
   </aside>
-  
+  <div id="sidebar-dimmer"></div>
 
 
-        
       </div>
     </main>
 
@@ -737,25 +568,10 @@
     <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Ilirus</span>
-
-  
-
-  
 </div>
-
-
   <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
-
-
-
   <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.1.0</div>
-
-
-
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.3.0</div>
 
         
 
@@ -769,99 +585,34 @@
         
       </div>
     </footer>
-
-    
       <div class="back-to-top">
         <i class="fa fa-arrow-up"></i>
-        
       </div>
-    
 
     
 
-    
-
-    
   </div>
 
   
-
-<script>
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-  
-  <script src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
 
+  <script src="/js/utils.js?v=7.3.0"></script>
+  <script src="/js/motion.js?v=7.3.0"></script>
+
   
-  <script src="/lib/reading_progress/reading_progress.js"></script>
-
-
-  
-
-
-  <script src="/js/utils.js?v=7.1.0"></script>
-
-  <script src="/js/motion.js?v=7.1.0"></script>
-
+  <script src="/js/affix.js?v=7.3.0"></script>
+  <script src="/js/schemes/pisces.js?v=7.3.0"></script>
 
 
   
-  
-
-
-  <script src="/js/schemes/muse.js?v=7.1.0"></script>
-
-
-
-  
-  <script src="/js/scrollspy.js?v=7.1.0"></script>
-<script src="/js/post-details.js?v=7.1.0"></script>
+  <script src="/js/scrollspy.js?v=7.3.0"></script>
+<script src="/js/post-details.js?v=7.3.0"></script>
 
 
 
-  
-
-
-  <script src="/js/next-boot.js?v=7.1.0"></script>
-
-
-  
+  <script src="/js/next-boot.js?v=7.3.0"></script>
 
   
 
@@ -871,7 +622,42 @@
 
 
   
-    <script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+<script>
   window.livereOptions = {
     refer: '2018/12/10/使用Vue-cli搭建Vue项目/'
   };
@@ -885,41 +671,6 @@
   })(document, 'script');
 </script>
 
-  
-
-
-  
-
-
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
 
 </body>
 </html>
