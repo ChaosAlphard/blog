@@ -212,6 +212,221 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chaosalphard.github.io/2019/08/05/Webpack中CSS样式的处理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ilirus">
+      <meta itemprop="description" content="兴趣使然的个人博客">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ilirus">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/08/05/Webpack中CSS样式的处理/" class="post-title-link" itemprop="url">Webpack中CSS样式的处理</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-08-05 22:24:12 / 修改时间：23:14:37" itemprop="dateCreated datePublished" datetime="2019-08-05T22:24:12+08:00">2019-08-05</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/打包工具/" itemprop="url" rel="index"><span itemprop="name">打包工具</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          <br>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+            <h1 id="CSS样式的处理"><a href="#CSS样式的处理" class="headerlink" title="CSS样式的处理"></a>CSS样式的处理</h1><p>安装<code>css-loader</code>和<code>style-loader</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add css-loader style-loader -D</span><br></pre></td></tr></table></figure></p>
+<p>在index.js中引入.css文件<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">'./index.css'</span>)</span><br></pre></td></tr></table></figure></p>
+<p>在webpack.config.js中配置css模块<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  mode: <span class="string">'development'</span>,</span><br><span class="line">  entry: <span class="string">'./src/index.js'</span>,</span><br><span class="line">  output: &#123;</span><br><span class="line">    filename: <span class="string">'bundle.[hash:4].js'</span>,</span><br><span class="line">    path: path.resolve(__dirname, <span class="string">'dist'</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">  devServer: &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125;,</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="comment">// 模块</span></span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    <span class="comment">// 规则</span></span><br><span class="line">    rules: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="comment">// 匹配.css 结尾的文件</span></span><br><span class="line">        test: <span class="regexp">/\.css$/</span>,</span><br><span class="line">        <span class="comment">// 可用字符串, 也可用对象</span></span><br><span class="line">        <span class="comment">// loader的顺序默认是从 右往左/下到上 执行</span></span><br><span class="line">        <span class="comment">// css-loader, 解析@import语法</span></span><br><span class="line">        <span class="comment">// style-loader, 把css 插入到head标签中</span></span><br><span class="line">        use: [</span><br><span class="line">          &#123;</span><br><span class="line">            loader: <span class="string">'style-loader'</span>,</span><br><span class="line">            options: &#123;</span><br><span class="line">              <span class="comment">// 在顶部插入</span></span><br><span class="line">              insertAt: <span class="string">'top'</span></span><br><span class="line">            &#125;</span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">'css-loader'</span></span><br><span class="line">        ]</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;<span class="comment">// 也可以处理less文件</span></span><br><span class="line">        test: <span class="regexp">/\.less$/</span>,</span><br><span class="line">        use: [</span><br><span class="line">          &#123;</span><br><span class="line">            loader: <span class="string">'style-loader'</span>,</span><br><span class="line">            options: &#123;</span><br><span class="line">              <span class="comment">// 在顶部插入</span></span><br><span class="line">              insertAt: <span class="string">'top'</span></span><br><span class="line">            &#125;</span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">'css-loader'</span>,  <span class="comment">// @import 解析</span></span><br><span class="line">          <span class="string">'less-loader'</span>  <span class="comment">// .less -&gt; .css</span></span><br><span class="line">        ]</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chaosalphard.github.io/2019/08/03/Git常用指令/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ilirus">
+      <meta itemprop="description" content="兴趣使然的个人博客">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ilirus">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/08/03/Git常用指令/" class="post-title-link" itemprop="url">Git常用指令</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-08-03 20:44:37 / 修改时间：21:07:29" itemprop="dateCreated datePublished" datetime="2019-08-03T20:44:37+08:00">2019-08-03</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/版本控制/" itemprop="url" rel="index"><span itemprop="name">版本控制</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          <br>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+            <h1 id="Git常用指令"><a href="#Git常用指令" class="headerlink" title="Git常用指令"></a>Git常用指令</h1><p><code>git init</code>: 为当前文件夹初始化Git仓库</p>
+<p><code>git status</code>: 查看状态(modified, untracked)</p>
+<p><code>git add &lt;file|path&gt;</code>: 添加指定文件/文件夹到暂存区(staging index)</p>
+<p><code>git commit</code>: 提交暂存区的文件到版本库<br><code>git commit -m &#39;msg&#39;</code>: 提交暂存区的文件到版本库<br><code>git commit -am &#39;msg&#39;</code>: 跳过<code>git add</code>步骤，直接提交所有<strong>工作区(working directory)已追踪</strong>文件</p>
+<p><code>git log</code>: 查看提交信息/记录</p>
+<h2 id="Git的三层结构"><a href="#Git的三层结构" class="headerlink" title="Git的三层结构"></a>Git的三层结构</h2><ul>
+<li><code>working directory</code>: 工作区</li>
+<li><code>staging index</code>: 暂存区</li>
+<li><code>git directory</code>: 版本库</li>
+</ul>
+<h2 id="Git文件的四种状态"><a href="#Git文件的四种状态" class="headerlink" title="Git文件的四种状态"></a>Git文件的四种状态</h2><ul>
+<li><code>Untracked</code>: 未被追踪</li>
+<li><code>Modified</code>: 已被修改，但未添加到暂存区</li>
+<li><code>Staged</code>: 添加到了暂存区，但未提交到版本库</li>
+<li><code>Committed</code>: 数据被储存在本地库中</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://chaosalphard.github.io/2019/08/03/Webpack配置HTML-template/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -481,7 +696,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-03 19:25:20" itemprop="dateModified" datetime="2019-08-03T19:25:20+08:00">2019-08-03</time>
+                <time title="修改时间：2019-08-05 23:15:40" itemprop="dateModified" datetime="2019-08-05T23:15:40+08:00">2019-08-05</time>
               </span>
             
           
@@ -1155,276 +1370,6 @@
   </article>
 
     
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://chaosalphard.github.io/2018/12/05/Kotlin学习笔记01/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ilirus">
-      <meta itemprop="description" content="兴趣使然的个人博客">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ilirus">
-    </span>
-      <header class="post-header">
-
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/12/05/Kotlin学习笔记01/" class="post-title-link" itemprop="url">Kotlin学习笔记01</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-12-05 16:43:44" itemprop="dateCreated datePublished" datetime="2018-12-05T16:43:44+08:00">2018-12-05</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-08-03 01:40:06" itemprop="dateModified" datetime="2019-08-03T01:40:06+08:00">2019-08-03</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习笔记/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a></span>
-
-                
-                
-                  ，
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习笔记/Kotlin/" itemprop="url" rel="index"><span itemprop="name">Kotlin</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          <br>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Kotlin项目的创建"><a href="#Kotlin项目的创建" class="headerlink" title="Kotlin项目的创建"></a>Kotlin项目的创建</h1><h2 id="创建一个Kotlin项目"><a href="#创建一个Kotlin项目" class="headerlink" title="创建一个Kotlin项目"></a>创建一个Kotlin项目</h2><ul>
-<li>Create Project -&gt; Kotlin<ul>
-<li>选择Kotlin/JVM 或者 Kotlin/JS</li>
-<li>选择SDK</li>
-<li>选择Library</li>
-</ul>
-</li>
-<li>创建包</li>
-<li>创建<code>.kt</code>文件</li>
-</ul>
-<p>在创建的<code>.kt</code>文件中写入以下代码，运行。<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">(args: <span class="type">Array</span>&lt;<span class="type">String</span>&gt;)</span></span>&#123;</span><br><span class="line">    println(<span class="string">"Hello Kotlin!"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="使用Spring-Boot-MyBatis-创建Web项目"><a href="#使用Spring-Boot-MyBatis-创建Web项目" class="headerlink" title="使用Spring Boot + MyBatis 创建Web项目"></a>使用Spring Boot + MyBatis 创建Web项目</h2><ul>
-<li>Create Project -&gt; Spring Initializr<ol>
-<li>选择Initializr Service URL (<a href="https://start.spring.io" target="_blank" rel="noopener">https://start.spring.io</a>)</li>
-<li>Language 选择 Kotlin</li>
-<li>选择插件<ul>
-<li>Core -&gt; DevTools</li>
-<li>Web -&gt; web</li>
-<li>Template Engines -&gt; Thymeleaf</li>
-<li>SQL -&gt; MySQL, MyBatis</li>
-</ul>
-</li>
-<li>完成</li>
-</ol>
-</li>
-</ul>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2018/12/05/Kotlin学习笔记01/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://chaosalphard.github.io/2018/10/19/笔记-SpringBoot学习笔记05/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ilirus">
-      <meta itemprop="description" content="兴趣使然的个人博客">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ilirus">
-    </span>
-      <header class="post-header">
-
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/10/19/笔记-SpringBoot学习笔记05/" class="post-title-link" itemprop="url">[笔记]SpringBoot学习笔记05</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-10-19 08:52:40" itemprop="dateCreated datePublished" datetime="2018-10-19T08:52:40+08:00">2018-10-19</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-08-03 01:50:22" itemprop="dateModified" datetime="2019-08-03T01:50:22+08:00">2019-08-03</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习笔记/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a></span>
-
-                
-                
-                  ，
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习笔记/Springboot/" itemprop="url" rel="index"><span itemprop="name">Springboot</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          <br>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="使用JUnit进行单元测试"><a href="#使用JUnit进行单元测试" class="headerlink" title="使用JUnit进行单元测试"></a>使用JUnit进行单元测试</h1><h2 id="生成测试类"><a href="#生成测试类" class="headerlink" title="生成测试类"></a>生成测试类</h2><p>在需要进行测试的类中 点击右键-&gt;Go To-&gt;Test 或者 使用快捷键<code>Ctrl+Shift+T</code>生成测试类</p>
-<p>生成的类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomDaoTest</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Resource</span> <span class="keyword">private</span> CustomDao dao;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">findCustomByName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">findCustomByID</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2018/10/19/笔记-SpringBoot学习笔记05/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
   </section>
 
   
@@ -1462,7 +1407,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">25</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
