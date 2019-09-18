@@ -64,7 +64,7 @@
 <meta property="og:site_name" content="Ilirus">
 <meta property="og:description" content="Git提交的回滚今天去面试的时候被问到了如何 撤销/回滚 提交的问题，一时间没想起来😢，写篇博客巩固一下😊。 revert git revert &amp;lt;commit&amp;gt;  生成一个撤消了commit 引入的修改的新提交，然后应用到当前分支。 commit 可以通过使用git log 来查看 revert 是提交一个 撤销了更改的 新提交，而不是从项目历史中移除这个提交。这会避免Git丢失">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-09-18T13:29:51.227Z">
+<meta property="og:updated_time" content="2019-09-18T13:36:19.741Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git提交的回滚">
 <meta name="twitter:description" content="Git提交的回滚今天去面试的时候被问到了如何 撤销/回滚 提交的问题，一时间没想起来😢，写篇博客巩固一下😊。 revert git revert &amp;lt;commit&amp;gt;  生成一个撤消了commit 引入的修改的新提交，然后应用到当前分支。 commit 可以通过使用git log 来查看 revert 是提交一个 撤销了更改的 新提交，而不是从项目历史中移除这个提交。这会避免Git丢失">
@@ -248,7 +248,7 @@
                 
               
 
-              <time title="创建时间：2019-09-18 17:46:03 / 修改时间：21:29:51" itemprop="dateCreated datePublished" datetime="2019-09-18T17:46:03+08:00">2019-09-18</time>
+              <time title="创建时间：2019-09-18 17:46:03 / 修改时间：21:36:19" itemprop="dateCreated datePublished" datetime="2019-09-18T17:46:03+08:00">2019-09-18</time>
             </span>
           
             
@@ -301,13 +301,15 @@
 <!-- ### 文件已经添加到暂存区
 可以通过`git reset HEAD <filename>` 来撤销修改。
 或者使用`git reset HEAD` 来撤销暂存区中所有文件。 -->
-<h2 id="checkout"><a href="#checkout" class="headerlink" title="checkout"></a>checkout</h2><!-- 可以通过`git checkout -- <filename>` 来撤销修改。 -->
-<ul>
-<li><p><code>git checkout &lt;commit&gt; &lt;file&gt;</code><br>实际上是查看文件之前的版本。<br>它将工作目录中的 <code>file</code> 文件变成 <code>commit</code> 中那个文件的拷贝，并将它加入暂存区。</p>
+<h2 id="查看之前的内容"><a href="#查看之前的内容" class="headerlink" title="查看之前的内容"></a>查看之前的内容</h2><ul>
+<li><p><code>git checkout &lt;commit&gt; &lt;file&gt;</code><br>实际上是查看文件之前的版本。<br>它将工作区中的 <code>file</code> 文件变成 <code>commit</code> 中那个文件的拷贝，并将它加入暂存区。</p>
 </li>
-<li><p><code>git checkout &lt;commit&gt;</code><br>更新工作目录中的所有文件，使得和某个特定提交中的文件一致。</p>
+<li><p><code>git checkout &lt;commit&gt;</code><br>更新工作区中的所有文件，使得和某个特定提交中的文件一致。</p>
 </li>
 </ul>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><blockquote>
+<p><a href="https://www.atlassian.com/git/tutorials/undoing-changes" target="_blank" rel="noopener">https://www.atlassian.com/git/tutorials/undoing-changes</a></p>
+</blockquote>
 
     </div>
 
@@ -525,7 +527,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Git提交的回滚"><span class="nav-number">1.</span> <span class="nav-text">Git提交的回滚</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#revert"><span class="nav-number">1.1.</span> <span class="nav-text">revert</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reset"><span class="nav-number">1.2.</span> <span class="nav-text">reset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reset-和-revert"><span class="nav-number">1.3.</span> <span class="nav-text">reset 和 revert</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#checkout"><span class="nav-number">1.4.</span> <span class="nav-text">checkout</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Git提交的回滚"><span class="nav-number">1.</span> <span class="nav-text">Git提交的回滚</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#revert"><span class="nav-number">1.1.</span> <span class="nav-text">revert</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reset"><span class="nav-number">1.2.</span> <span class="nav-text">reset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reset-和-revert"><span class="nav-number">1.3.</span> <span class="nav-text">reset 和 revert</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看之前的内容"><span class="nav-number">1.4.</span> <span class="nav-text">查看之前的内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">1.5.</span> <span class="nav-text">参考资料</span></a></li></ol></li></ol></div>
             
 
           </div>
