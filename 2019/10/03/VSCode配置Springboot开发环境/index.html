@@ -73,7 +73,7 @@
 <meta property="og:image" content="https://s2.ax1x.com/2019/10/03/u0Ig1J.jpg">
 <meta property="og:image" content="https://s2.ax1x.com/2019/10/03/u0IRXR.jpg">
 <meta property="og:image" content="https://s2.ax1x.com/2019/10/03/u0Ifn1.jpg">
-<meta property="og:updated_time" content="2019-10-03T14:36:51.347Z">
+<meta property="og:updated_time" content="2020-03-08T12:25:28.114Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="VSCode配置Springboot开发环境">
 <meta name="twitter:description" content="虽说Springboot的首选开发IDE是IntelliJ IDEA，然而对于老爷机来说IDEA太过庞大，对于因为某些原因而无法使用主力开发电脑时，使用VSCode来开发Springboot也不失为一个不错的选择。  安装开发扩展在商店中搜索Java Extension Pack 扩展，并安装。 这是一个扩展包，VSCode 会自动安装关联的扩展：  Cloudfoundry Manifest Y">
@@ -258,11 +258,21 @@
                 
               
 
-              <time title="创建时间：2019-10-03 20:36:06 / 修改时间：22:36:51" itemprop="dateCreated datePublished" datetime="2019-10-03T20:36:06+08:00">2019-10-03</time>
+              <time title="创建时间：2019-10-03 20:36:06" itemprop="dateCreated datePublished" datetime="2019-10-03T20:36:06+08:00">2019-10-03</time>
             </span>
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-03-08 20:25:28" itemprop="dateModified" datetime="2020-03-08T20:25:28+08:00">2020-03-08</time>
+              </span>
             
           
             <span class="post-meta-item">
@@ -319,6 +329,7 @@
 <li>Language Support for Java(TM) by Red Hat</li>
 <li>Maven for Java</li>
 </ul>
+<a id="more"></a>
 <p><img src="https://s2.ax1x.com/2019/10/03/u0I2c9.jpg" alt="JavaExt"></p>
 <p>在商店中搜索<code>Spring Boot Extension Pack</code> 扩展，并安装。</p>
 <p>这是一个扩展包，VSCode 会自动安装关联的扩展：</p>
@@ -329,7 +340,6 @@
 <li>Visual Studio IntelliCode</li>
 </ul>
 <p><img src="https://s2.ax1x.com/2019/10/03/u0IstU.jpg" alt="MavenExt"></p>
-<a id="more"></a>
 <h1 id="配置Java与Maven路径"><a href="#配置Java与Maven路径" class="headerlink" title="配置Java与Maven路径"></a>配置Java与Maven路径</h1><p>打开VSCode的设置文件(setting.json)， 写入以下配置<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  // java路径</span><br><span class="line">  "java.home": "C:/Software/java11/jdk",</span><br><span class="line">  // maven配置文件路径</span><br><span class="line">  "java.configuration.maven.userSettings": "E:/RNC/Tool/maven-3.6.1/conf/settings.xml",</span><br><span class="line">  // 修改pom.xml后导入依赖的动作(automatic 为自动下载与导入)</span><br><span class="line">  "java.configuration.updateBuildConfiguration": "automatic",</span><br><span class="line">  // maven主程序路径</span><br><span class="line">  "maven.executable.path": "E:/RNC/Tool/maven-3.6.1/bin/mvn",</span><br><span class="line">  // 不显示在VSCode文件视图中的文件</span><br><span class="line">  "files.exclude": &#123;</span><br><span class="line">    "**/.classpath": true,</span><br><span class="line">    "**/.project": true,</span><br><span class="line">    "**/.settings": true,</span><br><span class="line">    "**/.factorypath": true,</span><br><span class="line">    // 文件夹</span><br><span class="line">    ".mvn": true,</span><br><span class="line">    ".vscode": true,</span><br><span class="line">    "target": true</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p><img src="https://s2.ax1x.com/2019/10/03/u0IyhF.jpg" alt="Config"></p>
 <h1 id="使用方式"><a href="#使用方式" class="headerlink" title="使用方式"></a>使用方式</h1><p>按下<code>F1</code>，输入<code>spring initializr</code>，选择<code>Generate a Maven Project</code>选项即可。</p>
