@@ -212,6 +212,144 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chaosalphard.github.io/2018/09/20/笔记-SpringBoot学习笔记02/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ilirus">
+      <meta itemprop="description" content="兴趣使然的个人博客">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ilirus">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/09/20/笔记-SpringBoot学习笔记02/" class="post-title-link" itemprop="url">[笔记]SpringBoot学习笔记02</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-09-20 11:34:24" itemprop="dateCreated datePublished" datetime="2018-09-20T11:34:24+08:00">2018-09-20</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-03-11 21:31:38" itemprop="dateModified" datetime="2020-03-11T21:31:38+08:00">2020-03-11</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习笔记/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习笔记/Springboot/" itemprop="url" rel="index"><span itemprop="name">Springboot</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          <br>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="使用JPA来链接数据库"><a href="#使用JPA来链接数据库" class="headerlink" title="使用JPA来链接数据库"></a>使用JPA来链接数据库</h1><p>环境配置:<br>JDK: Java 8<br>IDE: Intellij IDEA<br>服务器: Tomcat 9</p>
+<h2 id="创建JPA项目"><a href="#创建JPA项目" class="headerlink" title="创建JPA项目"></a>创建JPA项目</h2><ul>
+<li>Create Project -&gt; Spring Initializr<ol>
+<li>选择JDK</li>
+<li>选择Initializr Service URL (<a href="https://start.spring.io" target="_blank" rel="noopener">https://start.spring.io</a>)</li>
+<li>选择插件<ul>
+<li>Core -&gt; DevTools</li>
+<li>Web -&gt; web</li>
+<li>Template Engines -&gt; Thymeleaf</li>
+<li>SQL -&gt; JPA, MySQL</li>
+</ul>
+</li>
+<li>完成</li>
+</ol>
+</li>
+</ul>
+<h2 id="配置JPA项目"><a href="#配置JPA项目" class="headerlink" title="配置JPA项目"></a>配置JPA项目</h2><h3 id="配置application-properties文件"><a href="#配置application-properties文件" class="headerlink" title="配置application.properties文件"></a>配置application.properties文件</h3><p>application.properties 中配置数据库链接<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">spring.jpa.database=mysql</span><br><span class="line">spring.datasource.url=jdbc:mysql://localhost:3306/java1604</span><br><span class="line">spring.datasource.username=java1604</span><br><span class="line">spring.datasource.password=java1604</span><br><span class="line">spring.jpa.hibernate.naming.physical-strategy=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl</span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2018/09/20/笔记-SpringBoot学习笔记02/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://chaosalphard.github.io/2018/09/11/笔记-SpringBoot学习笔记01/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -261,7 +399,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-03 01:50:10" itemprop="dateModified" datetime="2019-08-03T01:50:10+08:00">2019-08-03</time>
+                <time title="修改时间：2020-03-11 21:31:42" itemprop="dateModified" datetime="2020-03-11T21:31:42+08:00">2020-03-11</time>
               </span>
             
           
@@ -1302,125 +1440,11 @@
   </article>
 
     
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://chaosalphard.github.io/2018/05/20/使用VHD创建本地虚拟系统/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ilirus">
-      <meta itemprop="description" content="兴趣使然的个人博客">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ilirus">
-    </span>
-      <header class="post-header">
-
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/05/20/使用VHD创建本地虚拟系统/" class="post-title-link" itemprop="url">使用VHD创建本地虚拟系统</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-05-20 10:30:12" itemprop="dateCreated datePublished" datetime="2018-05-20T10:30:12+08:00">2018-05-20</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-06-16 20:08:02" itemprop="dateModified" datetime="2019-06-16T20:08:02+08:00">2019-06-16</time>
-              </span>
-            
-          
-
-          <br>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="VHD-VHDX简介"><a href="#VHD-VHDX简介" class="headerlink" title="VHD/VHDX简介"></a>VHD/VHDX简介</h1><h2 id="什么是VHD"><a href="#什么是VHD" class="headerlink" title="什么是VHD"></a>什么是VHD</h2><p>VHD 是Microsoft Virtual Hard Disk format（微软虚拟磁盘文件）的简称。可以由Windows Vista/7/8/10，Windows Server 2008R2 等系统创建。<br>一个VHD文件可以被虚拟为一块硬盘，并且可以像操作一块硬盘一样操作VHD文件，例如：读取、写入、创建分区、格式化等等。</p>
-<h2 id="什么是VHDX"><a href="#什么是VHDX" class="headerlink" title="什么是VHDX"></a>什么是VHDX</h2><p>随着虚拟环境的企业工作负荷的增加以及性能要求的提高，虚拟硬盘 (VHD) 格式需要适应这些变化。因此，Windows Server 2012 中的 Hyper-V 引入了一个新版本的VHD格式，称为VHDX。<br>与旧的VHD格式相比，VHDX具有更大的存储容量。它优化了动态磁盘和差异磁盘的结构对齐方式，以防止在新的大型扇区物理磁盘上性能降级。同时还能在电源故障期间提供数据损坏保护。</p>
-<p>VHDX格式的主要新功能如下：</p>
-<ul>
-<li>支持的虚拟硬盘的存储容量高达 64 TB。</li>
-<li>通过记录对VHDX元数据结构的更新，可以在电源发生故障时保护数据不会被损坏。</li>
-<li>改进了虚拟硬盘格式的对齐方式，可在大型扇区磁盘上更好地工作。</li>
-</ul>
-<p>VHDX 格式还提供以下功能：</p>
-<ul>
-<li>动态磁盘和差异磁盘有较大的数据块大小，可让这些磁盘满足工作负荷的需求。</li>
-<li>拥有4KB的逻辑扇区，可以在为4KB扇区设计的应用程序和作负荷使用该磁盘时提供较高的性能。</li>
-<li>能够存储有关用户可能想记录的文件的自定义元数据，如操作系统版本或应用的修补程序。</li>
-<li>高效地表示数据（也称为“剪裁”），使文件大小更小并且允许基础物理存储设备回收未使用的空间。（剪裁需要直接连接到虚拟机或 SCSI 磁盘的物理磁盘以及与剪裁兼容的硬件。)</li>
-</ul>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2018/05/20/使用VHD创建本地虚拟系统/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1453,7 +1477,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1502,7 +1526,9 @@
         
           
         
-        <span class="site-state-item-count">17</span>
+          
+        
+        <span class="site-state-item-count">18</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
@@ -1563,7 +1589,9 @@
         
           
         
-        <span class="site-state-item-count">20</span>
+          
+        
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
