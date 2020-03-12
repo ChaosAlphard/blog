@@ -212,106 +212,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://chaosalphard.github.io/2020/03/12/Maven中跳过单元测试/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ilirus">
-      <meta itemprop="description" content="兴趣使然的个人博客">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ilirus">
-    </span>
-      <header class="post-header">
-
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2020/03/12/Maven中跳过单元测试/" class="post-title-link" itemprop="url">Maven中跳过单元测试</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2020-03-12 17:45:03 / 修改时间：17:53:45" itemprop="dateCreated datePublished" datetime="2020-03-12T17:45:03+08:00">2020-03-12</time>
-            </span>
-          
-            
-
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          <br>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-            <h1 id="Maven中跳过单元测试"><a href="#Maven中跳过单元测试" class="headerlink" title="Maven中跳过单元测试"></a>Maven中跳过单元测试</h1><p><strong><span style="font-size:24px;">仅在必要时使用，切忌滥用</span></strong></p>
-<p>展开<code>Maven Project</code>窗口 -&gt; 点击<code>Toggle &#39;Skip Tests&#39; Mode</code>按钮(图标为一个闪电)</p>
-
-          
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://chaosalphard.github.io/2020/03/12/Maven中dependencyManagement元素的使用/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -348,11 +248,21 @@
                 
               
 
-              <time title="创建时间：2020-03-12 17:16:24 / 修改时间：17:44:01" itemprop="dateCreated datePublished" datetime="2020-03-12T17:16:24+08:00">2020-03-12</time>
+              <time title="创建时间：2020-03-12 17:16:24" itemprop="dateCreated datePublished" datetime="2020-03-12T17:16:24+08:00">2020-03-12</time>
             </span>
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-03-13 00:06:00" itemprop="dateModified" datetime="2020-03-13T00:06:00+08:00">2020-03-13</time>
+              </span>
             
           
             <span class="post-meta-item">
@@ -383,7 +293,7 @@
 
       
           <h1 id="dependencyManagement元素的使用"><a href="#dependencyManagement元素的使用" class="headerlink" title="dependencyManagement元素的使用"></a>dependencyManagement元素的使用</h1><p>使用<code>dependencyManagement</code>元素能让所有在子项目中引用一个依赖而不用显式的列出版本号，Maven会沿父子层<strong>向上</strong>查找，直到找到一个拥有<code>dependencyManagement</code>元素的项目，然后它就会使用这个<code>dependencyManagement</code>中指定的版本号</p>
-<p>例如在父项目中:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencyManagement</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.1.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencyManagement</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>例如在父项目中:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencyManagement</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>8.0.14<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencyManagement</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>在子项目里:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>这样做的好处是，如果多个子项目都引用同一个依赖，则可以避免在每一个子项目中重新声明一遍，且方便统一管理版本</p>
           <!--noindex-->
@@ -1473,6 +1383,120 @@
   </article>
 
     
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chaosalphard.github.io/2019/08/03/Git常用指令/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ilirus">
+      <meta itemprop="description" content="兴趣使然的个人博客">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ilirus">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/08/03/Git常用指令/" class="post-title-link" itemprop="url">Git常用指令</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-08-03 20:44:37 / 修改时间：21:07:29" itemprop="dateCreated datePublished" datetime="2019-08-03T20:44:37+08:00">2019-08-03</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/版本控制/" itemprop="url" rel="index"><span itemprop="name">版本控制</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          <br>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+            <h1 id="Git常用指令"><a href="#Git常用指令" class="headerlink" title="Git常用指令"></a>Git常用指令</h1><p><code>git init</code>: 为当前文件夹初始化Git仓库</p>
+<p><code>git status</code>: 查看状态(modified, untracked)</p>
+<p><code>git add &lt;file|path&gt;</code>: 添加指定文件/文件夹到暂存区(staging index)</p>
+<p><code>git commit</code>: 提交暂存区的文件到版本库<br><code>git commit -m &#39;msg&#39;</code>: 提交暂存区的文件到版本库<br><code>git commit -am &#39;msg&#39;</code>: 跳过<code>git add</code>步骤，直接提交所有<strong>工作区(working directory)已追踪</strong>文件</p>
+<p><code>git log</code>: 查看提交信息/记录</p>
+<h2 id="Git的三层结构"><a href="#Git的三层结构" class="headerlink" title="Git的三层结构"></a>Git的三层结构</h2><ul>
+<li><code>working directory</code>: 工作区</li>
+<li><code>staging index</code>: 暂存区</li>
+<li><code>git directory</code>: 版本库</li>
+</ul>
+<h2 id="Git文件的四种状态"><a href="#Git文件的四种状态" class="headerlink" title="Git文件的四种状态"></a>Git文件的四种状态</h2><ul>
+<li><code>Untracked</code>: 未被追踪</li>
+<li><code>Modified</code>: 已被修改，但未添加到暂存区</li>
+<li><code>Staged</code>: 添加到了暂存区，但未提交到版本库</li>
+<li><code>Committed</code>: 数据被储存在本地库中</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
   </section>
 
   
@@ -1510,7 +1534,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-count">32</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
