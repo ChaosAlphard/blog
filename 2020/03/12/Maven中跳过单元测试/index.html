@@ -57,21 +57,19 @@
   };
 </script>
 
-  <meta name="description" content="微服务是什么 　　微服务是一种架构模式，它提倡将单一应用程序划分为一组小的服务，服务之间相互协调、相互配合，为用户提供最终价值。每个服务运行在其独立的进程中，服务间采用轻量级的通信机制互相协作(例如基于HTTP协议的RESTful API)。　　每个服务都围绕具体业务进行构建，并能够独立的被部署到生产环境、类生产环境等。另外，应尽量避免统一的、集中式的服务管理机制，对具体的一个服务而言，应根据业务">
-<meta name="keywords" content="Java,SpringCloud">
+  <meta name="description" content="Maven中跳过单元测试仅在必要时使用，切忌滥用 展开Maven Project窗口 -&amp;gt; 点击Toggle &amp;#39;Skip Tests&amp;#39; Mode按钮(图标为一个闪电)">
+<meta name="keywords" content="Java,Maven">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[笔记]SpringCloud学习00: 微服务与SpringCloud">
-<meta property="og:url" content="https://chaosalphard.github.io/2020/03/11/笔记-SpringCloud学习00-微服务与SpringCloud/index.html">
+<meta property="og:title" content="Maven中跳过单元测试">
+<meta property="og:url" content="https://chaosalphard.github.io/2020/03/12/Maven中跳过单元测试/index.html">
 <meta property="og:site_name" content="Ilirus">
-<meta property="og:description" content="微服务是什么 　　微服务是一种架构模式，它提倡将单一应用程序划分为一组小的服务，服务之间相互协调、相互配合，为用户提供最终价值。每个服务运行在其独立的进程中，服务间采用轻量级的通信机制互相协作(例如基于HTTP协议的RESTful API)。　　每个服务都围绕具体业务进行构建，并能够独立的被部署到生产环境、类生产环境等。另外，应尽量避免统一的、集中式的服务管理机制，对具体的一个服务而言，应根据业务">
+<meta property="og:description" content="Maven中跳过单元测试仅在必要时使用，切忌滥用 展开Maven Project窗口 -&amp;gt; 点击Toggle &amp;#39;Skip Tests&amp;#39; Mode按钮(图标为一个闪电)">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://s1.ax1x.com/2020/03/11/8VEh8g.png">
-<meta property="og:updated_time" content="2020-03-12T09:18:01.924Z">
+<meta property="og:updated_time" content="2020-03-12T09:53:45.097Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="[笔记]SpringCloud学习00: 微服务与SpringCloud">
-<meta name="twitter:description" content="微服务是什么 　　微服务是一种架构模式，它提倡将单一应用程序划分为一组小的服务，服务之间相互协调、相互配合，为用户提供最终价值。每个服务运行在其独立的进程中，服务间采用轻量级的通信机制互相协作(例如基于HTTP协议的RESTful API)。　　每个服务都围绕具体业务进行构建，并能够独立的被部署到生产环境、类生产环境等。另外，应尽量避免统一的、集中式的服务管理机制，对具体的一个服务而言，应根据业务">
-<meta name="twitter:image" content="https://s1.ax1x.com/2020/03/11/8VEh8g.png">
-  <link rel="canonical" href="https://chaosalphard.github.io/2020/03/11/笔记-SpringCloud学习00-微服务与SpringCloud/">
+<meta name="twitter:title" content="Maven中跳过单元测试">
+<meta name="twitter:description" content="Maven中跳过单元测试仅在必要时使用，切忌滥用 展开Maven Project窗口 -&amp;gt; 点击Toggle &amp;#39;Skip Tests&amp;#39; Mode按钮(图标为一个闪电)">
+  <link rel="canonical" href="https://chaosalphard.github.io/2020/03/12/Maven中跳过单元测试/">
 
 
 <script id="page.configurations">
@@ -80,7 +78,7 @@
   };
 </script>
 
-  <title>[笔记]SpringCloud学习00: 微服务与SpringCloud | Ilirus</title>
+  <title>Maven中跳过单元测试 | Ilirus</title>
   
 
 
@@ -217,7 +215,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://chaosalphard.github.io/2020/03/11/笔记-SpringCloud学习00-微服务与SpringCloud/">
+    <link itemprop="mainEntityOfPage" href="https://chaosalphard.github.io/2020/03/12/Maven中跳过单元测试/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ilirus">
@@ -231,7 +229,7 @@
       <header class="post-header">
 
         
-          <h1 class="post-title" itemprop="name headline">[笔记]SpringCloud学习00: 微服务与SpringCloud
+          <h1 class="post-title" itemprop="name headline">Maven中跳过单元测试
 
               
             
@@ -251,21 +249,11 @@
                 
               
 
-              <time title="创建时间：2020-03-11 21:26:57" itemprop="dateCreated datePublished" datetime="2020-03-11T21:26:57+08:00">2020-03-11</time>
+              <time title="创建时间：2020-03-12 17:45:03 / 修改时间：17:53:45" itemprop="dateCreated datePublished" datetime="2020-03-12T17:45:03+08:00">2020-03-12</time>
             </span>
           
             
 
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2020-03-12 17:18:01" itemprop="dateModified" datetime="2020-03-12T17:18:01+08:00">2020-03-12</time>
-              </span>
             
           
             <span class="post-meta-item">
@@ -276,14 +264,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习笔记/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a></span>
-
-                
-                
-                  ，
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习笔记/SpringCloud/" itemprop="url" rel="index"><span itemprop="name">SpringCloud</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
 
                 
                 
@@ -302,34 +283,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="微服务是什么"><a href="#微服务是什么" class="headerlink" title="微服务是什么"></a>微服务是什么</h1><blockquote>
-<p>　　<code>微服务</code>是一种架构模式，它提倡将<code>单一</code>应用程序划分为一组小的服务，服务之间相互协调、相互配合，为用户提供最终价值。每个服务运行在其<code>独立</code>的<code>进程</code>中，服务间采用轻量级的通信机制互相协作(例如基于HTTP协议的RESTful API)。<br>　　每个服务都围绕具体业务进行构建，并能够<code>独立</code>的被部署到生产环境、类生产环境等。另外，应尽量避免统一的、集中式的服务管理机制，对具体的一个服务而言，应根据业务上下文，选择合适的语言、工具对其进行构建。</p>
-</blockquote>
-<h2 id="微服务架构应满足哪些维度"><a href="#微服务架构应满足哪些维度" class="headerlink" title="微服务架构应满足哪些维度"></a>微服务架构应满足哪些维度</h2><ul>
-<li>服务的注册与发现</li>
-<li>服务调用</li>
-<li>服务熔断</li>
-<li>负载均衡</li>
-<li>服务降级</li>
-<li>服务消息队列</li>
-<li>配置中心管理</li>
-<li>服务网关</li>
-<li>服务监控</li>
-<li>全链路追踪</li>
-<li>自动化构建部署</li>
-<li>服务定时任务调度操作</li>
-</ul>
-<h1 id="Spring-Cloud-是什么"><a href="#Spring-Cloud-是什么" class="headerlink" title="Spring Cloud 是什么"></a>Spring Cloud 是什么</h1><blockquote>
-<p>融合、协调、组装微服务相关技术，使构建分布式系统变更更容易。是分布式微服务架构的一种技术体现，是多种微服务架构落地技术的集合体。(微服务全家桶)</p>
-</blockquote>
-<a id="more"></a>
-<h3 id="Spring-Cloud-版本命名规则"><a href="#Spring-Cloud-版本命名规则" class="headerlink" title="Spring Cloud 版本命名规则"></a>Spring Cloud 版本命名规则</h3><p><code>Spring Cloud</code>是一个由许多<code>子项目</code>组成的<code>综合</code>项目，各子项目有不同的发布节奏。为管理Spring Cloud 与各子项目的版本依赖关系，发布了一个清单，其中包括了某个Spring Cloud 版本对应的子项目版本。</p>
-<p>为避免Spring Cloud 的版本号与子项目版本号混淆，Spring Cloud 采用了英国伦敦地铁站的名称来命名，以字母A-Z的形式来发布迭代版本，也就是说Spring Cloud 是以字母作为版本号。</p>
-<p>当Spring Cloud 的发布内容<strong>累积到临界点</strong>或<strong>一个重大BUG被解决</strong>后，会发布一个<code>service releases</code> 版本，简称<code>SR</code>版本(SR1、SR2等)。</p>
-<h2 id="Spring-Cloud-和Spring-Boot-的版本对应"><a href="#Spring-Cloud-和Spring-Boot-的版本对应" class="headerlink" title="Spring Cloud 和Spring Boot 的版本对应"></a>Spring Cloud 和Spring Boot 的版本对应</h2><p>在<a href="https://spring.io/projects/spring-cloud" target="_blank" rel="noopener">https://spring.io/projects/spring-cloud</a>网页底部可查看SpringCloud和SpringBoot的版本对应关系</p>
-<p><img src="https://s1.ax1x.com/2020/03/11/8VEh8g.png" alt="SpringCloud和SpringBoot对应版本"></p>
-<p>更详细的依赖信息需要在<a href="https://start.spring.io/actuator/info" target="_blank" rel="noopener">https://start.spring.io/actuator/info</a>中查讯</p>
-<p>在<a href="https://spring.io/projects/spring-cloud#learn" target="_blank" rel="noopener">https://spring.io/projects/spring-cloud#learn</a>页面中找到Spring Cloud 的<code>Reference Doc</code>在这个页面里可以找到官方推荐的<code>Spring Boot</code>版本</p>
+        <h1 id="Maven中跳过单元测试"><a href="#Maven中跳过单元测试" class="headerlink" title="Maven中跳过单元测试"></a>Maven中跳过单元测试</h1><p><strong><span style="font-size:24px;">仅在必要时使用，切忌滥用</span></strong></p>
+<p>展开<code>Maven Project</code>窗口 -&gt; 点击<code>Toggle &#39;Skip Tests&#39; Mode</code>按钮(图标为一个闪电)</p>
 
     </div>
 
@@ -343,13 +298,13 @@
         <div class="post-tags">
             <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
           
-            <a href="/tags/SpringCloud/" rel="tag"><i class="fa fa-tag"></i> SpringCloud</a>
+            <a href="/tags/Maven/" rel="tag"><i class="fa fa-tag"></i> Maven</a>
           
         </div>
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
-              <a href="/2019/10/05/数据库存储过程/" rel="next" title="数据库存储过程">
-                <i class="fa fa-chevron-left"></i> 数据库存储过程
+              <a href="/2020/03/12/Maven中dependencyManagement元素的使用/" rel="next" title="Maven中dependencyManagement元素的使用">
+                <i class="fa fa-chevron-left"></i> Maven中dependencyManagement元素的使用
               </a>
             
           </div>
@@ -357,10 +312,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-              <a href="/2020/03/12/笔记-SpringCloud学习01-项目的搭建/" rel="prev" title="[笔记]SpringCloud学习01: 项目的搭建">
-                [笔记]SpringCloud学习01: 项目的搭建 <i class="fa fa-chevron-right"></i>
-              </a>
-            
           </div>
         </div>
     </footer>
@@ -569,7 +520,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#微服务是什么"><span class="nav-number">1.</span> <span class="nav-text">微服务是什么</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#微服务架构应满足哪些维度"><span class="nav-number">1.1.</span> <span class="nav-text">微服务架构应满足哪些维度</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring-Cloud-是什么"><span class="nav-number">2.</span> <span class="nav-text">Spring Cloud 是什么</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-Cloud-版本命名规则"><span class="nav-number">2.0.1.</span> <span class="nav-text">Spring Cloud 版本命名规则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-Cloud-和Spring-Boot-的版本对应"><span class="nav-number">2.1.</span> <span class="nav-text">Spring Cloud 和Spring Boot 的版本对应</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Maven中跳过单元测试"><span class="nav-number">1.</span> <span class="nav-text">Maven中跳过单元测试</span></a></li></ol></div>
             
 
           </div>
@@ -683,7 +634,7 @@
 
 <script>
   window.livereOptions = {
-    refer: '2020/03/11/笔记-SpringCloud学习00-微服务与SpringCloud/'
+    refer: '2020/03/12/Maven中跳过单元测试/'
   };
   (function(d, s) {
     var j, e = d.getElementsByTagName(s)[0];
