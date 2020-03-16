@@ -66,7 +66,7 @@
 <meta property="og:description" content="什么是服务治理当我们的服务与服务之间通讯调用的时候，如果简单粗暴的用httpclient去请求，不经过第三方的组件管理，然后访问路径写死，那么如果有一个服务更换了路径，所有的服务都需要手动更换该服务的访问路径。维护的成本很高。 就是因为出现了这些问题，所以引入了服务治理(SOA governance)这个概念，同时衍生了这类的实现组件，也就是注册中心。典型的代表：zookeeper，Eureka，">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://s1.ax1x.com/2020/03/14/8MtKwd.jpg">
-<meta property="og:updated_time" content="2020-03-16T11:44:04.646Z">
+<meta property="og:updated_time" content="2020-03-16T11:50:29.651Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[笔记]SpringCloud学习02: Eureka基础">
 <meta name="twitter:description" content="什么是服务治理当我们的服务与服务之间通讯调用的时候，如果简单粗暴的用httpclient去请求，不经过第三方的组件管理，然后访问路径写死，那么如果有一个服务更换了路径，所有的服务都需要手动更换该服务的访问路径。维护的成本很高。 就是因为出现了这些问题，所以引入了服务治理(SOA governance)这个概念，同时衍生了这类的实现组件，也就是注册中心。典型的代表：zookeeper，Eureka，">
@@ -264,7 +264,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-03-16 19:44:04" itemprop="dateModified" datetime="2020-03-16T19:44:04+08:00">2020-03-16</time>
+                <time title="修改时间：2020-03-16 19:50:29" itemprop="dateModified" datetime="2020-03-16T19:50:29+08:00">2020-03-16</time>
               </span>
             
           
@@ -316,10 +316,21 @@
 <li>Service Consumer: 服务消费方，从Eureka获取注册服务列表，从而能够消费服务<!-- ![Dubbo](https://s1.ax1x.com/2020/03/14/8MtueH.jpg) -->
 </li>
 </ul>
+<a id="more"></a>
 <h1 id="Eureka组件"><a href="#Eureka组件" class="headerlink" title="Eureka组件"></a>Eureka组件</h1><p><code>Eureka</code>包含两个组件：<code>Eureka Server</code>和<code>Eureka Client</code></p>
 <h2 id="Eureka-Server"><a href="#Eureka-Server" class="headerlink" title="Eureka Server"></a>Eureka Server</h2><p><code>Eureka Server</code>提供注册服务，各个微服务节点通过配置启动后，会在<code>Eureka Server</code>中进行注册，这样<code>Eureka Server</code>中的服务注册表会储存所有可用服务节点的信息，服务节点的信息可在管理界面中直观的看到。</p>
 <p><strong><code>Eureka Server</code> 同时也是一个<code>Eureka Client</code></strong> 在不禁止Eureka Server的客户端行为时，它会向它配置文件中的其他Eureka Server 进行拉取注册表、服务注册和发送心跳等操作。</p>
 <h2 id="Eureka-Client"><a href="#Eureka-Client" class="headerlink" title="Eureka Client"></a>Eureka Client</h2><p><code>Eureka Client</code> 可向注册中心进行访问来获取服务提供方通讯地址。在启动后，<code>Eureka Client</code>将会向<code>Eureka Server</code>发送心跳(默认间隔为30s)。如果<code>Eureka Server</code>在多个心跳周期内没有接收到某个节点的心跳，<code>Eureka Server</code>则会将该节点从服务器注册表中移除(默认90s)。</p>
+<h3 id="服务提供方"><a href="#服务提供方" class="headerlink" title="服务提供方"></a>服务提供方</h3><ul>
+<li>启动后，向注册中心发起<code>register</code>请求，注册服务</li>
+<li>在运行过程中，定时向注册中心发送<code>renew</code>心跳，证明”我还活着”</li>
+<li>停止服务提供者，向注册中心发起<code>cancel</code>请求，清空当前服务注册信息</li>
+</ul>
+<h3 id="服务消费方"><a href="#服务消费方" class="headerlink" title="服务消费方"></a>服务消费方</h3><ul>
+<li>启动后，从注册中心拉取服务注册信息</li>
+<li>在运行过程中，定时更新服务注册信息</li>
+<li>发起向服务提供方远程调用时</li>
+</ul>
 
     </div>
 
@@ -563,7 +574,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是服务治理"><span class="nav-number">1.</span> <span class="nav-text">什么是服务治理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Eureka设计"><span class="nav-number">2.</span> <span class="nav-text">Eureka设计</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Eureka组件"><span class="nav-number">3.</span> <span class="nav-text">Eureka组件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Eureka-Server"><span class="nav-number">3.1.</span> <span class="nav-text">Eureka Server</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Eureka-Client"><span class="nav-number">3.2.</span> <span class="nav-text">Eureka Client</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是服务治理"><span class="nav-number">1.</span> <span class="nav-text">什么是服务治理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Eureka设计"><span class="nav-number">2.</span> <span class="nav-text">Eureka设计</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Eureka组件"><span class="nav-number">3.</span> <span class="nav-text">Eureka组件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Eureka-Server"><span class="nav-number">3.1.</span> <span class="nav-text">Eureka Server</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Eureka-Client"><span class="nav-number">3.2.</span> <span class="nav-text">Eureka Client</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#服务提供方"><span class="nav-number">3.2.1.</span> <span class="nav-text">服务提供方</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务消费方"><span class="nav-number">3.2.2.</span> <span class="nav-text">服务消费方</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
