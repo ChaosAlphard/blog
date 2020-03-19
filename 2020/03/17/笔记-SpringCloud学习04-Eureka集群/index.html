@@ -67,7 +67,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://s1.ax1x.com/2020/03/19/8yJLwT.jpg">
 <meta property="og:image" content="https://s1.ax1x.com/2020/03/19/8y5eZ6.png">
-<meta property="og:updated_time" content="2020-03-19T14:01:09.222Z">
+<meta property="og:updated_time" content="2020-03-19T15:37:29.852Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[笔记]SpringCloud学习04: Eureka集群">
 <meta name="twitter:description" content="Eureka 集群原理我们假设有三台 Eureka Server 组成的集群，只要三个地方的任意一个Eureka Server不出现问题，都不会影响整个架构的稳定性。  从图中可以看出Eureka Server集群相互之间通过Replicate来同步数据，相互之间不区分主节点和从节点，所有的节点都是平等的。在这种架构中，节点通过彼此互相注册来提高可用性，每个节点需要添加一个或多个有效的servic">
@@ -265,7 +265,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-03-19 22:01:09" itemprop="dateModified" datetime="2020-03-19T22:01:09+08:00">2020-03-19</time>
+                <time title="修改时间：2020-03-19 23:37:29" itemprop="dateModified" datetime="2020-03-19T23:37:29+08:00">2020-03-19</time>
               </span>
             
           
@@ -311,6 +311,7 @@
 <p>Eureka Server 集群之间的状态是采用异步方式同步的，所以不保证节点间的状态一定是一致的，不过基本能保证最终状态是一致的。</p>
 <p>Eureka保证AP (CAP原则又称CAP定理，指的是在一个分布式系统中，一致性(Consistency)、可用性(Availability)、分区容错性(Partition tolerance))</p>
 <p>Eureka Server 各个节点都是平等的，几个节点挂掉不会影响正常节点的工作，剩余的节点依然可以提供注册和查询服务。而Eureka Client 在向某个Eureka 注册时，如果发现连接失败，则会自动切换至其它节点。只要有一台Eureka Server 还在，就能保证注册服务可用(保证可用性)，只不过查到的信息可能不是最新的(不保证强一致性)。</p>
+<a id="more"></a>
 <h1 id="Eureka-集群搭建"><a href="#Eureka-集群搭建" class="headerlink" title="Eureka 集群搭建"></a>Eureka 集群搭建</h1><p>新建一个Eureka Server，并修改<code>application.yml</code>文件<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">7002</span></span><br><span class="line"></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  instance:</span></span><br><span class="line"><span class="attr">    hostname:</span> <span class="string">eureka7002.com</span></span><br><span class="line"><span class="attr">  client:</span></span><br><span class="line"><span class="attr">    register-with-eureka:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">    feth-registry:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">    service-url:</span></span><br><span class="line">      <span class="comment"># 相互注册</span></span><br><span class="line"><span class="attr">      defaultZone:</span> <span class="attr">http://eureka7001.com:7001/eureka/</span></span><br></pre></td></tr></table></figure></p>
 <p>修改之前的单机eureka配置文件<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">7001</span></span><br><span class="line"></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  instance:</span></span><br><span class="line"><span class="attr">    hostname:</span> <span class="string">eureka7001.com</span></span><br><span class="line"><span class="attr">  client:</span></span><br><span class="line"><span class="attr">    register-with-eureka:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">    feth-registry:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">    service-url:</span></span><br><span class="line">      <span class="comment"># 相互注册</span></span><br><span class="line"><span class="attr">      defaultZone:</span> <span class="attr">http://eureka7002.com:7002/eureka/</span></span><br></pre></td></tr></table></figure></p>
 <blockquote>

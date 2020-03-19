@@ -57,20 +57,20 @@
   };
 </script>
 
-  <meta name="description" content="服务提供方集群搭建参考之前搭建好的服务提供方工程，再创建一个新的工程，要注意application.yml中，spring.application.name属性要和之前的一致，完成后启动服务  服务消费方请求地址修改在消费方工程中，将请求地址改为微服务名称1234567891011121314151617181920package com.ilirus.springcloud.controller">
+  <meta name="description" content="服务提供方集群搭建参考之前搭建好的服务提供方工程，再创建一个新的工程，要注意application.yml中，spring.application.name属性要和之前的一致，完成后启动服务">
 <meta name="keywords" content="Java,SpringCloud,Eureka">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[笔记]SpringCloud学习05: 服务提供方集群">
 <meta property="og:url" content="https://chaosalphard.github.io/2020/03/19/笔记-SpringCloud学习05-服务提供方集群/index.html">
 <meta property="og:site_name" content="Ilirus">
-<meta property="og:description" content="服务提供方集群搭建参考之前搭建好的服务提供方工程，再创建一个新的工程，要注意application.yml中，spring.application.name属性要和之前的一致，完成后启动服务  服务消费方请求地址修改在消费方工程中，将请求地址改为微服务名称1234567891011121314151617181920package com.ilirus.springcloud.controller">
+<meta property="og:description" content="服务提供方集群搭建参考之前搭建好的服务提供方工程，再创建一个新的工程，要注意application.yml中，spring.application.name属性要和之前的一致，完成后启动服务">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://s1.ax1x.com/2020/03/19/86S86P.png">
 <meta property="og:image" content="https://s1.ax1x.com/2020/03/19/86kUKA.gif">
-<meta property="og:updated_time" content="2020-03-19T15:32:55.892Z">
+<meta property="og:updated_time" content="2020-03-19T15:37:49.159Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[笔记]SpringCloud学习05: 服务提供方集群">
-<meta name="twitter:description" content="服务提供方集群搭建参考之前搭建好的服务提供方工程，再创建一个新的工程，要注意application.yml中，spring.application.name属性要和之前的一致，完成后启动服务  服务消费方请求地址修改在消费方工程中，将请求地址改为微服务名称1234567891011121314151617181920package com.ilirus.springcloud.controller">
+<meta name="twitter:description" content="服务提供方集群搭建参考之前搭建好的服务提供方工程，再创建一个新的工程，要注意application.yml中，spring.application.name属性要和之前的一致，完成后启动服务">
 <meta name="twitter:image" content="https://s1.ax1x.com/2020/03/19/86S86P.png">
   <link rel="canonical" href="https://chaosalphard.github.io/2020/03/19/笔记-SpringCloud学习05-服务提供方集群/">
 
@@ -252,7 +252,7 @@
                 
               
 
-              <time title="创建时间：2020-03-19 22:02:13 / 修改时间：23:32:55" itemprop="dateCreated datePublished" datetime="2020-03-19T22:02:13+08:00">2020-03-19</time>
+              <time title="创建时间：2020-03-19 22:02:13 / 修改时间：23:37:49" itemprop="dateCreated datePublished" datetime="2020-03-19T22:02:13+08:00">2020-03-19</time>
             </span>
           
             
@@ -295,6 +295,7 @@
       
         <h1 id="服务提供方集群搭建"><a href="#服务提供方集群搭建" class="headerlink" title="服务提供方集群搭建"></a>服务提供方集群搭建</h1><p>参考之前搭建好的服务提供方工程，再创建一个新的工程，要注意<code>application.yml</code>中，<code>spring.application.name</code>属性要和之前的一致，完成后启动服务</p>
 <p><img src="https://s1.ax1x.com/2020/03/19/86S86P.png" alt="eureka"></p>
+<a id="more"></a>
 <h1 id="服务消费方请求地址修改"><a href="#服务消费方请求地址修改" class="headerlink" title="服务消费方请求地址修改"></a>服务消费方请求地址修改</h1><p>在消费方工程中，将请求地址改为微服务名称<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.ilirus.springcloud.controller;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* import ... */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(<span class="string">"/consumer"</span>)</span><br><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OrderController</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String PAYMENT_URL = <span class="string">"http://irs-provider-payment/payment"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> RestTemplate restTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/payment/create"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> CommonResult <span class="title">create</span><span class="params">(Payment payment)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> restTemplate.postForObject(PAYMENT_URL+<span class="string">"/create"</span>, payment, CommonResult.class);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* ... */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>因为目前<code>irs-provider-payment</code>服务下有两个实例，直接使用服务名并不能让程序知道你想用具体哪一个，所以还需要进一步配置</p>
 <h1 id="RestTemplate-配置负载均衡"><a href="#RestTemplate-配置负载均衡" class="headerlink" title="RestTemplate 配置负载均衡"></a>RestTemplate 配置负载均衡</h1><p>修改<code>RestTemplate</code>配置类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.ilirus.springcloud.config;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.client.loadbalancer.LoadBalanced;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.client.RestTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ApplicationontextConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="meta">@LoadBalanced</span>  <span class="comment">// 授予restTemplate负载均衡能力</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> RestTemplate <span class="title">getRestTemplate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> RestTemplate();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
