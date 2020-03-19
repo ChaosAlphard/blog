@@ -57,17 +57,21 @@
   };
 </script>
 
-  <meta name="description" content="兴趣使然的个人博客">
+  <meta name="description" content="Eureka 集群原理我们假设有三台 Eureka Server 组成的集群，只要三个地方的任意一个Eureka Server不出现问题，都不会影响整个架构的稳定性。  从图中可以看出Eureka Server集群相互之间通过Replicate来同步数据，相互之间不区分主节点和从节点，所有的节点都是平等的。在这种架构中，节点通过彼此互相注册来提高可用性，每个节点需要添加一个或多个有效的servic">
+<meta name="keywords" content="Java,SpringCloud,Eureka">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[笔记]SpringCloud学习04: Eureka集群">
 <meta property="og:url" content="https://chaosalphard.github.io/2020/03/17/笔记-SpringCloud学习04-Eureka集群/index.html">
 <meta property="og:site_name" content="Ilirus">
-<meta property="og:description" content="兴趣使然的个人博客">
+<meta property="og:description" content="Eureka 集群原理我们假设有三台 Eureka Server 组成的集群，只要三个地方的任意一个Eureka Server不出现问题，都不会影响整个架构的稳定性。  从图中可以看出Eureka Server集群相互之间通过Replicate来同步数据，相互之间不区分主节点和从节点，所有的节点都是平等的。在这种架构中，节点通过彼此互相注册来提高可用性，每个节点需要添加一个或多个有效的servic">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-03-17T15:33:16.562Z">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/19/8yJLwT.jpg">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/19/8y5eZ6.png">
+<meta property="og:updated_time" content="2020-03-19T14:01:09.222Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[笔记]SpringCloud学习04: Eureka集群">
-<meta name="twitter:description" content="兴趣使然的个人博客">
+<meta name="twitter:description" content="Eureka 集群原理我们假设有三台 Eureka Server 组成的集群，只要三个地方的任意一个Eureka Server不出现问题，都不会影响整个架构的稳定性。  从图中可以看出Eureka Server集群相互之间通过Replicate来同步数据，相互之间不区分主节点和从节点，所有的节点都是平等的。在这种架构中，节点通过彼此互相注册来提高可用性，每个节点需要添加一个或多个有效的servic">
+<meta name="twitter:image" content="https://s1.ax1x.com/2020/03/19/8yJLwT.jpg">
   <link rel="canonical" href="https://chaosalphard.github.io/2020/03/17/笔记-SpringCloud学习04-Eureka集群/">
 
 
@@ -251,6 +255,42 @@
               <time title="创建时间：2020-03-17 23:33:16" itemprop="dateCreated datePublished" datetime="2020-03-17T23:33:16+08:00">2020-03-17</time>
             </span>
           
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-03-19 22:01:09" itemprop="dateModified" datetime="2020-03-19T22:01:09+08:00">2020-03-19</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习笔记/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习笔记/SpringCloud/" itemprop="url" rel="index"><span itemprop="name">SpringCloud</span></a></span>
+
+                
+                
+              
+            </span>
+          
 
           <br>
 
@@ -263,7 +303,22 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <h1 id="Eureka-集群原理"><a href="#Eureka-集群原理" class="headerlink" title="Eureka 集群原理"></a>Eureka 集群原理</h1><p>我们假设有三台 Eureka Server 组成的集群，只要三个地方的任意一个Eureka Server不出现问题，都不会影响整个架构的稳定性。</p>
+<p><img src="https://s1.ax1x.com/2020/03/19/8yJLwT.jpg" alt="Eureka集群"></p>
+<p>从图中可以看出<code>Eureka Server</code>集群相互之间通过<code>Replicate</code>来同步数据，相互之间不区分主节点和从节点，所有的节点都是平等的。在这种架构中，节点通过<strong>彼此互相注册</strong>来提高可用性，每个节点需要添加一个或多个有效的serviceUrl 指向其他节点。</p>
+<p>如果某台Eureka Server 宕机，Eureka Client 的请求会自动切换到新的Eureka Server 节点。当宕机的服务器重新恢复后，Eureka 会再次将其纳入到服务器集群管理之中。当节点开始接受客户端请求时，所有的操作都会进行节点间复制，将请求复制到其它Eureka Server 当前所知的所有节点中。</p>
+<p>另外Eureka Server 的同步遵循着一个非常简单的原则：只要有一条边将节点连接，就可以进行信息传播与同步。所以，如果存在多个节点，只需要将节点之间两两连接起来形成通路，那么其它注册中心都可以共享信息。每个Eureka Server 同时也是Eureka Client，多个Eureka Server 之间通过<code>P2P</code>的方式完成服务注册表的同步。</p>
+<p>Eureka Server 集群之间的状态是采用异步方式同步的，所以不保证节点间的状态一定是一致的，不过基本能保证最终状态是一致的。</p>
+<p>Eureka保证AP (CAP原则又称CAP定理，指的是在一个分布式系统中，一致性(Consistency)、可用性(Availability)、分区容错性(Partition tolerance))</p>
+<p>Eureka Server 各个节点都是平等的，几个节点挂掉不会影响正常节点的工作，剩余的节点依然可以提供注册和查询服务。而Eureka Client 在向某个Eureka 注册时，如果发现连接失败，则会自动切换至其它节点。只要有一台Eureka Server 还在，就能保证注册服务可用(保证可用性)，只不过查到的信息可能不是最新的(不保证强一致性)。</p>
+<h1 id="Eureka-集群搭建"><a href="#Eureka-集群搭建" class="headerlink" title="Eureka 集群搭建"></a>Eureka 集群搭建</h1><p>新建一个Eureka Server，并修改<code>application.yml</code>文件<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">7002</span></span><br><span class="line"></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  instance:</span></span><br><span class="line"><span class="attr">    hostname:</span> <span class="string">eureka7002.com</span></span><br><span class="line"><span class="attr">  client:</span></span><br><span class="line"><span class="attr">    register-with-eureka:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">    feth-registry:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">    service-url:</span></span><br><span class="line">      <span class="comment"># 相互注册</span></span><br><span class="line"><span class="attr">      defaultZone:</span> <span class="attr">http://eureka7001.com:7001/eureka/</span></span><br></pre></td></tr></table></figure></p>
+<p>修改之前的单机eureka配置文件<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">7001</span></span><br><span class="line"></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  instance:</span></span><br><span class="line"><span class="attr">    hostname:</span> <span class="string">eureka7001.com</span></span><br><span class="line"><span class="attr">  client:</span></span><br><span class="line"><span class="attr">    register-with-eureka:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">    feth-registry:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">    service-url:</span></span><br><span class="line">      <span class="comment"># 相互注册</span></span><br><span class="line"><span class="attr">      defaultZone:</span> <span class="attr">http://eureka7002.com:7002/eureka/</span></span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>因为是在同一台机器上，所以需要修改host文件将<code>eureka7001.com</code>和<code>eureka7002.com</code>映射为<code>127.0.0.1</code></p>
+</blockquote>
+<h1 id="微服务注册进集群"><a href="#微服务注册进集群" class="headerlink" title="微服务注册进集群"></a>微服务注册进集群</h1><p>回到之前的子工程中，修改<code>application.yml</code>文件中的eureka配置<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">eureka:</span> <span class="comment"># eureka 客户端</span></span><br><span class="line"><span class="attr">  client:</span></span><br><span class="line"><span class="attr">    register-with-eureka:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">    fetch-registry:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">    service-url:</span></span><br><span class="line">      <span class="comment"># 服务中心链接</span></span><br><span class="line"><span class="attr">      defaultZone:</span> <span class="attr">http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka</span></span><br></pre></td></tr></table></figure></p>
+<p>启动服务，查看是否正确<br><img src="https://s1.ax1x.com/2020/03/19/8y5eZ6.png" alt="集群"></p>
+
     </div>
 
     
@@ -271,6 +326,16 @@
     
 
     <footer class="post-footer">
+          
+        
+        <div class="post-tags">
+            <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
+          
+            <a href="/tags/SpringCloud/" rel="tag"><i class="fa fa-tag"></i> SpringCloud</a>
+          
+            <a href="/tags/Eureka/" rel="tag"><i class="fa fa-tag"></i> Eureka</a>
+          
+        </div>
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
               <a href="/2020/03/16/笔记-SpringCloud学习03-Eureka的搭建/" rel="next" title="[笔记]SpringCloud学习03: Eureka的搭建">
@@ -282,6 +347,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+              <a href="/2020/03/19/笔记-SpringCloud学习05-服务提供方集群/" rel="prev" title="[笔记]SpringCloud学习05: 服务提供方集群">
+                [笔记]SpringCloud学习05: 服务提供方集群 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
     </footer>
@@ -318,8 +387,17 @@
 
   <aside id="sidebar" class="sidebar">
     <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
 
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -331,7 +409,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-count">36</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -473,6 +551,23 @@
 
         </div>
       </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Eureka-集群原理"><span class="nav-number">1.</span> <span class="nav-text">Eureka 集群原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Eureka-集群搭建"><span class="nav-number">2.</span> <span class="nav-text">Eureka 集群搭建</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#微服务注册进集群"><span class="nav-number">3.</span> <span class="nav-text">微服务注册进集群</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
 
     </div>
   </aside>

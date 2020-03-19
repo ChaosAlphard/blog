@@ -212,6 +212,248 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chaosalphard.github.io/2020/03/19/笔记-SpringCloud学习05-服务提供方集群/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ilirus">
+      <meta itemprop="description" content="兴趣使然的个人博客">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ilirus">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2020/03/19/笔记-SpringCloud学习05-服务提供方集群/" class="post-title-link" itemprop="url">[笔记]SpringCloud学习05: 服务提供方集群</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-03-19 22:02:13 / 修改时间：23:32:55" itemprop="dateCreated datePublished" datetime="2020-03-19T22:02:13+08:00">2020-03-19</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习笔记/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习笔记/SpringCloud/" itemprop="url" rel="index"><span itemprop="name">SpringCloud</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          <br>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+            <h1 id="服务提供方集群搭建"><a href="#服务提供方集群搭建" class="headerlink" title="服务提供方集群搭建"></a>服务提供方集群搭建</h1><p>参考之前搭建好的服务提供方工程，再创建一个新的工程，要注意<code>application.yml</code>中，<code>spring.application.name</code>属性要和之前的一致，完成后启动服务</p>
+<p><img src="https://s1.ax1x.com/2020/03/19/86S86P.png" alt="eureka"></p>
+<h1 id="服务消费方请求地址修改"><a href="#服务消费方请求地址修改" class="headerlink" title="服务消费方请求地址修改"></a>服务消费方请求地址修改</h1><p>在消费方工程中，将请求地址改为微服务名称<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.ilirus.springcloud.controller;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* import ... */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(<span class="string">"/consumer"</span>)</span><br><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OrderController</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String PAYMENT_URL = <span class="string">"http://irs-provider-payment/payment"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> RestTemplate restTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/payment/create"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> CommonResult <span class="title">create</span><span class="params">(Payment payment)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> restTemplate.postForObject(PAYMENT_URL+<span class="string">"/create"</span>, payment, CommonResult.class);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* ... */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>因为目前<code>irs-provider-payment</code>服务下有两个实例，直接使用服务名并不能让程序知道你想用具体哪一个，所以还需要进一步配置</p>
+<h1 id="RestTemplate-配置负载均衡"><a href="#RestTemplate-配置负载均衡" class="headerlink" title="RestTemplate 配置负载均衡"></a>RestTemplate 配置负载均衡</h1><p>修改<code>RestTemplate</code>配置类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.ilirus.springcloud.config;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.client.loadbalancer.LoadBalanced;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.client.RestTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ApplicationontextConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="meta">@LoadBalanced</span>  <span class="comment">// 授予restTemplate负载均衡能力</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> RestTemplate <span class="title">getRestTemplate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> RestTemplate();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>至此，全部配置完成</p>
+<p><img src="https://s1.ax1x.com/2020/03/19/86kUKA.gif" alt="负载均衡"></p>
+
+          
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chaosalphard.github.io/2020/03/17/笔记-SpringCloud学习04-Eureka集群/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ilirus">
+      <meta itemprop="description" content="兴趣使然的个人博客">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ilirus">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2020/03/17/笔记-SpringCloud学习04-Eureka集群/" class="post-title-link" itemprop="url">[笔记]SpringCloud学习04: Eureka集群</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-03-17 23:33:16" itemprop="dateCreated datePublished" datetime="2020-03-17T23:33:16+08:00">2020-03-17</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-03-19 22:01:09" itemprop="dateModified" datetime="2020-03-19T22:01:09+08:00">2020-03-19</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习笔记/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习笔记/SpringCloud/" itemprop="url" rel="index"><span itemprop="name">SpringCloud</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          <br>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+            <h1 id="Eureka-集群原理"><a href="#Eureka-集群原理" class="headerlink" title="Eureka 集群原理"></a>Eureka 集群原理</h1><p>我们假设有三台 Eureka Server 组成的集群，只要三个地方的任意一个Eureka Server不出现问题，都不会影响整个架构的稳定性。</p>
+<p><img src="https://s1.ax1x.com/2020/03/19/8yJLwT.jpg" alt="Eureka集群"></p>
+<p>从图中可以看出<code>Eureka Server</code>集群相互之间通过<code>Replicate</code>来同步数据，相互之间不区分主节点和从节点，所有的节点都是平等的。在这种架构中，节点通过<strong>彼此互相注册</strong>来提高可用性，每个节点需要添加一个或多个有效的serviceUrl 指向其他节点。</p>
+<p>如果某台Eureka Server 宕机，Eureka Client 的请求会自动切换到新的Eureka Server 节点。当宕机的服务器重新恢复后，Eureka 会再次将其纳入到服务器集群管理之中。当节点开始接受客户端请求时，所有的操作都会进行节点间复制，将请求复制到其它Eureka Server 当前所知的所有节点中。</p>
+<p>另外Eureka Server 的同步遵循着一个非常简单的原则：只要有一条边将节点连接，就可以进行信息传播与同步。所以，如果存在多个节点，只需要将节点之间两两连接起来形成通路，那么其它注册中心都可以共享信息。每个Eureka Server 同时也是Eureka Client，多个Eureka Server 之间通过<code>P2P</code>的方式完成服务注册表的同步。</p>
+<p>Eureka Server 集群之间的状态是采用异步方式同步的，所以不保证节点间的状态一定是一致的，不过基本能保证最终状态是一致的。</p>
+<p>Eureka保证AP (CAP原则又称CAP定理，指的是在一个分布式系统中，一致性(Consistency)、可用性(Availability)、分区容错性(Partition tolerance))</p>
+<p>Eureka Server 各个节点都是平等的，几个节点挂掉不会影响正常节点的工作，剩余的节点依然可以提供注册和查询服务。而Eureka Client 在向某个Eureka 注册时，如果发现连接失败，则会自动切换至其它节点。只要有一台Eureka Server 还在，就能保证注册服务可用(保证可用性)，只不过查到的信息可能不是最新的(不保证强一致性)。</p>
+<h1 id="Eureka-集群搭建"><a href="#Eureka-集群搭建" class="headerlink" title="Eureka 集群搭建"></a>Eureka 集群搭建</h1><p>新建一个Eureka Server，并修改<code>application.yml</code>文件<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">7002</span></span><br><span class="line"></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  instance:</span></span><br><span class="line"><span class="attr">    hostname:</span> <span class="string">eureka7002.com</span></span><br><span class="line"><span class="attr">  client:</span></span><br><span class="line"><span class="attr">    register-with-eureka:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">    feth-registry:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">    service-url:</span></span><br><span class="line">      <span class="comment"># 相互注册</span></span><br><span class="line"><span class="attr">      defaultZone:</span> <span class="attr">http://eureka7001.com:7001/eureka/</span></span><br></pre></td></tr></table></figure></p>
+<p>修改之前的单机eureka配置文件<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">7001</span></span><br><span class="line"></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  instance:</span></span><br><span class="line"><span class="attr">    hostname:</span> <span class="string">eureka7001.com</span></span><br><span class="line"><span class="attr">  client:</span></span><br><span class="line"><span class="attr">    register-with-eureka:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">    feth-registry:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">    service-url:</span></span><br><span class="line">      <span class="comment"># 相互注册</span></span><br><span class="line"><span class="attr">      defaultZone:</span> <span class="attr">http://eureka7002.com:7002/eureka/</span></span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>因为是在同一台机器上，所以需要修改host文件将<code>eureka7001.com</code>和<code>eureka7002.com</code>映射为<code>127.0.0.1</code></p>
+</blockquote>
+<h1 id="微服务注册进集群"><a href="#微服务注册进集群" class="headerlink" title="微服务注册进集群"></a>微服务注册进集群</h1><p>回到之前的子工程中，修改<code>application.yml</code>文件中的eureka配置<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">eureka:</span> <span class="comment"># eureka 客户端</span></span><br><span class="line"><span class="attr">  client:</span></span><br><span class="line"><span class="attr">    register-with-eureka:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">    fetch-registry:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">    service-url:</span></span><br><span class="line">      <span class="comment"># 服务中心链接</span></span><br><span class="line"><span class="attr">      defaultZone:</span> <span class="attr">http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka</span></span><br></pre></td></tr></table></figure></p>
+<p>启动服务，查看是否正确<br><img src="https://s1.ax1x.com/2020/03/19/8y5eZ6.png" alt="集群"></p>
+
+          
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://chaosalphard.github.io/2020/03/16/笔记-SpringCloud学习03-Eureka的搭建/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1286,252 +1528,6 @@
   </article>
 
     
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://chaosalphard.github.io/2019/09/11/在Windows的UAC授权中增加密码验证/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ilirus">
-      <meta itemprop="description" content="兴趣使然的个人博客">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ilirus">
-    </span>
-      <header class="post-header">
-
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/09/11/在Windows的UAC授权中增加密码验证/" class="post-title-link" itemprop="url">在Windows的UAC授权中增加密码验证</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-09-11 23:50:21" itemprop="dateCreated datePublished" datetime="2019-09-11T23:50:21+08:00">2019-09-11</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-09-13 00:25:01" itemprop="dateModified" datetime="2019-09-13T00:25:01+08:00">2019-09-13</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Windows/" itemprop="url" rel="index"><span itemprop="name">Windows</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          <br>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="在Windows的UAC授权中增加密码验证"><a href="#在Windows的UAC授权中增加密码验证" class="headerlink" title="在Windows的UAC授权中增加密码验证"></a>在Windows的UAC授权中增加密码验证</h1><p>　　通常情况下，当用户以管理员账户登录后，如果要进行某些需要管理员权限的操作(例如：为所有用户安装软件)，系统会弹出UAC(用户账户控制)弹窗，以向用户要求权限。<br>　　普通用户需要输入管理员密码才可授予权限，而管理员账户只需点击 “是” 按钮即可授予权限。</p>
-<p><img src="https://s2.ax1x.com/2019/09/12/nwbvee.jpg" alt="UAC"></p>
-<p>　　但是这样并不是很安全，所以我希望，即便是在管理员账户下，也需要进行密码验证。而且日常使用中，需要UAC授权的情况并不多见，所以增加密码验证这一步也并不会太影响日常使用。</p>
-<ul>
-<li>以管理员账户登录，按下<code>Win+R</code>，输入<code>gpedit.msc</code> 以进入<code>组策略编辑器</code></li>
-<li>进入 计算机配置 -&gt; Windows设置 -&gt; 安全设置 -&gt; 本地策略 -&gt; 安全选项 选项卡</li>
-<li>找到 用户账户控制：管理员批准模式中管理员的提升权限提示的行为 选项</li>
-<li>将其属性更改为<code>提示凭据</code> 或者 <code>在安全桌面上提示凭据</code> 即可</li>
-</ul>
-<p><img src="https://s2.ax1x.com/2019/09/12/nwbxdH.jpg" alt="UAC"></p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/09/11/在Windows的UAC授权中增加密码验证/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://chaosalphard.github.io/2019/08/27/CSS蛇形边框/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ilirus">
-      <meta itemprop="description" content="兴趣使然的个人博客">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ilirus">
-    </span>
-      <header class="post-header">
-
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/08/27/CSS蛇形边框/" class="post-title-link" itemprop="url">CSS蛇形边框</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-08-27 02:27:56 / 修改时间：05:08:07" itemprop="dateCreated datePublished" datetime="2019-08-27T02:27:56+08:00">2019-08-27</time>
-            </span>
-          
-            
-
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/CSS/" itemprop="url" rel="index"><span itemprop="name">CSS</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          <br>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="成果展示"><a href="#成果展示" class="headerlink" title="成果展示"></a>成果展示</h1><iframe src="https://erina.gitee.io/ilirus/CSS%E8%9B%87%E5%BD%A2%E8%BE%B9%E6%A1%86/04.html" frameborder="0" width="200" height="100"></iframe>
-
-<blockquote>
-<p><a href="https://caniuse.com/#search=clip-path" target="_blank" rel="noopener">浏览器支持</a>:</p>
-<ul>
-<li>Chrome 55+</li>
-<li>Firefox 54+</li>
-</ul>
-</blockquote>
-<h1 id="主要思路"><a href="#主要思路" class="headerlink" title="主要思路"></a>主要思路</h1><blockquote>
-<p>使用<code>伪元素</code>实现一个大于目标元素的背景板，<br>再使用<code>clip-path</code>将其裁剪到只剩上/下/左/右一个边,<br>再使用<code>animation</code>实现动画效果。</p>
-</blockquote>
-<h1 id="实现过程"><a href="#实现过程" class="headerlink" title="实现过程"></a>实现过程</h1><p>写一个普通的<code>button</code><br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css">  <span class="selector-class">.content</span> &#123;</span></span><br><span class="line"><span class="undefined">    width: 180px;</span></span><br><span class="line"><span class="undefined">    height: 64px;</span></span><br><span class="line"><span class="undefined">    margin: 0;</span></span><br><span class="line"><span class="undefined">    padding: 0;</span></span><br><span class="line"><span class="undefined">    border: none;</span></span><br><span class="line"><span class="undefined">    background: transparent;</span></span><br><span class="line"><span class="undefined">    position: relative;</span></span><br><span class="line"><span class="undefined">    font-size: 24px;</span></span><br><span class="line"><span class="undefined">  &#125;</span></span><br><span class="line"><span class="undefined">  </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"content"</span>&gt;</span>我是内容<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>加上<code>::before</code><br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.content</span><span class="selector-pseudo">::before</span> &#123;</span><br><span class="line">  <span class="attribute">content</span>: <span class="string">''</span>;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">top</span>: -<span class="number">2px</span>; <span class="attribute">bottom</span>: -<span class="number">2px</span>;</span><br><span class="line">  <span class="attribute">left</span>: -<span class="number">2px</span>; <span class="attribute">right</span>: -<span class="number">2px</span>;</span><br><span class="line">  <span class="attribute">background</span>: olivedrab;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">2px</span> solid olive;</span><br><span class="line">  <span class="attribute">z-index</span>: -<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<iframe src="https://erina.gitee.io/ilirus/CSS%E8%9B%87%E5%BD%A2%E8%BE%B9%E6%A1%86/01.html" frameborder="0" width="200" height="100"></iframe>
-
-<p>使用<code>clip-path</code>裁剪<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.content</span><span class="selector-pseudo">::before</span> &#123;</span><br><span class="line">  <span class="comment">/* 上 */</span></span><br><span class="line">  <span class="attribute">clip-path</span>: <span class="built_in">inset</span>(0 0 calc(100% - 2px) <span class="number">0</span>);</span><br><span class="line">  <span class="comment">/* 右 */</span></span><br><span class="line">  <span class="attribute">clip-path</span>: <span class="built_in">inset</span>(0 0 0 calc(100% - 2px));</span><br><span class="line">  <span class="comment">/* 下 */</span></span><br><span class="line">  <span class="attribute">clip-path</span>: <span class="built_in">inset</span>(calc(100% - 2px) <span class="number">0</span> <span class="number">0</span> <span class="number">0</span>);</span><br><span class="line">  <span class="comment">/* 左 */</span></span><br><span class="line">  <span class="attribute">clip-path</span>: <span class="built_in">inset</span>(0 calc(100% - 2px) <span class="number">0</span> <span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<iframe src="https://erina.gitee.io/ilirus/CSS%E8%9B%87%E5%BD%A2%E8%BE%B9%E6%A1%86/02.html" frameborder="0" width="200" height="300"></iframe>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/08/27/CSS蛇形边框/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
   </section>
 
   
@@ -1569,7 +1565,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-count">36</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
