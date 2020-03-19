@@ -248,7 +248,7 @@
                 
               
 
-              <time title="创建时间：2020-03-20 03:02:19 / 修改时间：03:11:59" itemprop="dateCreated datePublished" datetime="2020-03-20T03:02:19+08:00">2020-03-20</time>
+              <time title="创建时间：2020-03-20 03:02:19 / 修改时间：03:31:21" itemprop="dateCreated datePublished" datetime="2020-03-20T03:02:19+08:00">2020-03-20</time>
             </span>
           
             
@@ -289,17 +289,29 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
-            <h1 id="Eureka-自我保护机制"><a href="#Eureka-自我保护机制" class="headerlink" title="Eureka 自我保护机制"></a>Eureka 自我保护机制</h1><p>保护模式主要用于一组客户端和服务端之间存在网络分区场景下的保护，一旦进入<code>保护模式</code>，<code>Eureka Server</code>会尝试保护其服务注册表中的信息，将<strong>不再删除</strong>服务注册表中的信息，也就是<strong>不会注销任何微服务</strong></p>
+          <h1 id="Eureka-自我保护机制"><a href="#Eureka-自我保护机制" class="headerlink" title="Eureka 自我保护机制"></a>Eureka 自我保护机制</h1><p>保护模式主要用于一组客户端和服务端之间存在网络分区场景下的保护，一旦进入<code>保护模式</code>，<code>Eureka Server</code>会尝试保护其服务注册表中的信息，将<strong>不再删除</strong>服务注册表中的信息，也就是<strong>不会注销任何微服务</strong></p>
 <blockquote>
 <p>一句话概括: 如果某一时刻，<code>Eureka Server</code>中某个微服务不可用了，<code>Eureka</code>不会立即清除，而是会尝试对该微服务的信息进行保存 (CAP中的AP)</p>
 </blockquote>
-<p>如果在<code>Eureka Server</code>首页看到一下提示，则说明<code>Eureka</code>进入了保护模式</p>
+<h1 id="为什么需要自我保护机制"><a href="#为什么需要自我保护机制" class="headerlink" title="为什么需要自我保护机制"></a>为什么需要自我保护机制</h1><blockquote>
+<p>为了防止<code>Eureka Client</code>可以正常运行，但与<code>Eureka Server</code>直接网络不同的情况下，<code>Eureka Server</code>错误地将可以正常运行的<code>Client</code>端移除</p>
+</blockquote>
+<p>默认情况下，如果<code>Eureka Server</code>在一定时间内(默认90s)没有接收到某个服务实例的心跳时，<code>Eureka Server</code>会注销该实例。但当网络分区故障发生时(延时，拥挤)，微服务与<code>Eureka Server</code>之间无法正常通讯时，超时移除节点是不正确的行为——微服务自身很可能是正常状态，也就是说不应该注销此服务。</p>
+<p><code>Eureka</code>通过<code>自我保护模式</code>来解决这个问题——当<code>Eureka Server</code>短时间内丢失过多<code>Client</code>端时，那么这个节点将进入自我保护模式。</p>
+<p>也就是说宁可保留错误的服务注册信息，也不会盲目注销任何可能正常的服务实例</p>
+<h1 id="如何判断Eureka-是否进入了自我保护模式"><a href="#如何判断Eureka-是否进入了自我保护模式" class="headerlink" title="如何判断Eureka 是否进入了自我保护模式"></a>如何判断Eureka 是否进入了自我保护模式</h1><p>如果在<code>Eureka Server</code>首页看到以下提示，则说明<code>Eureka</code>进入了保护模式</p>
 <blockquote>
 <p><span style="color:#D88">EMERGENCY! EUREKA MAY BE INCORRECTLY CLAIMING INSTANCES ARE UP WHEN THEY’RE NOT. RENEWALS ARE LESSER THAN THRESHOLD AND HENCE THE INSTANCES ARE NOT BEING EXPIRED JUST TO BE SAFE.</span></p>
 </blockquote>
-
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2020/03/20/笔记-SpringCloud学习07-Eureka自我保护/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
         
       
     </div>
