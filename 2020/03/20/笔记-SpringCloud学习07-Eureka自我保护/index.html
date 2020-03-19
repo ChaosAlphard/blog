@@ -65,7 +65,7 @@
 <meta property="og:site_name" content="Ilirus">
 <meta property="og:description" content="Eureka 自我保护机制保护模式主要用于一组客户端和服务端之间存在网络分区场景下的保护，一旦进入保护模式，Eureka Server会尝试保护其服务注册表中的信息，将不再删除服务注册表中的信息，也就是不会注销任何微服务  一句话概括: 如果某一时刻，Eureka Server中某个微服务不可用了，Eureka不会立即清除，而是会尝试对该微服务的信息进行保存 (CAP中的AP)  为什么需要自我保">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-03-19T19:31:21.248Z">
+<meta property="og:updated_time" content="2020-03-19T19:52:54.039Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[笔记]SpringCloud学习07: Eureka自我保护">
 <meta name="twitter:description" content="Eureka 自我保护机制保护模式主要用于一组客户端和服务端之间存在网络分区场景下的保护，一旦进入保护模式，Eureka Server会尝试保护其服务注册表中的信息，将不再删除服务注册表中的信息，也就是不会注销任何微服务  一句话概括: 如果某一时刻，Eureka Server中某个微服务不可用了，Eureka不会立即清除，而是会尝试对该微服务的信息进行保存 (CAP中的AP)  为什么需要自我保">
@@ -249,7 +249,7 @@
                 
               
 
-              <time title="创建时间：2020-03-20 03:02:19 / 修改时间：03:31:21" itemprop="dateCreated datePublished" datetime="2020-03-20T03:02:19+08:00">2020-03-20</time>
+              <time title="创建时间：2020-03-20 03:02:19 / 修改时间：03:52:54" itemprop="dateCreated datePublished" datetime="2020-03-20T03:02:19+08:00">2020-03-20</time>
             </span>
           
             
@@ -305,6 +305,8 @@
 <p><span style="color:#D88">EMERGENCY! EUREKA MAY BE INCORRECTLY CLAIMING INSTANCES ARE UP WHEN THEY’RE NOT. RENEWALS ARE LESSER THAN THRESHOLD AND HENCE THE INSTANCES ARE NOT BEING EXPIRED JUST TO BE SAFE.</span></p>
 </blockquote>
 <a id="more"></a>
+<h1 id="如何禁止自我保护机制"><a href="#如何禁止自我保护机制" class="headerlink" title="如何禁止自我保护机制"></a>如何禁止自我保护机制</h1><p>在Erueka Server 端的<code>application.yml</code>文件中，添加以下内容<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  server:</span></span><br><span class="line">    <span class="comment"># 关闭自我保护机制</span></span><br><span class="line"><span class="attr">    enable-self-preservation:</span> <span class="literal">false</span></span><br><span class="line">    <span class="comment"># 移除服务的超时时间，单位毫秒</span></span><br><span class="line"><span class="attr">    eviction-interval-timer-in-ms:</span> <span class="number">15000</span></span><br></pre></td></tr></table></figure></p>
+<p>在Eureka Client 端的<code>application.yml</code>文件中，添加以下内容<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">eureka:</span> <span class="comment"># eureka 客户端</span></span><br><span class="line"><span class="attr">  instance:</span></span><br><span class="line">    <span class="comment"># Eureka Client 端向Server 端发送心跳的时间间隔，单位秒，默认30s</span></span><br><span class="line">    <span class="comment"># 修改心跳时间主要是因为修改了Server 端的超时时间(15000ms = 15s)</span></span><br><span class="line">    <span class="comment"># 所以对应的修改Client 端的心跳时间</span></span><br><span class="line"><span class="attr">    lease-renewal-interval-in-seconds:</span> <span class="number">5</span></span><br><span class="line">    <span class="comment"># Eureka Server 端在收到最后一次心跳后等待时间上限，单位秒，超时将剔除服务，默认90s</span></span><br><span class="line"><span class="attr">    lease-expiration-duration-in-seconds:</span> <span class="number">15</span></span><br></pre></td></tr></table></figure></p>
 
     </div>
 
@@ -544,7 +546,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Eureka-自我保护机制"><span class="nav-number">1.</span> <span class="nav-text">Eureka 自我保护机制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么需要自我保护机制"><span class="nav-number">2.</span> <span class="nav-text">为什么需要自我保护机制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何判断Eureka-是否进入了自我保护模式"><span class="nav-number">3.</span> <span class="nav-text">如何判断Eureka 是否进入了自我保护模式</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Eureka-自我保护机制"><span class="nav-number">1.</span> <span class="nav-text">Eureka 自我保护机制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么需要自我保护机制"><span class="nav-number">2.</span> <span class="nav-text">为什么需要自我保护机制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何判断Eureka-是否进入了自我保护模式"><span class="nav-number">3.</span> <span class="nav-text">如何判断Eureka 是否进入了自我保护模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何禁止自我保护机制"><span class="nav-number">4.</span> <span class="nav-text">如何禁止自我保护机制</span></a></li></ol></div>
             
 
           </div>
