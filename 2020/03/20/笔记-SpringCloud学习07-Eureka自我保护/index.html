@@ -57,17 +57,18 @@
   };
 </script>
 
-  <meta name="description" content="兴趣使然的个人博客">
+  <meta name="description" content="Eureka 自我保护机制保护模式主要用于一组客户端和服务端之间存在网络分区场景下的保护，一旦进入保护模式，Eureka Server会尝试保护其服务注册表中的信息，将不再删除服务注册表中的信息，也就是不会注销任何微服务  一句话概括: 如果某一时刻，Eureka Server中某个微服务不可用了，Eureka不会立即清除，而是会尝试对该微服务的信息进行保存 (CAP中的AP)  如果在Eurek">
+<meta name="keywords" content="Java,SpringCloud,Eureka">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[笔记]SpringCloud学习07: Eureka自我保护">
 <meta property="og:url" content="https://chaosalphard.github.io/2020/03/20/笔记-SpringCloud学习07-Eureka自我保护/index.html">
 <meta property="og:site_name" content="Ilirus">
-<meta property="og:description" content="兴趣使然的个人博客">
+<meta property="og:description" content="Eureka 自我保护机制保护模式主要用于一组客户端和服务端之间存在网络分区场景下的保护，一旦进入保护模式，Eureka Server会尝试保护其服务注册表中的信息，将不再删除服务注册表中的信息，也就是不会注销任何微服务  一句话概括: 如果某一时刻，Eureka Server中某个微服务不可用了，Eureka不会立即清除，而是会尝试对该微服务的信息进行保存 (CAP中的AP)  如果在Eurek">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-03-19T19:02:19.046Z">
+<meta property="og:updated_time" content="2020-03-19T19:11:59.689Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[笔记]SpringCloud学习07: Eureka自我保护">
-<meta name="twitter:description" content="兴趣使然的个人博客">
+<meta name="twitter:description" content="Eureka 自我保护机制保护模式主要用于一组客户端和服务端之间存在网络分区场景下的保护，一旦进入保护模式，Eureka Server会尝试保护其服务注册表中的信息，将不再删除服务注册表中的信息，也就是不会注销任何微服务  一句话概括: 如果某一时刻，Eureka Server中某个微服务不可用了，Eureka不会立即清除，而是会尝试对该微服务的信息进行保存 (CAP中的AP)  如果在Eurek">
   <link rel="canonical" href="https://chaosalphard.github.io/2020/03/20/笔记-SpringCloud学习07-Eureka自我保护/">
 
 
@@ -248,7 +249,33 @@
                 
               
 
-              <time title="创建时间：2020-03-20 03:02:19" itemprop="dateCreated datePublished" datetime="2020-03-20T03:02:19+08:00">2020-03-20</time>
+              <time title="创建时间：2020-03-20 03:02:19 / 修改时间：03:11:59" itemprop="dateCreated datePublished" datetime="2020-03-20T03:02:19+08:00">2020-03-20</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习笔记/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习笔记/SpringCloud/" itemprop="url" rel="index"><span itemprop="name">SpringCloud</span></a></span>
+
+                
+                
+              
             </span>
           
 
@@ -263,7 +290,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <h1 id="Eureka-自我保护机制"><a href="#Eureka-自我保护机制" class="headerlink" title="Eureka 自我保护机制"></a>Eureka 自我保护机制</h1><p>保护模式主要用于一组客户端和服务端之间存在网络分区场景下的保护，一旦进入<code>保护模式</code>，<code>Eureka Server</code>会尝试保护其服务注册表中的信息，将<strong>不再删除</strong>服务注册表中的信息，也就是<strong>不会注销任何微服务</strong></p>
+<blockquote>
+<p>一句话概括: 如果某一时刻，<code>Eureka Server</code>中某个微服务不可用了，<code>Eureka</code>不会立即清除，而是会尝试对该微服务的信息进行保存 (CAP中的AP)</p>
+</blockquote>
+<p>如果在<code>Eureka Server</code>首页看到一下提示，则说明<code>Eureka</code>进入了保护模式</p>
+<blockquote>
+<p><span style="color:#D88">EMERGENCY! EUREKA MAY BE INCORRECTLY CLAIMING INSTANCES ARE UP WHEN THEY’RE NOT. RENEWALS ARE LESSER THAN THRESHOLD AND HENCE THE INSTANCES ARE NOT BEING EXPIRED JUST TO BE SAFE.</span></p>
+</blockquote>
+
     </div>
 
     
@@ -271,6 +306,16 @@
     
 
     <footer class="post-footer">
+          
+        
+        <div class="post-tags">
+            <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
+          
+            <a href="/tags/SpringCloud/" rel="tag"><i class="fa fa-tag"></i> SpringCloud</a>
+          
+            <a href="/tags/Eureka/" rel="tag"><i class="fa fa-tag"></i> Eureka</a>
+          
+        </div>
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
               <a href="/2020/03/20/笔记-SpringCloud学习06-Eureka服务发现/" rel="next" title="[笔记]SpringCloud学习06: Eureka服务发现">
@@ -318,8 +363,17 @@
 
   <aside id="sidebar" class="sidebar">
     <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
 
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -473,6 +527,23 @@
 
         </div>
       </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Eureka-自我保护机制"><span class="nav-number">1.</span> <span class="nav-text">Eureka 自我保护机制</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
 
     </div>
   </aside>

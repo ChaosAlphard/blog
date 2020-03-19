@@ -248,7 +248,33 @@
                 
               
 
-              <time title="创建时间：2020-03-20 03:02:19" itemprop="dateCreated datePublished" datetime="2020-03-20T03:02:19+08:00">2020-03-20</time>
+              <time title="创建时间：2020-03-20 03:02:19 / 修改时间：03:11:59" itemprop="dateCreated datePublished" datetime="2020-03-20T03:02:19+08:00">2020-03-20</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习笔记/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习笔记/SpringCloud/" itemprop="url" rel="index"><span itemprop="name">SpringCloud</span></a></span>
+
+                
+                
+              
             </span>
           
 
@@ -264,7 +290,15 @@
 
       
           
-            
+            <h1 id="Eureka-自我保护机制"><a href="#Eureka-自我保护机制" class="headerlink" title="Eureka 自我保护机制"></a>Eureka 自我保护机制</h1><p>保护模式主要用于一组客户端和服务端之间存在网络分区场景下的保护，一旦进入<code>保护模式</code>，<code>Eureka Server</code>会尝试保护其服务注册表中的信息，将<strong>不再删除</strong>服务注册表中的信息，也就是<strong>不会注销任何微服务</strong></p>
+<blockquote>
+<p>一句话概括: 如果某一时刻，<code>Eureka Server</code>中某个微服务不可用了，<code>Eureka</code>不会立即清除，而是会尝试对该微服务的信息进行保存 (CAP中的AP)</p>
+</blockquote>
+<p>如果在<code>Eureka Server</code>首页看到一下提示，则说明<code>Eureka</code>进入了保护模式</p>
+<blockquote>
+<p><span style="color:#D88">EMERGENCY! EUREKA MAY BE INCORRECTLY CLAIMING INSTANCES ARE UP WHEN THEY’RE NOT. RENEWALS ARE LESSER THAN THRESHOLD AND HENCE THE INSTANCES ARE NOT BEING EXPIRED JUST TO BE SAFE.</span></p>
+</blockquote>
+
           
         
       
