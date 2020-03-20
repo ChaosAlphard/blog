@@ -248,7 +248,7 @@
                 
               
 
-              <time title="创建时间：2020-03-21 03:44:07 / 修改时间：04:37:14" itemprop="dateCreated datePublished" datetime="2020-03-21T03:44:07+08:00">2020-03-21</time>
+              <time title="创建时间：2020-03-21 03:44:07 / 修改时间：05:02:31" itemprop="dateCreated datePublished" datetime="2020-03-21T03:44:07+08:00">2020-03-21</time>
             </span>
           
             
@@ -289,8 +289,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
-            <h1 id="Ribbon-介绍"><a href="#Ribbon-介绍" class="headerlink" title="Ribbon 介绍"></a>Ribbon 介绍</h1><blockquote>
+          <h1 id="Ribbon-介绍"><a href="#Ribbon-介绍" class="headerlink" title="Ribbon 介绍"></a>Ribbon 介绍</h1><blockquote>
 <p><code>Ribbon</code>是<code>Netflix</code>发布的一款用于负载均衡的开源项目，是一个客户端的负载均衡器。</p>
 </blockquote>
 <p><code>Ribbon</code>会基于某些规则(轮询，随机等)决定要调用的服务链接，并且可以使用<code>Ribbon</code>实现自定义的负载均衡算法。</p>
@@ -299,13 +298,15 @@
 <p>Ribbon: 在调用微服务接口的时候，由Ribbon 的负载均衡算法决定调用哪个服务接口。(进程内LB)</p>
 <h2 id="集中式LB-和进程内LB"><a href="#集中式LB-和进程内LB" class="headerlink" title="集中式LB 和进程内LB"></a>集中式LB 和进程内LB</h2><p>集中式Load Balancer: 在服务的消费方和提供方之间使用独立的LB 设施，由该设施负责把请求访问通过某种策略转发制服务提供方</p>
 <p>进程内Load Balancer: 将LB 逻辑集成到消费方，消费方从服务注册中心获知有那些服务地址可用，然后自己再从这些地址中选择一个合适的服务器</p>
-<h1 id="Ribbon-引入"><a href="#Ribbon-引入" class="headerlink" title="Ribbon 引入"></a>Ribbon 引入</h1><p>修改<code>pom.xml</code><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-ribbon<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 版本从父工程的dependencyManagement中继承, 故此处不用写 --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p><code>Ribbon</code>已经集成在<code>Eureka Client</code>中，如果<code>pom.xml</code>中已经引入<code>Eureka Client</code>，则可以不用再引入<code>Ribbon</code></p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-eureka-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h2 id="Ribbon-的使用"><a href="#Ribbon-的使用" class="headerlink" title="Ribbon 的使用"></a>Ribbon 的使用</h2><p>使用<code>@LoadBalancer</code>注解授予<code>RestTemplate</code>负载均衡功能，<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ApplicationontextConfig</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="meta">@LoadBalanced</span>  <span class="comment">// 授予restTemplate负载均衡能力</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> RestTemplate <span class="title">getRestTemplate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> RestTemplate();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>使用<code>@Resource</code>或者<code>@Autowired</code> 装配具有负载均衡能力的<code>RestTemplate</code><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(<span class="string">"/test"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestController</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TEST_URL = <span class="string">"http://irs-provider-test/test"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> RestTemplate restTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/get"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> CommonResult <span class="title">get</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// restTemplate 现在已经具有了负载均衡能力</span></span><br><span class="line">        <span class="keyword">return</span> restTemplate.getForObject(TEST_URL+<span class="string">"/get"</span>, CommonResult.class);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2020/03/21/笔记-SpringCloud学习08-Ribbon基础/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
         
       
     </div>
