@@ -57,17 +57,18 @@
   };
 </script>
 
-  <meta name="description" content="兴趣使然的个人博客">
+  <meta name="description" content="引入依赖在pom.xml中写入以下依赖123456789&amp;lt;dependency&amp;gt;  &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt;  &amp;lt;artifactId&amp;gt;spring-boot-starter-security&amp;lt;/artifactId&amp;gt;&amp;lt;/dependency&amp;gt;&amp;lt;depende">
+<meta name="keywords" content="Java,SpringSecurity">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SpringSecurity简单入门">
 <meta property="og:url" content="https://chaosalphard.github.io/2020/03/23/SpringSecurity简单入门/index.html">
 <meta property="og:site_name" content="Ilirus">
-<meta property="og:description" content="兴趣使然的个人博客">
+<meta property="og:description" content="引入依赖在pom.xml中写入以下依赖123456789&amp;lt;dependency&amp;gt;  &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt;  &amp;lt;artifactId&amp;gt;spring-boot-starter-security&amp;lt;/artifactId&amp;gt;&amp;lt;/dependency&amp;gt;&amp;lt;depende">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-03-24T15:07:58.663Z">
+<meta property="og:updated_time" content="2020-03-24T16:21:15.541Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringSecurity简单入门">
-<meta name="twitter:description" content="兴趣使然的个人博客">
+<meta name="twitter:description" content="引入依赖在pom.xml中写入以下依赖123456789&amp;lt;dependency&amp;gt;  &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt;  &amp;lt;artifactId&amp;gt;spring-boot-starter-security&amp;lt;/artifactId&amp;gt;&amp;lt;/dependency&amp;gt;&amp;lt;depende">
   <link rel="canonical" href="https://chaosalphard.github.io/2020/03/23/SpringSecurity简单入门/">
 
 
@@ -261,9 +262,24 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-03-24 23:07:58" itemprop="dateModified" datetime="2020-03-24T23:07:58+08:00">2020-03-24</time>
+                <time title="修改时间：2020-03-25 00:21:15" itemprop="dateModified" datetime="2020-03-25T00:21:15+08:00">2020-03-25</time>
               </span>
             
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/SpringSecurity/" itemprop="url" rel="index"><span itemprop="name">SpringSecurity</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           <br>
@@ -277,7 +293,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <h1 id="引入依赖"><a href="#引入依赖" class="headerlink" title="引入依赖"></a>引入依赖</h1><p>在<code>pom.xml</code>中写入以下依赖<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-security<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.security<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-security-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="编写配置"><a href="#编写配置" class="headerlink" title="编写配置"></a>编写配置</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.ilirus.oauth.config;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.config.annotation.web.builders.HttpSecurity;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;</span><br><span class="line"></span><br><span class="line"><span class="meta">@EnableWebSecurity</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SecurityConfig</span> <span class="keyword">extends</span> <span class="title">WebSecurityConfigurerAdapter</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(AuthenticationManagerBuilder auth)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">// 在内存中创建用户</span></span><br><span class="line">        auth.inMemoryAuthentication()</span><br><span class="line">            <span class="comment">// 使用BCryptPasswordEncoder 加密密码</span></span><br><span class="line">              .passwordEncoder(<span class="keyword">new</span> BCryptPasswordEncoder())</span><br><span class="line">            <span class="comment">// 用户名为 user</span></span><br><span class="line">              .withUser(<span class="string">"user"</span>)</span><br><span class="line">            <span class="comment">// 密码为 123</span></span><br><span class="line">              .password(<span class="keyword">new</span> BCryptPasswordEncoder().encode(<span class="string">"123"</span>))</span><br><span class="line">            <span class="comment">//拥有 USER 权限</span></span><br><span class="line">              .roles(<span class="string">"USER"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(HttpSecurity http)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        http.authorizeRequests()</span><br><span class="line">            <span class="comment">// 匹配"/","/index","/error"</span></span><br><span class="line">            .antMatchers(<span class="string">"/"</span>,<span class="string">"/index"</span>,<span class="string">"/error"</span>)</span><br><span class="line">            <span class="comment">// 不需要权限即可访问</span></span><br><span class="line">            .permitAll()</span><br><span class="line">            <span class="comment">// 匹配"/user" 路径下的所有</span></span><br><span class="line">            .antMatchers(<span class="string">"/user/**"</span>)</span><br><span class="line">            <span class="comment">// 拥有USER 权限才可访问</span></span><br><span class="line">            .hasRole(<span class="string">"USER"</span>)</span><br><span class="line">            .antMatchers(<span class="string">"/admin/**"</span>)</span><br><span class="line">            .hasRole(<span class="string">"ADMIN"</span>)</span><br><span class="line">            .and().formLogin()</span><br><span class="line">            <span class="comment">// 登录地址为 "/login"</span></span><br><span class="line">            .loginPage(<span class="string">"/login"</span>)</span><br><span class="line">            <span class="comment">// 成功后默认跳转到"/user"</span></span><br><span class="line">            .defaultSuccessUrl(<span class="string">"/user"</span>)</span><br><span class="line">            .and().logout()</span><br><span class="line">            <span class="comment">// 注销地址为 "logout"</span></span><br><span class="line">            .logoutUrl(<span class="string">"/logout"</span>)</span><br><span class="line">            <span class="comment">// 注销后跳转到 "/login"</span></span><br><span class="line">            .logoutSuccessUrl(<span class="string">"/login"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>至此，一个最简单的SpringSecurity 验证就引入到了demo 中</p>
+
     </div>
 
     
@@ -285,6 +304,14 @@
     
 
     <footer class="post-footer">
+          
+        
+        <div class="post-tags">
+            <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
+          
+            <a href="/tags/SpringSecurity/" rel="tag"><i class="fa fa-tag"></i> SpringSecurity</a>
+          
+        </div>
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
               <a href="/2020/03/21/笔记-SpringCloud学习08-Ribbon基础/" rel="next" title="[笔记]SpringCloud学习08: Ribbon基础">
@@ -332,8 +359,17 @@
 
   <aside id="sidebar" class="sidebar">
     <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
 
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -396,7 +432,9 @@
         
           
         
-        <span class="site-state-item-count">18</span>
+          
+        
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
@@ -465,7 +503,9 @@
         
           
         
-        <span class="site-state-item-count">24</span>
+          
+        
+        <span class="site-state-item-count">25</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
@@ -489,6 +529,23 @@
 
         </div>
       </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#引入依赖"><span class="nav-number">1.</span> <span class="nav-text">引入依赖</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编写配置"><span class="nav-number">2.</span> <span class="nav-text">编写配置</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
 
     </div>
   </aside>
