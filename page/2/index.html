@@ -212,6 +212,135 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chaosalphard.github.io/2020/03/17/笔记-SpringCloud学习04-Eureka集群/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ilirus">
+      <meta itemprop="description" content="兴趣使然的个人博客">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ilirus">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2020/03/17/笔记-SpringCloud学习04-Eureka集群/" class="post-title-link" itemprop="url">[笔记]SpringCloud学习04: Eureka集群</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-03-17 23:33:16" itemprop="dateCreated datePublished" datetime="2020-03-17T23:33:16+08:00">2020-03-17</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-03-19 23:37:29" itemprop="dateModified" datetime="2020-03-19T23:37:29+08:00">2020-03-19</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习笔记/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习笔记/SpringCloud/" itemprop="url" rel="index"><span itemprop="name">SpringCloud</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          <br>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Eureka-集群原理"><a href="#Eureka-集群原理" class="headerlink" title="Eureka 集群原理"></a>Eureka 集群原理</h1><p>我们假设有三台 Eureka Server 组成的集群，只要三个地方的任意一个Eureka Server不出现问题，都不会影响整个架构的稳定性。</p>
+<p><img src="https://s1.ax1x.com/2020/03/19/8yJLwT.jpg" alt="Eureka集群"></p>
+<p>从图中可以看出<code>Eureka Server</code>集群相互之间通过<code>Replicate</code>来同步数据，相互之间不区分主节点和从节点，所有的节点都是平等的。在这种架构中，节点通过<strong>彼此互相注册</strong>来提高可用性，每个节点需要添加一个或多个有效的serviceUrl 指向其他节点。</p>
+<p>如果某台Eureka Server 宕机，Eureka Client 的请求会自动切换到新的Eureka Server 节点。当宕机的服务器重新恢复后，Eureka 会再次将其纳入到服务器集群管理之中。当节点开始接受客户端请求时，所有的操作都会进行节点间复制，将请求复制到其它Eureka Server 当前所知的所有节点中。</p>
+<p>另外Eureka Server 的同步遵循着一个非常简单的原则：只要有一条边将节点连接，就可以进行信息传播与同步。所以，如果存在多个节点，只需要将节点之间两两连接起来形成通路，那么其它注册中心都可以共享信息。每个Eureka Server 同时也是Eureka Client，多个Eureka Server 之间通过<code>P2P</code>的方式完成服务注册表的同步。</p>
+<p>Eureka Server 集群之间的状态是采用异步方式同步的，所以不保证节点间的状态一定是一致的，不过基本能保证最终状态是一致的。</p>
+<p>Eureka保证AP (CAP原则又称CAP定理，指的是在一个分布式系统中，一致性(Consistency)、可用性(Availability)、分区容错性(Partition tolerance))</p>
+<p>Eureka Server 各个节点都是平等的，几个节点挂掉不会影响正常节点的工作，剩余的节点依然可以提供注册和查询服务。而Eureka Client 在向某个Eureka 注册时，如果发现连接失败，则会自动切换至其它节点。只要有一台Eureka Server 还在，就能保证注册服务可用(保证可用性)，只不过查到的信息可能不是最新的(不保证强一致性)。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2020/03/17/笔记-SpringCloud学习04-Eureka集群/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://chaosalphard.github.io/2020/03/16/笔记-SpringCloud学习03-Eureka的搭建/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1410,128 +1539,6 @@
   </article>
 
     
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://chaosalphard.github.io/2019/08/27/CSS蛇形边框/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ilirus">
-      <meta itemprop="description" content="兴趣使然的个人博客">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ilirus">
-    </span>
-      <header class="post-header">
-
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/08/27/CSS蛇形边框/" class="post-title-link" itemprop="url">CSS蛇形边框</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-08-27 02:27:56 / 修改时间：05:08:07" itemprop="dateCreated datePublished" datetime="2019-08-27T02:27:56+08:00">2019-08-27</time>
-            </span>
-          
-            
-
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/CSS/" itemprop="url" rel="index"><span itemprop="name">CSS</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          <br>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="成果展示"><a href="#成果展示" class="headerlink" title="成果展示"></a>成果展示</h1><iframe src="https://erina.gitee.io/ilirus/CSS%E8%9B%87%E5%BD%A2%E8%BE%B9%E6%A1%86/04.html" frameborder="0" width="200" height="100"></iframe>
-
-<blockquote>
-<p><a href="https://caniuse.com/#search=clip-path" target="_blank" rel="noopener">浏览器支持</a>:</p>
-<ul>
-<li>Chrome 55+</li>
-<li>Firefox 54+</li>
-</ul>
-</blockquote>
-<h1 id="主要思路"><a href="#主要思路" class="headerlink" title="主要思路"></a>主要思路</h1><blockquote>
-<p>使用<code>伪元素</code>实现一个大于目标元素的背景板，<br>再使用<code>clip-path</code>将其裁剪到只剩上/下/左/右一个边,<br>再使用<code>animation</code>实现动画效果。</p>
-</blockquote>
-<h1 id="实现过程"><a href="#实现过程" class="headerlink" title="实现过程"></a>实现过程</h1><p>写一个普通的<code>button</code><br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css">  <span class="selector-class">.content</span> &#123;</span></span><br><span class="line"><span class="undefined">    width: 180px;</span></span><br><span class="line"><span class="undefined">    height: 64px;</span></span><br><span class="line"><span class="undefined">    margin: 0;</span></span><br><span class="line"><span class="undefined">    padding: 0;</span></span><br><span class="line"><span class="undefined">    border: none;</span></span><br><span class="line"><span class="undefined">    background: transparent;</span></span><br><span class="line"><span class="undefined">    position: relative;</span></span><br><span class="line"><span class="undefined">    font-size: 24px;</span></span><br><span class="line"><span class="undefined">  &#125;</span></span><br><span class="line"><span class="undefined">  </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"content"</span>&gt;</span>我是内容<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>加上<code>::before</code><br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.content</span><span class="selector-pseudo">::before</span> &#123;</span><br><span class="line">  <span class="attribute">content</span>: <span class="string">''</span>;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">top</span>: -<span class="number">2px</span>; <span class="attribute">bottom</span>: -<span class="number">2px</span>;</span><br><span class="line">  <span class="attribute">left</span>: -<span class="number">2px</span>; <span class="attribute">right</span>: -<span class="number">2px</span>;</span><br><span class="line">  <span class="attribute">background</span>: olivedrab;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">2px</span> solid olive;</span><br><span class="line">  <span class="attribute">z-index</span>: -<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<iframe src="https://erina.gitee.io/ilirus/CSS%E8%9B%87%E5%BD%A2%E8%BE%B9%E6%A1%86/01.html" frameborder="0" width="200" height="100"></iframe>
-
-<p>使用<code>clip-path</code>裁剪<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.content</span><span class="selector-pseudo">::before</span> &#123;</span><br><span class="line">  <span class="comment">/* 上 */</span></span><br><span class="line">  <span class="attribute">clip-path</span>: <span class="built_in">inset</span>(0 0 calc(100% - 2px) <span class="number">0</span>);</span><br><span class="line">  <span class="comment">/* 右 */</span></span><br><span class="line">  <span class="attribute">clip-path</span>: <span class="built_in">inset</span>(0 0 0 calc(100% - 2px));</span><br><span class="line">  <span class="comment">/* 下 */</span></span><br><span class="line">  <span class="attribute">clip-path</span>: <span class="built_in">inset</span>(calc(100% - 2px) <span class="number">0</span> <span class="number">0</span> <span class="number">0</span>);</span><br><span class="line">  <span class="comment">/* 左 */</span></span><br><span class="line">  <span class="attribute">clip-path</span>: <span class="built_in">inset</span>(0 calc(100% - 2px) <span class="number">0</span> <span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<iframe src="https://erina.gitee.io/ilirus/CSS%E8%9B%87%E5%BD%A2%E8%BE%B9%E6%A1%86/02.html" frameborder="0" width="200" height="300"></iframe>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/08/27/CSS蛇形边框/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
   </section>
 
   
@@ -1569,7 +1576,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-count">45</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
