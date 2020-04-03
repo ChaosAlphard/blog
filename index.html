@@ -248,7 +248,7 @@
                 
               
 
-              <time title="创建时间：2020-04-04 02:10:29 / 修改时间：02:26:44" itemprop="dateCreated datePublished" datetime="2020-04-04T02:10:29+08:00">2020-04-04</time>
+              <time title="创建时间：2020-04-04 02:10:29 / 修改时间：02:54:43" itemprop="dateCreated datePublished" datetime="2020-04-04T02:10:29+08:00">2020-04-04</time>
             </span>
           
             
@@ -282,15 +282,21 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
-            <h1 id="使用注解进行授权控制"><a href="#使用注解进行授权控制" class="headerlink" title="使用注解进行授权控制"></a>使用注解进行授权控制</h1><blockquote>
+          <h1 id="使用注解进行授权控制"><a href="#使用注解进行授权控制" class="headerlink" title="使用注解进行授权控制"></a>使用注解进行授权控制</h1><blockquote>
 <p>从<code>SpringSecurity</code>2.0版本开始，支持服务层方法的安全性支持，目前有<code>@Secured</code>，<code>@PreAuthorize</code>，<code>@PostAuthorize</code>三类注解</p>
 </blockquote>
 <p>在<code>@Configuration</code>实例上使用<code>@EnableGlobalMethodSecurity</code>注解来启用基于注解的授权控制<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@EnableWebSecurity</span></span><br><span class="line"><span class="comment">// 启用方法授权</span></span><br><span class="line"><span class="meta">@EnableGlobalMethodSecurity</span>(</span><br><span class="line">    <span class="comment">// 启用@Secured注解</span></span><br><span class="line">    securedEnabled = <span class="keyword">true</span>,</span><br><span class="line">    <span class="comment">// 启用@PreAuthorize和@PostAuthorize注解</span></span><br><span class="line">    prePostEnabled = <span class="keyword">true</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SecurityConfig</span> <span class="keyword">extends</span> <span class="title">WebSecurityConfigurerAdapter</span> </span>&#123; ... &#125;</span><br></pre></td></tr></table></figure></p>
 <p>之后向方法(类、方法或者接口)添加注解就会限制对该方法的访问</p>
 <h2 id="Secured注解"><a href="#Secured注解" class="headerlink" title="@Secured注解"></a>@Secured注解</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IndexController</span> </span>&#123;</span><br><span class="line">    <span class="comment">// IS_AUTHENTICATED_ANONYMOUSLY: 表示可以匿名访问</span></span><br><span class="line">    <span class="meta">@Secured</span>(<span class="string">"IS_AUTHENTICATED_ANONYMOUSLY"</span>)</span><br><span class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/r"</span>)</span><br><span class="line">    <span class="meta">@ResponseBody</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">resource</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> getUserName()+<span class="string">"访问资源"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ROLE_USER: 表示需要有USER权限才能访问</span></span><br><span class="line">    <span class="meta">@Secured</span>(<span class="string">"ROLE_USER"</span>)</span><br><span class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/r1"</span>)</span><br><span class="line">    <span class="meta">@ResponseBody</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">resource1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> getUserName()+<span class="string">"访问资源1"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="PreAuthorize和-PostAuthorize注解"><a href="#PreAuthorize和-PostAuthorize注解" class="headerlink" title="@PreAuthorize和@PostAuthorize注解"></a>@PreAuthorize和@PostAuthorize注解</h2>
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2020/04/04/SpringSecurity使用注解进行授权控制/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
         
       
     </div>
