@@ -57,18 +57,20 @@
   };
 </script>
 
-  <meta name="description" content="兴趣使然的个人博客">
+  <meta name="description" content="什么是OAuth OAuth(开放授权)是一个开放标准，允许用户让第三方应用访问该用户在某一网站上存储的私密的资源(如照片，视频，联系人列表)，而无需将用户名和密码提供给第三方应用。  举个例子: 用户借助QQ认证去登录网站A，如果认证通过了，就不需要用户手动在网站A注册账户了。 那么怎么样才算认证通过？网站A成功从QQ获取用户信息则认为认证成功了。那么如何从QQ那里获取用户的身份信息呢？用户信息">
 <meta name="keywords" content="OAuth">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OAuth2.0简介">
 <meta property="og:url" content="https://chaosalphard.github.io/2020/04/07/OAuth2-0简介/index.html">
 <meta property="og:site_name" content="Ilirus">
-<meta property="og:description" content="兴趣使然的个人博客">
+<meta property="og:description" content="什么是OAuth OAuth(开放授权)是一个开放标准，允许用户让第三方应用访问该用户在某一网站上存储的私密的资源(如照片，视频，联系人列表)，而无需将用户名和密码提供给第三方应用。  举个例子: 用户借助QQ认证去登录网站A，如果认证通过了，就不需要用户手动在网站A注册账户了。 那么怎么样才算认证通过？网站A成功从QQ获取用户信息则认为认证成功了。那么如何从QQ那里获取用户的身份信息呢？用户信息">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-04-06T19:16:46.887Z">
+<meta property="og:image" content="https://hbimg.huabanimg.com/da0e66ef1c6536b0602a374fff92f85fa8106e562a54-ROlZR6">
+<meta property="og:updated_time" content="2020-04-06T20:00:20.842Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OAuth2.0简介">
-<meta name="twitter:description" content="兴趣使然的个人博客">
+<meta name="twitter:description" content="什么是OAuth OAuth(开放授权)是一个开放标准，允许用户让第三方应用访问该用户在某一网站上存储的私密的资源(如照片，视频，联系人列表)，而无需将用户名和密码提供给第三方应用。  举个例子: 用户借助QQ认证去登录网站A，如果认证通过了，就不需要用户手动在网站A注册账户了。 那么怎么样才算认证通过？网站A成功从QQ获取用户信息则认为认证成功了。那么如何从QQ那里获取用户的身份信息呢？用户信息">
+<meta name="twitter:image" content="https://hbimg.huabanimg.com/da0e66ef1c6536b0602a374fff92f85fa8106e562a54-ROlZR6">
   <link rel="canonical" href="https://chaosalphard.github.io/2020/04/07/OAuth2-0简介/">
 
 
@@ -249,7 +251,7 @@
                 
               
 
-              <time title="创建时间：2020-04-07 03:14:56 / 修改时间：03:16:46" itemprop="dateCreated datePublished" datetime="2020-04-07T03:14:56+08:00">2020-04-07</time>
+              <time title="创建时间：2020-04-07 03:14:56 / 修改时间：04:00:20" itemprop="dateCreated datePublished" datetime="2020-04-07T03:14:56+08:00">2020-04-07</time>
             </span>
           
             
@@ -283,7 +285,39 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <h1 id="什么是OAuth"><a href="#什么是OAuth" class="headerlink" title="什么是OAuth"></a>什么是OAuth</h1><blockquote>
+<p>OAuth(开放授权)是一个开放标准，允许用户让<strong>第三方应用</strong>访问该用户在某一网站上存储的<strong>私密的资源</strong>(如照片，视频，联系人列表)，而无需将用户名和密码提供给第三方应用。</p>
+</blockquote>
+<p>举个例子: 用户借助<strong>QQ认证</strong>去登录<strong>网站A</strong>，如果认证通过了，就不需要用户手动在网站A注册账户了。</p>
+<p>那么怎么样才算认证通过？网站A成功从QQ获取用户信息则认为认证成功了。那么如何从QQ那里获取用户的身份信息呢？用户信息的拥有者是用户本人，QQ需要经过用户同意才可以为网站A生成令牌，而网站A拿到此令牌才可从QQ获取用户信息。</p>
+<h1 id="OAuth的思路"><a href="#OAuth的思路" class="headerlink" title="OAuth的思路"></a>OAuth的思路</h1><blockquote>
+<p>OAuth在”第三方应用程序”与”服务提供商”之间，设置了一个授权层(authorization layer)。”第三方应用程序”不能直接登录”服务提供商”，只能登录授权层，以此将用户与第三方应用程序区分开来。”第三方应用程序”登录授权层所用的令牌(token)，与用户的密码不同。用户可以在登录的时候，指定授权层令牌的权限范围和有效期。</p>
+</blockquote>
+<p>“第三方应用程序”登录授权层以后，”服务提供商”根据令牌的权限范围和有效期，向”第三方应用程序”开放用户储存的资料。</p>
+<h1 id="运行流程"><a href="#运行流程" class="headerlink" title="运行流程"></a>运行流程</h1><ul>
+<li><code>Third-party application</code>: 第三方应用程序，也可称为”客户端”，即例子中的”网站A”。它本身不储存资源，需要通过资源所有者的授权去请求资源服务器的资源。</li>
+<li><code>HTTP service</code>: HTTP服务提供商，即例子中的QQ。</li>
+<li><code>Resource Owner</code>: 资源所有者，也就是用户。</li>
+<li><code>User Agent</code>: 用户代理，一般是指浏览器。</li>
+<li><code>Authorization server</code>: 认证服务器，即服务提供商用来处理认证的服务器，用于服务提供商对资源拥有者的身份进行认证、对资源访问进行授权、认证成功后给客户端发放令牌(Access Token, 客户端访问资源服务器的凭据)。</li>
+<li><code>Resource server</code>: 资源服务器，即服务提供商存放用户资源的服务器。</li>
+</ul>
+<blockquote>
+<p>认证服务器与资源服务器，它们可以是同一台服务器，也可以是不同的服务器。</p>
+</blockquote>
+<p><img src="https://hbimg.huabanimg.com/da0e66ef1c6536b0602a374fff92f85fa8106e562a54-ROlZR6" alt="运行流程"></p>
+<ol>
+<li>用户打开<code>第三方应用程序</code>以后，<code>第三方应用程序</code>要求<code>用户</code>给予授权。</li>
+<li><code>用户</code>同意给予<code>第三方应用程序</code>授权。</li>
+<li><code>第三方应用程序</code>使用上一步获得的授权，向<code>认证服务器</code>申请令牌。</li>
+<li><code>认证服务器</code>对<code>第三方应用程序</code>进行认证以后，确认无误，同意发放令牌。</li>
+<li><code>第三方应用程序</code>使用令牌，向<code>资源服务器</code>申请获取资源。</li>
+<li><code>资源服务器</code>确认令牌无误，同意向<code>第三方应用程序</code>开放资源。</li>
+<li><code>第三方应用程序</code>拿到资源后，即可得知认证通过。</li>
+</ol>
+<a id="more"></a>
+<p>参考: <a href="https://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html" target="_blank" rel="noopener">阮一峰: 理解Oauth2.0</a></p>
+
     </div>
 
     
@@ -344,8 +378,17 @@
 
   <aside id="sidebar" class="sidebar">
     <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
 
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -511,6 +554,23 @@
 
         </div>
       </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是OAuth"><span class="nav-number">1.</span> <span class="nav-text">什么是OAuth</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OAuth的思路"><span class="nav-number">2.</span> <span class="nav-text">OAuth的思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#运行流程"><span class="nav-number">3.</span> <span class="nav-text">运行流程</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
 
     </div>
   </aside>
