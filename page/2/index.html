@@ -212,6 +212,121 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chaosalphard.github.io/2020/03/20/笔记-SpringCloud学习06-Eureka服务发现/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ilirus">
+      <meta itemprop="description" content="兴趣使然的个人博客">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ilirus">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2020/03/20/笔记-SpringCloud学习06-Eureka服务发现/" class="post-title-link" itemprop="url">[笔记]SpringCloud学习06: Eureka服务发现</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-03-20 02:03:59 / 修改时间：03:00:09" itemprop="dateCreated datePublished" datetime="2020-03-20T02:03:59+08:00">2020-03-20</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习笔记/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习笔记/SpringCloud/" itemprop="url" rel="index"><span itemprop="name">SpringCloud</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          <br>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="获取Eureka-Server-端注册成功的服务信息"><a href="#获取Eureka-Server-端注册成功的服务信息" class="headerlink" title="获取Eureka Server 端注册成功的服务信息"></a>获取Eureka Server 端注册成功的服务信息</h1><blockquote>
+<p>对于注册进<code>Eureka</code>里面的微服务，可以通过<strong>服务发现</strong>来获取该服务的信息</p>
+</blockquote>
+<p>修改对应工程(Eureka Client 端)的Controller<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.ilirus.springcloud.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.ilirus.springcloud.entities.CommonResult;</span><br><span class="line"><span class="keyword">import</span> com.ilirus.springcloud.enums.Status;</span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.client.ServiceInstance;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.client.discovery.DiscoveryClient;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.annotation.Resource;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(<span class="string">"/payment"</span>)</span><br><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PaymentController</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> DiscoveryClient discoveryClient;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/discovery"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> CommonResult <span class="title">discovery</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; services = discoveryClient.getServices();</span><br><span class="line">        <span class="keyword">return</span> CommonResult.ofData(Status.SUCCESS, services);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/discovery/&#123;instances&#125;"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> CommonResult <span class="title">discovery</span><span class="params">(@PathVariable String instances)</span> </span>&#123;</span><br><span class="line">        List&lt;ServiceInstance&gt; serviceInstances = discoveryClient.getInstances(instances);</span><br><span class="line">        <span class="keyword">return</span> CommonResult.ofData(Status.SUCCESS, serviceInstances);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2020/03/20/笔记-SpringCloud学习06-Eureka服务发现/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://chaosalphard.github.io/2020/03/19/笔记-SpringCloud学习05-服务提供方集群/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1397,147 +1512,6 @@
   </article>
 
     
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://chaosalphard.github.io/2019/09/18/Git提交的回滚/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ilirus">
-      <meta itemprop="description" content="兴趣使然的个人博客">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ilirus">
-    </span>
-      <header class="post-header">
-
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/09/18/Git提交的回滚/" class="post-title-link" itemprop="url">Git提交的回滚</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-09-18 17:46:03" itemprop="dateCreated datePublished" datetime="2019-09-18T17:46:03+08:00">2019-09-18</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2020-03-08 20:25:30" itemprop="dateModified" datetime="2020-03-08T20:25:30+08:00">2020-03-08</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/版本控制/" itemprop="url" rel="index"><span itemprop="name">版本控制</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          <br>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <!-- 今天去面试的时候被问到了如何 撤销/回滚 提交的问题，一时间没想起来😢，写篇博客巩固一下😊。 -->
-<h1 id="revert"><a href="#revert" class="headerlink" title="revert"></a>revert</h1><blockquote>
-<p><code>git revert &lt;commit&gt;</code></p>
-</blockquote>
-<p>生成一个撤消了<code>commit</code> 引入的修改的新提交，然后应用到当前分支。</p>
-<p><code>commit</code> 可以通过使用<code>git log</code> 来查看</p>
-<p><code>revert</code> 是提交一个 撤销了更改的 <strong>新提交</strong>，而不是从项目历史中移除这个提交。这会避免Git丢失项目历史，是一种比较安全的方式。</p>
-<h1 id="reset"><a href="#reset" class="headerlink" title="reset"></a>reset</h1><blockquote>
-<p><code>git reset</code>asd</p>
-</blockquote>
-<p>重设暂存区，但不改变工作区，匹配最近的一次提交。</p>
-<blockquote>
-<p><code>git reset --hard</code></p>
-</blockquote>
-<p>重设<strong>暂存区和工作区</strong>，匹配最近的一次提交。<br><code>--hard</code> 会使git更改工作区中的文件。确定要扔掉本地的开发进度再使用。</p>
-<blockquote>
-<p><code>git reset &lt;commit&gt;</code></p>
-</blockquote>
-<p>将暂存区重设到这个提交，但不改变工作区。<br>所有<code>commit</code> 之后的更改会保留在工作区中，适用于重新提交更干净的项目历史。</p>
-<blockquote>
-<p><code>git reset --hard &lt;commit&gt;</code></p>
-</blockquote>
-<p>将暂存区和工作区都重设到这个提交。</p>
-<blockquote>
-<p><code>git reset &lt;file&gt;</code></p>
-</blockquote>
-<p>从暂存区移除某个文件，但不改变工作区。</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/09/18/Git提交的回滚/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
   </section>
 
   
@@ -1575,7 +1549,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-count">47</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
