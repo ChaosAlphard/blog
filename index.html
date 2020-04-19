@@ -261,7 +261,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-04-20 01:25:51" itemprop="dateModified" datetime="2020-04-20T01:25:51+08:00">2020-04-20</time>
+                <time title="修改时间：2020-04-20 03:51:34" itemprop="dateModified" datetime="2020-04-20T03:51:34+08:00">2020-04-20</time>
               </span>
             
           
@@ -311,17 +311,17 @@
 <p>关于<code>java.time</code>下, 类的简介:</p>
 <ul>
 <li><code>Instant</code>: 时间戳</li>
-<li><code>Duration</code>: 持续时间, 可用于计算两个日期之间的时间差</li>
 <li><code>LocalDate</code>: 只包含日期，比如: 2020-01-01</li>
 <li><code>LocalTime</code>: 只包含时间，比如: 12:00:00</li>
-<li><code>LocalDateTime</code>: 包含日期和时间，比如: 2020-01-01 12:00:00</li>
-<li><code>Peroid</code>: 时间段</li>
+<li><code>LocalDateTime</code>: 包含日期和时间，比如: 2020-01-01T12:00:00</li>
+<li><code>Duration</code>: 时间段, 主要用于计算两个时间之间的差值</li>
+<li><code>Peroid</code>: 时间段, 主要用于计算两个日期之间的差值</li>
 <li><code>ZoneOffset</code>: 时区偏移量，比如: +8:00</li>
 <li><code>ZonedDateTime</code>: 带时区的日期时间</li>
-<li><code>Clock:</code>时钟，通过指定一个时区以获取当前的时刻</li>
+<li><code>Clock:</code>时钟，可以获取或指定时区, 也可获取当前的时刻</li>
 <li><code>DateTimeFormatter</code>: 时间格式化</li>
 </ul>
-<p>关于<code>java.time</code>下<strong>大部分</strong>类的方法前缀简介:</p>
+<p>关于<code>java.time</code>下<strong>大部分</strong>类的方法<strong>前缀</strong>简介:</p>
 <ul>
 <li><code>of</code>: 静态工厂方法(用类名去调用)。</li>
 <li><code>parse</code>: 静态工厂方法，关注于解析(用类名去调用)。</li>
@@ -332,7 +332,7 @@
 <li><code>plus</code>: 返回一个时间增加了的、时间日期对象拷贝(如果参数是负数也能够有minus方法的效果)</li>
 <li><code>minus</code>: 返回一个时间减少了的、时间日期对象拷贝</li>
 <li><code>to</code>: 把当前时间日期对象转换成另外一个，可能会损失部分状态.</li>
-<li><code>at</code>: 把这个对象与另一个对象组合起来，例如： date.atTime(time)。</li>
+<li><code>at</code>: 把这个对象与另一个对象组合起来，例如: date.atTime(time)。</li>
 <li><code>format</code>: 根据某一个DateTimeFormatter格式化为字符串</li>
 </ul>
           <!--noindex-->
