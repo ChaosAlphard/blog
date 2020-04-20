@@ -57,19 +57,24 @@
   };
 </script>
 
-  <meta name="description" content="进入正题之前先简单说说值传递和引用传递的区别  按值调用(call by value)表示方法接收的是调用者提供的值，而按引用调用(call by reference)表示方法接收的是调用者提供的变量地址。一个方法可以修改传递引用所对应的变量值，而不能修改传递值调用所对应的变量值。  下面是我用Rust来做的一个简单示范。  可以看到，虽然call_by_value和call_by_referen">
+  <meta name="description" content="进入正题之前先简单说说值传递和引用传递的区别  按值调用(call by value)表示方法接收的是调用者提供的值，而按引用调用(call by reference)表示方法接收的是调用者提供的变量地址。一个方法可以修改传递引用所对应的变量值，而不能修改传递值调用所对应的变量值。  下面是我用Rust来做的一个简单示范。  可以看到，虽然call_by_value函数和call_by_refer">
 <meta name="keywords" content="Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java是值传递还是引用传递">
 <meta property="og:url" content="https://chaosalphard.github.io/2020/04/20/Java是值传递还是引用传递/index.html">
 <meta property="og:site_name" content="Ilirus">
-<meta property="og:description" content="进入正题之前先简单说说值传递和引用传递的区别  按值调用(call by value)表示方法接收的是调用者提供的值，而按引用调用(call by reference)表示方法接收的是调用者提供的变量地址。一个方法可以修改传递引用所对应的变量值，而不能修改传递值调用所对应的变量值。  下面是我用Rust来做的一个简单示范。  可以看到，虽然call_by_value和call_by_referen">
+<meta property="og:description" content="进入正题之前先简单说说值传递和引用传递的区别  按值调用(call by value)表示方法接收的是调用者提供的值，而按引用调用(call by reference)表示方法接收的是调用者提供的变量地址。一个方法可以修改传递引用所对应的变量值，而不能修改传递值调用所对应的变量值。  下面是我用Rust来做的一个简单示范。  可以看到，虽然call_by_value函数和call_by_refer">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://i.loli.net/2020/04/20/Mbofu1YtOjBQ6Lp.png">
-<meta property="og:updated_time" content="2020-04-20T16:10:18.391Z">
+<meta property="og:image" content="https://i.loli.net/2020/04/21/WZfUqEYix2gCpPM.png">
+<meta property="og:image" content="https://i.loli.net/2020/04/21/QPzRF5CEec3xTOW.png">
+<meta property="og:image" content="https://i.loli.net/2020/04/21/RXVBCY1vKJyPguA.png">
+<meta property="og:image" content="https://i.loli.net/2020/04/21/f6qKRP3UJGeBW8m.png">
+<meta property="og:image" content="https://i.loli.net/2020/04/21/dpXhKGslgOYTkuj.png">
+<meta property="og:updated_time" content="2020-04-20T17:06:56.437Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java是值传递还是引用传递">
-<meta name="twitter:description" content="进入正题之前先简单说说值传递和引用传递的区别  按值调用(call by value)表示方法接收的是调用者提供的值，而按引用调用(call by reference)表示方法接收的是调用者提供的变量地址。一个方法可以修改传递引用所对应的变量值，而不能修改传递值调用所对应的变量值。  下面是我用Rust来做的一个简单示范。  可以看到，虽然call_by_value和call_by_referen">
+<meta name="twitter:description" content="进入正题之前先简单说说值传递和引用传递的区别  按值调用(call by value)表示方法接收的是调用者提供的值，而按引用调用(call by reference)表示方法接收的是调用者提供的变量地址。一个方法可以修改传递引用所对应的变量值，而不能修改传递值调用所对应的变量值。  下面是我用Rust来做的一个简单示范。  可以看到，虽然call_by_value函数和call_by_refer">
 <meta name="twitter:image" content="https://i.loli.net/2020/04/20/Mbofu1YtOjBQ6Lp.png">
   <link rel="canonical" href="https://chaosalphard.github.io/2020/04/20/Java是值传递还是引用传递/">
 
@@ -264,7 +269,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-04-21 00:10:18" itemprop="dateModified" datetime="2020-04-21T00:10:18+08:00">2020-04-21</time>
+                <time title="修改时间：2020-04-21 01:06:56" itemprop="dateModified" datetime="2020-04-21T01:06:56+08:00">2020-04-21</time>
               </span>
             
           
@@ -301,7 +306,12 @@
 </blockquote>
 <p>下面是我用<a href="https://www.rust-lang.org/" target="_blank" rel="noopener">Rust</a>来做的一个简单示范。</p>
 <p><img src="https://i.loli.net/2020/04/20/Mbofu1YtOjBQ6Lp.png" alt="Rust"></p>
-<p>可以看到，虽然<code>call_by_value</code>和<code>call_by_reference</code>函数都将值修改为了<code>12450</code>，但是由于<code>call_by_reference</code>函数接收的是<code>by_ref</code>变量的引用，所以在函数内修改<code>by_ref</code>的值会影响到函数外部的<code>by_ref</code>变量，而<code>call_by_value</code>函数接收的是<code>by_val</code>变量的值，所以在函数内修改<code>by_val</code>的值不会影响到函数外部的<code>by_val</code>变量。</p>
+<p>可以看到，虽然<code>call_by_value</code>函数和<code>call_by_reference</code>函数都将接收到的参数的值修改为了<code>12450</code>，但是由于<code>call_by_reference</code>函数接收的是<code>by_ref</code>变量的引用，所以在函数内修改<code>by_ref</code>的值会影响到函数外部的<code>by_ref</code>变量，而<code>call_by_value</code>函数接收的是<code>by_val</code>变量的值，所以在函数内修改<code>by_val</code>的值不会影响到函数外部的<code>by_val</code>变量。</p>
+<h1 id="对于基本数据类型-Java是值传递还是引用传递"><a href="#对于基本数据类型-Java是值传递还是引用传递" class="headerlink" title="对于基本数据类型, Java是值传递还是引用传递?"></a>对于基本数据类型, Java是值传递还是引用传递?</h1><a id="more"></a>
+<p>看下图<br><img src="https://i.loli.net/2020/04/21/WZfUqEYix2gCpPM.png" alt="00"><br>可以看到，在函数内的修改并没有影响到函数外部的<code>num</code>，所以对于基本数据类型, Java是值传递</p>
+<p>对于基本数据的包装类, 也是值传递<br><img src="https://i.loli.net/2020/04/21/QPzRF5CEec3xTOW.png" alt="01"></p>
+<h1 id="对于引用类型-Java是值传递还是引用传递"><a href="#对于引用类型-Java是值传递还是引用传递" class="headerlink" title="对于引用类型, Java是值传递还是引用传递?"></a>对于引用类型, Java是值传递还是引用传递?</h1><p>看下图<br><img src="https://i.loli.net/2020/04/21/RXVBCY1vKJyPguA.png" alt="02"><br>可以看到，在函数内的修改已经影响到了函数外部的<code>lis</code>，这似乎证明了引用类型, Java是引用传递</p>
+<p><strong>但是</strong>, 我们都知道, 对于引用类型, 变量保存的是指向其内存空间的地址, 也就是说, 如果将引用类型赋值给另一个变量, 再通过另一个变量去修改引用类型的值, 当前变量也会被改变, 如何理解呢? 请看下图<br><img src="https://i.loli.net/2020/04/21/f6qKRP3UJGeBW8m.png" alt="03"><br><img src="https://i.loli.net/2020/04/21/dpXhKGslgOYTkuj.png" alt="04"></p>
 
     </div>
 
@@ -363,8 +373,17 @@
 
   <aside id="sidebar" class="sidebar">
     <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
 
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -530,6 +549,23 @@
 
         </div>
       </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#对于基本数据类型-Java是值传递还是引用传递"><span class="nav-number">1.</span> <span class="nav-text">对于基本数据类型, Java是值传递还是引用传递?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对于引用类型-Java是值传递还是引用传递"><span class="nav-number">2.</span> <span class="nav-text">对于引用类型, Java是值传递还是引用传递?</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
 
     </div>
   </aside>
