@@ -212,6 +212,244 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chaosalphard.github.io/2020/11/08/使用Validate实现参数统一校验以及自定义校验规则/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ilirus">
+      <meta itemprop="description" content="兴趣使然的个人博客">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ilirus">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2020/11/08/使用Validate实现参数统一校验以及自定义校验规则/" class="post-title-link" itemprop="url">使用Validate实现参数统一校验以及自定义校验规则</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-11-08 22:40:20" itemprop="dateCreated datePublished" datetime="2020-11-08T22:40:20+08:00">2020-11-08</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-11-09 22:56:42" itemprop="dateModified" datetime="2020-11-09T22:56:42+08:00">2020-11-09</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          <br>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p><code>JSR-303</code>是一项标准, <code>JSR-349</code>是其的升级版本, 添加了一些新特性, 这项标准规定了一些校验规范, 如<code>@Null</code>, <code>@NotNull</code>, <code>@Pattern</code>, 位于<code>javax.validation.constraints</code>包下, 只提供规范不提供实现.<br><code>Hibernate Validation</code>是对这个规范的实践, 他提供了相应的实现, 并增加了一些其他校验注解, 如<code>@Email</code>, <code>@Length</code>, <code>@Range</code>等.</p>
+</blockquote>
+<h1 id="引入Validator依赖"><a href="#引入Validator依赖" class="headerlink" title="引入Validator依赖"></a>引入Validator依赖</h1><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.hibernate.validator<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hibernate-validator<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>6.1.6.Final<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="配置Validator"><a href="#配置Validator" class="headerlink" title="配置Validator"></a>配置Validator</h1><p><code>Validator</code>默认会对所有数据进行校验, 然后返回结果, 如果想要在校验到数据不符合规则时直接返回结果的话, 则需要进行配置<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ValidatorConfiguration</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Bean</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Validator <span class="title">validator</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Validation.byProvider(HibernateValidator.class)</span><br><span class="line">            .configure()</span><br><span class="line">            <span class="comment">// 设置校验到任意数据不符合规则时直接返回结果, 不再对剩余数据进行校验</span></span><br><span class="line">            .failFast(<span class="keyword">true</span>)</span><br><span class="line">            .buildValidatorFactory()</span><br><span class="line">            .getValidator();</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="使用Validator对Controller参数进行校验"><a href="#使用Validator对Controller参数进行校验" class="headerlink" title="使用Validator对Controller参数进行校验"></a>使用Validator对Controller参数进行校验</h1><p>参数实体类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Param</span> </span>&#123;</span><br><span class="line">  <span class="meta">@NotNull</span>(message = <span class="string">"id不能为空"</span>)</span><br><span class="line">  <span class="keyword">private</span> Integer id;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@NotBlank</span>(message = <span class="string">"name不能为空"</span>)</span><br><span class="line">  <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@NotNull</span>(message = <span class="string">"age不能为空"</span>)</span><br><span class="line">  <span class="keyword">private</span> Integer age;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@NotNull</span>(message = <span class="string">"sex不能为空"</span>)</span><br><span class="line">  <span class="keyword">private</span> Byte sex;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> String time;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2020/11/08/使用Validate实现参数统一校验以及自定义校验规则/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chaosalphard.github.io/2020/10/19/使用自定义断言替代throw处理常见的异常/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ilirus">
+      <meta itemprop="description" content="兴趣使然的个人博客">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ilirus">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2020/10/19/使用自定义断言替代throw处理常见的异常/" class="post-title-link" itemprop="url">使用自定义断言替代throw处理常见的异常</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-10-19 23:37:23" itemprop="dateCreated datePublished" datetime="2020-10-19T23:37:23+08:00">2020-10-19</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-11-08 22:54:34" itemprop="dateModified" datetime="2020-11-08T22:54:34+08:00">2020-11-08</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          <br>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>　　<code>Java</code>中空判断随处可见，通常我们都是手动判断是否为空，然后再抛出自定义异常以及记录信息，例如:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> data = dao.findById(id);</span><br><span class="line"><span class="keyword">if</span>(data == <span class="keyword">null</span>) &#123;</span><br><span class="line">  log.error(<span class="string">"数据为空, id&#123;&#125;"</span>, id);</span><br><span class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> CustomException(Status.USER_NOT_EXIST);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样的代码写多了就觉得麻烦，可不可以简化一下呢</p>
+<h1 id="使用Assert替代null判断"><a href="#使用Assert替代null判断" class="headerlink" title="使用Assert替代null判断"></a>使用Assert替代null判断</h1><p>　　我们都知道sprng中有一个<code>Assert</code>类，其中有一个方法<code>notNull()</code> 可以用来判断是否为空，并且输出自定义提示，何不根据此改造一下，做一个自定义的<code>Assert</code>类</p>
+<h2 id="创建枚举类接口"><a href="#创建枚举类接口" class="headerlink" title="创建枚举类接口"></a>创建枚举类接口</h2><p>创建默认枚举方法，需要与你自定义枚举中的属性对应<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IBaseEnum</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getCode</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">getMessage</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2020/10/19/使用自定义断言替代throw处理常见的异常/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://chaosalphard.github.io/2020/04/20/Java是值传递还是引用传递/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -261,7 +499,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-06-14 03:26:49" itemprop="dateModified" datetime="2020-06-14T03:26:49+08:00">2020-06-14</time>
+                <time title="修改时间：2020-08-04 00:15:28" itemprop="dateModified" datetime="2020-08-04T00:15:28+08:00">2020-08-04</time>
               </span>
             
           
@@ -297,7 +535,7 @@
 <p>按值调用(call by value)表示方法接收的是调用者提供的值，而按引用调用(call by reference)表示方法接收的是调用者提供的变量地址。一个方法可以修改传递引用所对应的变量值，而不能修改传递值调用所对应的变量值。</p>
 </blockquote>
 <p>下面是我用<a href="https://www.rust-lang.org/" target="_blank" rel="noopener">Rust</a>来做的一个简单示范。</p>
-<p><img src="/img/20200420-23/rust.png" alt="Rust"></p>
+<p><img src="/blog/img/20200420-23/rust.png" alt="Rust"></p>
 <p>可以看到，虽然<code>call_by_value</code>函数和<code>call_by_reference</code>函数都将接收到的参数的值修改为了<code>12450</code>，但是由于<code>call_by_reference</code>函数接收的是<code>by_ref</code>变量的引用，所以在函数内修改<code>by_ref</code>的值会影响到函数外部的<code>by_ref</code>变量，而<code>call_by_value</code>函数接收的是<code>by_val</code>变量的值，所以在函数内修改<code>by_val</code>的值不会影响到函数外部的<code>by_val</code>变量。</p>
           <!--noindex-->
           
@@ -1202,245 +1440,11 @@
   </article>
 
     
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://chaosalphard.github.io/2020/03/29/笔记-SpringCloud学习10-OpenFeign超时配置与日志记录/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ilirus">
-      <meta itemprop="description" content="兴趣使然的个人博客">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ilirus">
-    </span>
-      <header class="post-header">
-
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2020/03/29/笔记-SpringCloud学习10-OpenFeign超时配置与日志记录/" class="post-title-link" itemprop="url">[笔记]SpringCloud学习10: OpenFeign超时配置与日志记录</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2020-03-29 22:50:00 / 修改时间：23:11:42" itemprop="dateCreated datePublished" datetime="2020-03-29T22:50:00+08:00">2020-03-29</time>
-            </span>
-          
-            
-
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习笔记/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a></span>
-
-                
-                
-                  ，
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习笔记/SpringCloud/" itemprop="url" rel="index"><span itemprop="name">SpringCloud</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          <br>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-            <h1 id="设置超时时间"><a href="#设置超时时间" class="headerlink" title="设置超时时间"></a>设置超时时间</h1><p>在<code>application.yml</code>中<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置超时时间</span></span><br><span class="line"><span class="attr">ribbon:</span></span><br><span class="line">  <span class="comment"># 指与服务器建立链接的超时时间(单位: ms)</span></span><br><span class="line"><span class="attr">  ConnectTimeout:</span> <span class="number">1000</span></span><br><span class="line">  <span class="comment"># 指与服务器建立链接之后，从服务器读取到可用资源所花时间</span></span><br><span class="line"><span class="attr">  ReadTimeout:</span> <span class="number">5000</span></span><br></pre></td></tr></table></figure></p>
-<h1 id="配置日志输出"><a href="#配置日志输出" class="headerlink" title="配置日志输出"></a>配置日志输出</h1><p><code>OpenFeign</code>有4个日志级别</p>
-<ul>
-<li><code>NONE</code>: 不输出任何日志</li>
-<li><code>BASIC</code>: 仅记录请求方法、URL、响应状态吗以及执行时间</li>
-<li><code>HEADERS</code>: 除了<code>BASIC</code>中的信息外，还记录请求和响应的头信息</li>
-<li><code>FULL</code>: 输出所有信息</li>
-</ul>
-<p>编写配置类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.ilirus.springcloud.config;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> feign.Logger;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OpenFeignConfig</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    Logger.<span class="function">Level <span class="title">feignLoggerLevel</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Logger.Level.FULL;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>在<code>application.yml</code>中配置控制台日志输出级别<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">logging:</span></span><br><span class="line"><span class="attr">  level:</span></span><br><span class="line">    <span class="string">com.ilirus.springcloud.service.PaymentFeignService:</span> <span class="string">debug</span></span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://chaosalphard.github.io/2020/03/29/笔记-SpringCloud学习09-OpenFeign服务调用/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ilirus">
-      <meta itemprop="description" content="兴趣使然的个人博客">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ilirus">
-    </span>
-      <header class="post-header">
-
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2020/03/29/笔记-SpringCloud学习09-OpenFeign服务调用/" class="post-title-link" itemprop="url">[笔记]SpringCloud学习09: OpenFeign服务调用</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2020-03-29 03:07:11 / 修改时间：04:13:42" itemprop="dateCreated datePublished" datetime="2020-03-29T03:07:11+08:00">2020-03-29</time>
-            </span>
-          
-            
-
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习笔记/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a></span>
-
-                
-                
-                  ，
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习笔记/SpringCloud/" itemprop="url" rel="index"><span itemprop="name">SpringCloud</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          <br>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Feign-简介"><a href="#Feign-简介" class="headerlink" title="Feign 简介"></a>Feign 简介</h1><blockquote>
-<p>Feign是一个声明式的<code>WebService</code>客户端。它的出现使开发<code>WebService</code>客户端变得很简单。使用<code>Feign</code>只需要创建一个接口加上对应的注解。</p>
-<p>Feign 是一种声明式、模板化的HTTP 客户端。在SpringCloud 中使用Feign，可以做到使用HTTP 请求访问远程服务，就像调用本地方法一样的，开发者完全感知不到这是在调用远程方法，更感知不到在访问HTTP 请求。</p>
-</blockquote>
-<h1 id="Feign-和-OpenFeign"><a href="#Feign-和-OpenFeign" class="headerlink" title="Feign 和 OpenFeign"></a>Feign 和 OpenFeign</h1><p><code>OpenFeign</code>在<code>Feign</code>的基础上支持了<code>SpringMVC</code>的注解。</p>
-<p>在<code>OpenFeign</code>中，除了自身提供的注解之外，还支持使用<code>JAX-RS</code>注解，或者<code>SpringMVC</code>注解。</p>
-<p><code>OpenFeign</code>的<code>@FeignClient</code>注解可以解析<code>SpringMVC</code>的<code>@RequestMapping</code>注解下的接口，并通过动态代理的方式产生实现类，实现类中做负载均衡并调用其他服务。</p>
-<p><code>OpenFeign</code>同样使用声明式方式定义Web服务客户端，其次，<code>OpenFeign</code>还可以通过集成<code>Ribbon</code>或<code>Eureka</code>来实现负载均衡的HTTP 客户端。</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2020/03/29/笔记-SpringCloud学习09-OpenFeign服务调用/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1473,7 +1477,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-count">52</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="generator" content="Hexo 3.8.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Fira Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    search: {
+      root: '/',
+      path: ''
+    },
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="JSR-303是一项标准, JSR-349是其的升级版本, 添加了一些新特性, 这项标准规定了一些校验规范, 如@Null, @NotNull, @Pattern, 位于javax.validation.constraints包下, 只提供规范不提供实现.Hibernate Validation是对这个规范的实践, 他提供了相应的实现, 并增加了一些其他校验注解, 如@Email, @Lengt">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Validate实现参数统一校验以及自定义校验规则">
+<meta property="og:url" content="https://chaosalphard.github.io/2020/11/08/使用Validate实现参数统一校验以及自定义校验规则/index.html">
+<meta property="og:site_name" content="Ilirus">
+<meta property="og:description" content="JSR-303是一项标准, JSR-349是其的升级版本, 添加了一些新特性, 这项标准规定了一些校验规范, 如@Null, @NotNull, @Pattern, 位于javax.validation.constraints包下, 只提供规范不提供实现.Hibernate Validation是对这个规范的实践, 他提供了相应的实现, 并增加了一些其他校验注解, 如@Email, @Lengt">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-11-09T14:56:42.912Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用Validate实现参数统一校验以及自定义校验规则">
+<meta name="twitter:description" content="JSR-303是一项标准, JSR-349是其的升级版本, 添加了一些新特性, 这项标准规定了一些校验规范, 如@Null, @NotNull, @Pattern, 位于javax.validation.constraints包下, 只提供规范不提供实现.Hibernate Validation是对这个规范的实践, 他提供了相应的实现, 并增加了一些其他校验注解, 如@Email, @Lengt">
+  <link rel="canonical" href="https://chaosalphard.github.io/2020/11/08/使用Validate实现参数统一校验以及自定义校验规则/">
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>使用Validate实现参数统一校验以及自定义校验规则 | Ilirus</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ilirus</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+    <ul id="menu" class="menu">
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+    </ul>
+</nav>
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chaosalphard.github.io/2020/11/08/使用Validate实现参数统一校验以及自定义校验规则/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ilirus">
+      <meta itemprop="description" content="兴趣使然的个人博客">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ilirus">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">使用Validate实现参数统一校验以及自定义校验规则
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-11-08 22:40:20" itemprop="dateCreated datePublished" datetime="2020-11-08T22:40:20+08:00">2020-11-08</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-11-09 22:56:42" itemprop="dateModified" datetime="2020-11-09T22:56:42+08:00">2020-11-09</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          <br>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p><code>JSR-303</code>是一项标准, <code>JSR-349</code>是其的升级版本, 添加了一些新特性, 这项标准规定了一些校验规范, 如<code>@Null</code>, <code>@NotNull</code>, <code>@Pattern</code>, 位于<code>javax.validation.constraints</code>包下, 只提供规范不提供实现.<br><code>Hibernate Validation</code>是对这个规范的实践, 他提供了相应的实现, 并增加了一些其他校验注解, 如<code>@Email</code>, <code>@Length</code>, <code>@Range</code>等.</p>
+</blockquote>
+<h1 id="引入Validator依赖"><a href="#引入Validator依赖" class="headerlink" title="引入Validator依赖"></a>引入Validator依赖</h1><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.hibernate.validator<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hibernate-validator<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>6.1.6.Final<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="配置Validator"><a href="#配置Validator" class="headerlink" title="配置Validator"></a>配置Validator</h1><p><code>Validator</code>默认会对所有数据进行校验, 然后返回结果, 如果想要在校验到数据不符合规则时直接返回结果的话, 则需要进行配置<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ValidatorConfiguration</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Bean</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Validator <span class="title">validator</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Validation.byProvider(HibernateValidator.class)</span><br><span class="line">            .configure()</span><br><span class="line">            <span class="comment">// 设置校验到任意数据不符合规则时直接返回结果, 不再对剩余数据进行校验</span></span><br><span class="line">            .failFast(<span class="keyword">true</span>)</span><br><span class="line">            .buildValidatorFactory()</span><br><span class="line">            .getValidator();</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="使用Validator对Controller参数进行校验"><a href="#使用Validator对Controller参数进行校验" class="headerlink" title="使用Validator对Controller参数进行校验"></a>使用Validator对Controller参数进行校验</h1><p>参数实体类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Param</span> </span>&#123;</span><br><span class="line">  <span class="meta">@NotNull</span>(message = <span class="string">"id不能为空"</span>)</span><br><span class="line">  <span class="keyword">private</span> Integer id;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@NotBlank</span>(message = <span class="string">"name不能为空"</span>)</span><br><span class="line">  <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@NotNull</span>(message = <span class="string">"age不能为空"</span>)</span><br><span class="line">  <span class="keyword">private</span> Integer age;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@NotNull</span>(message = <span class="string">"sex不能为空"</span>)</span><br><span class="line">  <span class="keyword">private</span> Byte sex;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> String time;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p>Controller<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PostMapping</span>(<span class="string">"/hello"</span>)</span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">hello</span><span class="params">(@Validated @RequestBody Param param, BindingResult result)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(result.hasErrors()) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"fail"</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">"success"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Validator会对参数进行校验，并返回校验结果(<code>BindingResult</code>)</p>
+<h2 id="使用统一异常处理器来处理Validator校验结果"><a href="#使用统一异常处理器来处理Validator校验结果" class="headerlink" title="使用统一异常处理器来处理Validator校验结果"></a>使用统一异常处理器来处理Validator校验结果</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestControllerAdvice</span></span><br><span class="line"><span class="meta">@ResponseStatus</span>(HttpStatus.OK)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GlobalExceptionHandler</span> </span>&#123;</span><br><span class="line">  <span class="comment">// Json格式入参时, 参数不符合规则抛出MethodArgumentNotValidException</span></span><br><span class="line">  <span class="meta">@ExceptionHandler</span>(MethodArgumentNotValidException.class)</span><br><span class="line">  <span class="keyword">public</span> R&lt;List&lt;Map&lt;String, Object&gt;&gt;&gt; argNotValidErr(MethodArgumentNotValidException e) &#123;</span><br><span class="line">    <span class="keyword">return</span> R.ofFail(getValidError(e.getBindingResult()));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 使用Get请求接口, 参数写在在url中时, 参数不符合规则抛出BindException</span></span><br><span class="line">  <span class="meta">@ExceptionHandler</span>(BindException.class)</span><br><span class="line">  <span class="keyword">public</span> R&lt;List&lt;Map&lt;String, Object&gt;&gt;&gt; binddErr(BindException e) &#123;</span><br><span class="line">    <span class="keyword">return</span> R.ofFail(getValidError(e.getBindingResult()));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 处理Validator的验证结果, 获取所有的不符合规则的参数</span></span><br><span class="line">  <span class="keyword">private</span> List&lt;Map&lt;String, Object&gt;&gt; getValidErrors(BindingResult result) &#123;</span><br><span class="line">    <span class="keyword">if</span>(result == <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;&gt;(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    List&lt;Map&lt;String, Object&gt;&gt; lis = <span class="keyword">new</span> ArrayList&lt;&gt;(<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">for</span>(FieldError error : result.getFieldErrors()) &#123;</span><br><span class="line">      lis.add(<span class="keyword">new</span> HashMap&lt;&gt;()&#123;&#123;</span><br><span class="line">        put(<span class="string">"field"</span>, error.getField());</span><br><span class="line">        put(<span class="string">"message"</span>, error.getDefaultMessage());</span><br><span class="line">        put(<span class="string">"rejectValue"</span>, error.getRejectedValue());</span><br><span class="line">      &#125;&#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> lis;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 如果配置了Validator的failFast属性为true, 则可以使用下面的方法处理结果</span></span><br><span class="line">  <span class="function"><span class="keyword">private</span> Map&lt;String, Object&gt; <span class="title">getValidError</span><span class="params">(BindingResult result)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(result == <span class="keyword">null</span>||result.getFieldError() == <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">new</span> HashMap&lt;&gt;(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    FieldError error = result.getFieldError();</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> HashMap&lt;&gt;()&#123;&#123;</span><br><span class="line">      put(<span class="string">"field"</span>, error.getField());</span><br><span class="line">      put(<span class="string">"message"</span>, error.getDefaultMessage());</span><br><span class="line">      put(<span class="string">"rejectValue"</span>, error.getRejectedValue());</span><br><span class="line">    &#125;&#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Validator分组校验"><a href="#Validator分组校验" class="headerlink" title="Validator分组校验"></a>Validator分组校验</h1><p>定义接口, 接口里面不需要写任何东西, Validator会把接口视为一个一个的<strong>组</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IGet</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IList</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IAdd</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IEdit</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IDelete</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果一个组继承了另一个组,</span></span><br><span class="line"><span class="comment">// 则在校验属于这个组的参数时,</span></span><br><span class="line"><span class="comment">// 也会一并校验被继承组的参数</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ISexFilter</span> <span class="keyword">extends</span> <span class="title">Default</span> </span>&#123;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>修改参数实体类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Param</span> </span>&#123;</span><br><span class="line">  <span class="comment">// groups 定义该字段所属的"组"</span></span><br><span class="line">  <span class="meta">@NotNull</span>(message = <span class="string">"id不能为空"</span>, groups = &#123;IGet.class, IEdit.class, IDelete.class&#125;)</span><br><span class="line">  <span class="meta">@Null</span>(message = <span class="string">"获取列表时不需要ID"</span>, groups = IList.class)</span><br><span class="line">  <span class="keyword">private</span> Integer id;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@NotBlank</span>(message = <span class="string">"name不能为空"</span>, groups = IAdd.class)</span><br><span class="line">  <span class="meta">@Null</span>(message = <span class="string">"不能修改name"</span>, groups = IEdit.class)</span><br><span class="line">  <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@NotNull</span>(message = <span class="string">"age不能为空"</span>, groups = IEdit.class)</span><br><span class="line">  <span class="keyword">private</span> Integer age;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@NotNull</span>(message = <span class="string">"sex不能为空"</span>, groups = IEdit.class)</span><br><span class="line">  <span class="meta">@NotBlank</span>(message = <span class="string">"sex不能为空"</span>, groups = ISexFilter.class)</span><br><span class="line">  <span class="keyword">private</span> Byte sex;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 没有标明groups参数时, 默认属于Default组</span></span><br><span class="line">  <span class="meta">@NotBlank</span>(message = <span class="string">"time不能为空"</span>)</span><br><span class="line">  <span class="keyword">private</span> String time;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>修改Controller<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping</span></span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="comment">// 如果没有传入要校验的组, Validator默认校验Default组的参数</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">validateTest</span><span class="params">(@Validated Param param)</span></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">"success"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@GetMapping</span>(<span class="string">"/get"</span>)</span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">get</span><span class="params">(@Validated(value = &#123;IGet.class, ISexFilter.class&#125;)</span> Param param)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> service.get(param.getId());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@GetMapping</span>(<span class="string">"/list"</span>)</span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="comment">// 这里虽然只指定了校验 IList组 和 ISexFilter组,</span></span><br><span class="line"><span class="comment">// 但由于 ISexFilter组 继承了 Default组,</span></span><br><span class="line"><span class="comment">// 所以实际上是校验属于 IList组, ISexFilter组, Default组 的参数.</span></span><br><span class="line"><span class="comment">// 且由于 time 字段没有指明所属组, 所以 time字段 默认属于 Default组,</span></span><br><span class="line"><span class="comment">// 故而 id(IList组), sex(ISexFilter组), time(Default组) 字段都会被校验.</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> List&lt;Object&gt; <span class="title">list</span><span class="params">(@Validated(&#123;IList.class, ISexFilter.class&#125;)</span> Param param)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> service.list();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@PostMapping</span>(<span class="string">"/add"</span>)</span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">add</span><span class="params">(@Validated(value = IAdd.class)</span> @RequestBody Param param)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">"success"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@PatchMapping</span>(<span class="string">"/edit"</span>)</span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">edit</span><span class="params">(@Validated(IEdit.class)</span> @RequestBody Param param)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">"success"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@DeleteMapping</span>(<span class="string">"/delete"</span>)</span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">delete</span><span class="params">(@Validated(IDelete.class)</span> @RequestBody IndexParam param)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">"success"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="定义Validator校验顺序"><a href="#定义Validator校验顺序" class="headerlink" title="定义Validator校验顺序"></a>定义Validator校验顺序</h1><blockquote>
+<p>默认情况下, 不同组别的约束验证是无序的, 然而在某些情况下, 约束验证的顺序却很重要. 例如:</p>
+<ul>
+<li>第二个组中的校验依赖于一个稳定状态, 而这个稳定状态是由第一个组来进行校验的.</li>
+<li>某个组的校验比较耗时, 最优的选择是将其放在最后进行验证.</li>
+</ul>
+</blockquote>
+<p>定义分组接口<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IFirstValidate</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ISecondValidate</span> </span>&#123;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>定义分组校验顺序<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GroupSequence</span>(&#123;</span><br><span class="line">  IFirstValidate.class,</span><br><span class="line">  ISecondValidate.class</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IValidateGroup</span> </span>&#123;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>参数实体类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EditParam</span> </span>&#123;</span><br><span class="line">  <span class="meta">@NotNull</span>(message = <span class="string">"id不能为空"</span>, groups = IFirstValidate.class)</span><br><span class="line">  <span class="keyword">private</span> Integer id;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@NotNull</span>(message = <span class="string">"detail不能为空"</span>, groups = IFirstValidate.class)</span><br><span class="line">  <span class="meta">@Size</span>(min = <span class="number">1024</span>, message = <span class="string">"detail不能小于1024"</span>, groups = ISecondValidate.class)</span><br><span class="line">  <span class="keyword">private</span> List&lt;Object&gt; detail;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在控制器中使用<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PutMapping</span>(<span class="string">"/edit"</span>)</span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">edit</span><span class="params">(@Validated(IValidateGroup.class)</span> @RequestBody EditParam param)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">"success"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="自定义Validator校验注解"><a href="#自定义Validator校验注解" class="headerlink" title="自定义Validator校验注解"></a>自定义Validator校验注解</h1><p>通常来说, <code>Hibernate Validation</code>提供的注解已经够用了, 但有时候还是需要根据业务自定义校验规则.</p>
+<p>自定义注解<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(&#123;</span><br><span class="line">  ElementType.METHOD,</span><br><span class="line">  ElementType.FIELD,</span><br><span class="line">  ElementType.ANNOTATION_TYPE,</span><br><span class="line">  ElementType.CONSTRUCTOR,</span><br><span class="line">  ElementType.PARAMETER,</span><br><span class="line">  ElementType.TYPE_USE</span><br><span class="line">&#125;)</span><br><span class="line"><span class="meta">@Repeatable</span>(Time.List.class)</span><br><span class="line"><span class="comment">// 设置自定义注解实现类</span></span><br><span class="line"><span class="meta">@Constraint</span>(validatedBy = &#123;TimeValidate.class&#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Time &#123;</span><br><span class="line">  <span class="function"><span class="keyword">boolean</span> <span class="title">allowNull</span><span class="params">()</span> <span class="keyword">default</span> <span class="keyword">false</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="function">String <span class="title">regexp</span><span class="params">()</span> <span class="keyword">default</span> "^<span class="params">(([<span class="number">0</span><span class="number">-1</span>][<span class="number">0</span><span class="number">-9</span>])</span>|<span class="params">(<span class="number">2</span>[<span class="number">0</span><span class="number">-3</span>])</span>):[0-5][0-9]:[0-5][0-9]$"</span>;</span><br><span class="line"></span><br><span class="line">  <span class="function">String <span class="title">message</span><span class="params">()</span> <span class="keyword">default</span> "时间格式错误"</span>;</span><br><span class="line"></span><br><span class="line">  Class&lt;?&gt;[] groups() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">  Class&lt;? extends Payload&gt;[] payload() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Documented</span></span><br><span class="line">  <span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line">  <span class="meta">@Target</span>(&#123;</span><br><span class="line">    ElementType.METHOD,</span><br><span class="line">    ElementType.FIELD,</span><br><span class="line">    ElementType.ANNOTATION_TYPE,</span><br><span class="line">    ElementType.CONSTRUCTOR,</span><br><span class="line">    ElementType.PARAMETER,</span><br><span class="line">    ElementType.TYPE_USE</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">public</span> <span class="meta">@interface</span> List &#123;</span><br><span class="line">    Time[] value();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>自定义注解实现<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 需要实现ConstraintValidator, 第一项参数是要校验的注解, 第二项是要校验的值的类型</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TimeValidate</span> <span class="keyword">implements</span> <span class="title">ConstraintValidator</span>&lt;<span class="title">Time</span>, <span class="title">String</span>&gt; </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">boolean</span> allowNull;</span><br><span class="line">  <span class="keyword">private</span> Pattern regexp;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 初始化</span></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initialize</span><span class="params">(Time annotation)</span> </span>&#123;</span><br><span class="line">    allowNull = annotation.allowNull();</span><br><span class="line">    regexp = Pattern.compile(annotation.regexp());</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 自定义校验实现</span></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isValid</span><span class="params">(String value, ConstraintValidatorContext constraintValidatorContext)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(value == <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> allowNull;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> regexp.matcher(value).matches();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在参数实体类中使用<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TimeParam</span> </span>&#123;</span><br><span class="line">  <span class="meta">@NotNull</span>(message = <span class="string">"id不能为空"</span>)</span><br><span class="line">  <span class="keyword">private</span> Integer id;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Time</span>(allowNull = <span class="keyword">true</span>)</span><br><span class="line">  <span class="keyword">private</span> String time;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+        
+        <div class="post-tags">
+            <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
+          
+        </div>
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+              <a href="/2020/10/19/使用自定义断言替代throw处理常见的异常/" rel="next" title="使用自定义断言替代throw处理常见的异常">
+                <i class="fa fa-chevron-left"></i> 使用自定义断言替代throw处理常见的异常
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+          </div>
+        </div>
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    
+  <div class="comments" id="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC80NTMxNi8yMTgyOQ=="></div>
+  </div>
+  
+  
+
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Ilirus</p>
+  <div class="site-description motion-element" itemprop="description">兴趣使然的个人博客</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/ChaosAlphard" title="GitHub &rarr; https://github.com/ChaosAlphard" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+  </div>
+
+
+
+        </div>
+      </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#引入Validator依赖"><span class="nav-number">1.</span> <span class="nav-text">引入Validator依赖</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置Validator"><span class="nav-number">2.</span> <span class="nav-text">配置Validator</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用Validator对Controller参数进行校验"><span class="nav-number">3.</span> <span class="nav-text">使用Validator对Controller参数进行校验</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用统一异常处理器来处理Validator校验结果"><span class="nav-number">3.1.</span> <span class="nav-text">使用统一异常处理器来处理Validator校验结果</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Validator分组校验"><span class="nav-number">4.</span> <span class="nav-text">Validator分组校验</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#定义Validator校验顺序"><span class="nav-number">5.</span> <span class="nav-text">定义Validator校验顺序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#自定义Validator校验注解"><span class="nav-number">6.</span> <span class="nav-text">自定义Validator校验注解</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ilirus</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.3.0</div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+      </div>
+
+    
+
+  </div>
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  <script src="/js/utils.js?v=7.3.0"></script>
+  <script src="/js/motion.js?v=7.3.0"></script>
+
+  
+  <script src="/js/affix.js?v=7.3.0"></script>
+  <script src="/js/schemes/pisces.js?v=7.3.0"></script>
+
+
+  
+  <script src="/js/scrollspy.js?v=7.3.0"></script>
+<script src="/js/post-details.js?v=7.3.0"></script>
+
+
+
+  <script src="/js/next-boot.js?v=7.3.0"></script>
+
+  
+
+  
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+<script>
+  window.livereOptions = {
+    refer: '2020/11/08/使用Validate实现参数统一校验以及自定义校验规则/'
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"left","width":300,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
