@@ -65,18 +65,18 @@
 <meta property="og:site_name" content="Ilirus">
 <meta property="og:description" content="进入正题之前先简单说说值传递和引用传递的区别  按值调用(call by value)表示方法接收的是调用者提供的值，而按引用调用(call by reference)表示方法接收的是调用者提供的变量地址。一个方法可以修改传递引用所对应的变量值，而不能修改传递值调用所对应的变量值。  下面是我用Rust来做的一个简单示范。  可以看到，虽然call_by_value函数和call_by_refer">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://chaosalphard.github.io/blog/img/20200420-23/rust.png">
-<meta property="og:image" content="https://chaosalphard.github.io/blog/img/20200420-23/00.png">
-<meta property="og:image" content="https://chaosalphard.github.io/blog/img/20200420-23/01.png">
-<meta property="og:image" content="https://chaosalphard.github.io/blog/img/20200420-23/02.png">
-<meta property="og:image" content="https://chaosalphard.github.io/blog/img/20200420-23/03.png">
-<meta property="og:image" content="https://chaosalphard.github.io/blog/img/20200420-23/ref.png">
-<meta property="og:image" content="https://chaosalphard.github.io/blog/img/20200420-23/04.png">
-<meta property="og:updated_time" content="2020-11-09T15:22:59.815Z">
+<meta property="og:image" content="https://erina.gitee.io/blog/img/20200420-23/rust.png">
+<meta property="og:image" content="https://erina.gitee.io/blog/img/20200420-23/00.png">
+<meta property="og:image" content="https://erina.gitee.io/blog/img/20200420-23/01.png">
+<meta property="og:image" content="https://erina.gitee.io/blog/img/20200420-23/02.png">
+<meta property="og:image" content="https://erina.gitee.io/blog/img/20200420-23/03.png">
+<meta property="og:image" content="https://erina.gitee.io/blog/img/20200420-23/ref.png">
+<meta property="og:image" content="https://erina.gitee.io/blog/img/20200420-23/04.png">
+<meta property="og:updated_time" content="2020-11-09T15:49:46.029Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java是值传递还是引用传递">
 <meta name="twitter:description" content="进入正题之前先简单说说值传递和引用传递的区别  按值调用(call by value)表示方法接收的是调用者提供的值，而按引用调用(call by reference)表示方法接收的是调用者提供的变量地址。一个方法可以修改传递引用所对应的变量值，而不能修改传递值调用所对应的变量值。  下面是我用Rust来做的一个简单示范。  可以看到，虽然call_by_value函数和call_by_refer">
-<meta name="twitter:image" content="https://chaosalphard.github.io/blog/img/20200420-23/rust.png">
+<meta name="twitter:image" content="https://erina.gitee.io/blog/img/20200420-23/rust.png">
   <link rel="canonical" href="https://chaosalphard.github.io/2020/04/20/Java是值传递还是引用传递/">
 
 
@@ -270,7 +270,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-11-09 23:22:59" itemprop="dateModified" datetime="2020-11-09T23:22:59+08:00">2020-11-09</time>
+                <time title="修改时间：2020-11-09 23:49:46" itemprop="dateModified" datetime="2020-11-09T23:49:46+08:00">2020-11-09</time>
               </span>
             
           
@@ -306,22 +306,22 @@
 <p>按值调用(call by value)表示方法接收的是调用者提供的值，而按引用调用(call by reference)表示方法接收的是调用者提供的变量地址。一个方法可以修改传递引用所对应的变量值，而不能修改传递值调用所对应的变量值。</p>
 </blockquote>
 <p>下面是我用<a href="https://www.rust-lang.org/" target="_blank" rel="noopener">Rust</a>来做的一个简单示范。</p>
-<p><img src="/blog/img/20200420-23/rust.png" alt="Rust"></p>
+<p><img src="https://erina.gitee.io/blog/img/20200420-23/rust.png" alt="Rust"></p>
 <p>可以看到，虽然<code>call_by_value</code>函数和<code>call_by_reference</code>函数都将接收到的参数的值修改为了<code>12450</code>，但是由于<code>call_by_reference</code>函数接收的是<code>by_ref</code>变量的引用，所以在函数内修改<code>by_ref</code>的值会影响到函数外部的<code>by_ref</code>变量，而<code>call_by_value</code>函数接收的是<code>by_val</code>变量的值，所以在函数内修改<code>by_val</code>的值不会影响到函数外部的<code>by_val</code>变量。</p>
 <a id="more"></a>
 <h1 id="对于基本数据类型-Java是值传递还是引用传递"><a href="#对于基本数据类型-Java是值传递还是引用传递" class="headerlink" title="对于基本数据类型, Java是值传递还是引用传递?"></a>对于基本数据类型, Java是值传递还是引用传递?</h1><p>看下图</p>
-<p><img src="/blog/img/20200420-23/00.png" alt="00"></p>
+<p><img src="https://erina.gitee.io/blog/img/20200420-23/00.png" alt="00"></p>
 <p>可以看到，在函数内的修改并没有影响到函数外部的<code>num</code>，所以对于基本数据类型, Java是值传递</p>
 <p>对于基本数据的包装类, 也是值传递</p>
-<p><img src="/blog/img/20200420-23/01.png" alt="01"></p>
+<p><img src="https://erina.gitee.io/blog/img/20200420-23/01.png" alt="01"></p>
 <h1 id="对于引用类型-Java是值传递还是引用传递"><a href="#对于引用类型-Java是值传递还是引用传递" class="headerlink" title="对于引用类型, Java是值传递还是引用传递?"></a>对于引用类型, Java是值传递还是引用传递?</h1><p>看下图</p>
-<p><img src="/blog/img/20200420-23/02.png" alt="02"></p>
+<p><img src="https://erina.gitee.io/blog/img/20200420-23/02.png" alt="02"></p>
 <p>可以看到，在函数内的修改已经影响到了函数外部的<code>lis</code>，这似乎证明了对于引用类型, Java是引用传递</p>
 <p><strong>但是</strong>, 我们都知道, 对于引用类型, 变量保存的是指向其堆内存的地址, 也就是说, 如果将引用类型赋值给另一个变量, 修改当前变量的值, 另一个变量也会被改变, 如何理解呢? 请看下图</p>
-<p><img src="/blog/img/20200420-23/03.png" alt="03"></p>
+<p><img src="https://erina.gitee.io/blog/img/20200420-23/03.png" alt="03"></p>
 <p>可以看到, 虽然只是修改了<code>lis</code>而没有去修改<code>copy</code>, 但由于<code>lis</code>和<code>copy</code>指向的是同一内存地址, 所以对<code>lis</code>的修改也会体现在<code>copy</code>上</p>
-<p><img src="/blog/img/20200420-23/ref.png" alt="ref"></p>
-<p>回到正题，既然知道了<code>lis</code>变量是对于堆内存中ArrayList的引用, 那么之前的结果就不成立了, 修改<code>changeValue</code>方法再看<br><img src="/blog/img/20200420-23/04.png" alt="04"></p>
+<p><img src="https://erina.gitee.io/blog/img/20200420-23/ref.png" alt="ref"></p>
+<p>回到正题，既然知道了<code>lis</code>变量是对于堆内存中ArrayList的引用, 那么之前的结果就不成立了, 修改<code>changeValue</code>方法再看<br><img src="https://erina.gitee.io/blog/img/20200420-23/04.png" alt="04"></p>
 <p>可以看到, 在函数中将一个新的ArrayList的引用赋值给了<code>lis</code>变量, 但是函数外的<code>lis</code>变量依然指向的是原来的ArrayList, 所以得出结论, 对于引用类型, Java也是值传递</p>
 <h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>无论是对于基本数据类型还是引用类型，Java都是<strong>值传递</strong>，但要注意的是，对于引用类型，变量保存的是其引用，所以通过函数接收的变量去修改其指向的引用类型，也<strong>会影响到函数外的变量</strong>，而给函数接收的变量赋予新的引用，则<strong>不会影响到函数外的变量</strong>。</p>
 
