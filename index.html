@@ -212,7 +212,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://chaosalphard.github.io/2020/11/08/使用Validate实现参数统一校验以及自定义校验规则/">
+    <link itemprop="mainEntityOfPage" href="https://chaosalphard.github.io/2021/01/10/使用ControllerAdvice统一封装Controller返回数据/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ilirus">
@@ -229,7 +229,354 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2020/11/08/使用Validate实现参数统一校验以及自定义校验规则/" class="post-title-link" itemprop="url">使用Validate实现参数统一校验以及自定义校验规则</a>
+                <a href="/2021/01/10/使用ControllerAdvice统一封装Controller返回数据/" class="post-title-link" itemprop="url">使用ControllerAdvice统一封装Controller返回数据</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2021-01-10 08:02:12 / 修改时间：03:43:18" itemprop="dateCreated datePublished" datetime="2021-01-10T08:02:12+08:00">2021-01-10</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          <br>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在给前端提供Api接口时，通常会约定好一个统一返回格式，这样方便前端处理返回结果</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(<span class="string">"/index"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IndexController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@GetMapping</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> R&lt;Data&gt; <span class="title">index</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> R.ofSuccess(<span class="keyword">new</span> Data());</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但每次都要用统一返回类手动封装一次再返回还是比较麻烦的，可以使用<code>@ControllerAdvice</code> 注解来进行统一封装，避免每次手动封装</p>
+<p><strong>定义ControllerAdvice</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这里的annotations = ApiResult.class 代表只有在类上有@ApiResult 注解的Controller 才会被处理</span></span><br><span class="line"><span class="comment">// 如果不写则默认对所有Controller 进行处理</span></span><br><span class="line"><span class="meta">@RestControllerAdvice</span>(annotations = ApiResult.class)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ResponseAdvice</span> <span class="keyword">implements</span> <span class="title">ResponseBodyAdvice</span>&lt;<span class="title">Object</span>&gt; </span>&#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">supports</span><span class="params">(MethodParameter returnType, Class&lt;? extends HttpMessageConverter&lt;?&gt;&gt; converterType)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 判断返回类型是否已经是定义好的统一返回类型, 以及@ApiResult 注解是否启用</span></span><br><span class="line">    <span class="comment">// 返回true 则表示进入下一步处理, 返回false 则表示不做处理, 原样返回</span></span><br><span class="line">    <span class="keyword">return</span> !returnType.getParameterType().isAssignableFrom(R.class)&amp;&amp;</span><br><span class="line">            !returnType.hasMethodAnnotation(ApiResult.Disable.class);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Object <span class="title">beforeBodyWrite</span><span class="params">(Object body, MethodParameter returnType, MediaType selectedContentType, Class&lt;? extends HttpMessageConverter&lt;?&gt;&gt; selectedConverterType, ServerHttpRequest request, ServerHttpResponse response)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> R.ofSuccess(body);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2021/01/10/使用ControllerAdvice统一封装Controller返回数据/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chaosalphard.github.io/2020/11/18/Validate自定义校验注解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ilirus">
+      <meta itemprop="description" content="兴趣使然的个人博客<br/>若图片无法加载请点击<a href=" https: erina.gitee.io blog">这里前往国内站点">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ilirus">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2020/11/18/Validate自定义校验注解/" class="post-title-link" itemprop="url">Validate自定义校验注解</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-11-18 20:12:21" itemprop="dateCreated datePublished" datetime="2020-11-18T20:12:21+08:00">2020-11-18</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2021-01-10 00:58:53" itemprop="dateModified" datetime="2021-01-10T00:58:53+08:00">2021-01-10</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          <br>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="自定义Validator校验注解"><a href="#自定义Validator校验注解" class="headerlink" title="自定义Validator校验注解"></a>自定义Validator校验注解</h1><p>通常来说, <code>Hibernate Validation</code>提供的注解已经够用了, 但有时候还是需要根据业务自定义校验规则.</p>
+<h2 id="自定义注解"><a href="#自定义注解" class="headerlink" title="自定义注解"></a>自定义注解</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(&#123;</span><br><span class="line">  ElementType.METHOD,</span><br><span class="line">  ElementType.FIELD,</span><br><span class="line">  ElementType.ANNOTATION_TYPE,</span><br><span class="line">  ElementType.CONSTRUCTOR,</span><br><span class="line">  ElementType.PARAMETER,</span><br><span class="line">  ElementType.TYPE_USE</span><br><span class="line">&#125;)</span><br><span class="line"><span class="meta">@Repeatable</span>(Time.List.class)</span><br><span class="line"><span class="comment">// 设置自定义注解实现类</span></span><br><span class="line"><span class="meta">@Constraint</span>(validatedBy = &#123;TimeValidate.class&#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Time &#123;</span><br><span class="line">  <span class="function"><span class="keyword">boolean</span> <span class="title">allowNull</span><span class="params">()</span> <span class="keyword">default</span> <span class="keyword">false</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="function">String <span class="title">regexp</span><span class="params">()</span> <span class="keyword">default</span> "^<span class="params">(([<span class="number">0</span><span class="number">-1</span>][<span class="number">0</span><span class="number">-9</span>])</span>|<span class="params">(<span class="number">2</span>[<span class="number">0</span><span class="number">-3</span>])</span>):[0-5][0-9]:[0-5][0-9]$"</span>;</span><br><span class="line"></span><br><span class="line">  <span class="function">String <span class="title">message</span><span class="params">()</span> <span class="keyword">default</span> "时间格式错误"</span>;</span><br><span class="line"></span><br><span class="line">  Class&lt;?&gt;[] groups() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">  Class&lt;? extends Payload&gt;[] payload() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Documented</span></span><br><span class="line">  <span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line">  <span class="meta">@Target</span>(&#123;</span><br><span class="line">    ElementType.METHOD,</span><br><span class="line">    ElementType.FIELD,</span><br><span class="line">    ElementType.ANNOTATION_TYPE,</span><br><span class="line">    ElementType.CONSTRUCTOR,</span><br><span class="line">    ElementType.PARAMETER,</span><br><span class="line">    ElementType.TYPE_USE</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">public</span> <span class="meta">@interface</span> List &#123;</span><br><span class="line">    Time[] value();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2020/11/18/Validate自定义校验注解/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chaosalphard.github.io/2020/11/10/Validate参数分组校验/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ilirus">
+      <meta itemprop="description" content="兴趣使然的个人博客<br/>若图片无法加载请点击<a href=" https: erina.gitee.io blog">这里前往国内站点">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ilirus">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2020/11/10/Validate参数分组校验/" class="post-title-link" itemprop="url">Validate参数分组校验</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-11-10 12:30:22" itemprop="dateCreated datePublished" datetime="2020-11-10T12:30:22+08:00">2020-11-10</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2021-01-10 01:00:29" itemprop="dateModified" datetime="2021-01-10T01:00:29+08:00">2021-01-10</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          <br>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+            <h1 id="Validator分组校验"><a href="#Validator分组校验" class="headerlink" title="Validator分组校验"></a>Validator分组校验</h1><p>定义接口, 接口里面不需要写任何东西, Validator会把接口视为一个一个的<strong>组</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IGet</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IList</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IAdd</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IEdit</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IDelete</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果一个组继承了另一个组,</span></span><br><span class="line"><span class="comment">// 则在校验属于这个组的参数时,</span></span><br><span class="line"><span class="comment">// 也会一并校验被继承组的参数</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ISexFilter</span> <span class="keyword">extends</span> <span class="title">Default</span> </span>&#123;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>修改参数实体类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Param</span> </span>&#123;</span><br><span class="line">  <span class="comment">// groups 定义该字段所属的"组"</span></span><br><span class="line">  <span class="meta">@NotNull</span>(message = <span class="string">"id不能为空"</span>, groups = &#123;IGet.class, IEdit.class, IDelete.class&#125;)</span><br><span class="line">  <span class="meta">@Null</span>(message = <span class="string">"获取列表时不需要ID"</span>, groups = IList.class)</span><br><span class="line">  <span class="keyword">private</span> Integer id;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@NotBlank</span>(message = <span class="string">"name不能为空"</span>, groups = IAdd.class)</span><br><span class="line">  <span class="meta">@Null</span>(message = <span class="string">"不能修改name"</span>, groups = IEdit.class)</span><br><span class="line">  <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@NotNull</span>(message = <span class="string">"age不能为空"</span>, groups = IEdit.class)</span><br><span class="line">  <span class="keyword">private</span> Integer age;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@NotNull</span>(message = <span class="string">"sex不能为空"</span>, groups = IEdit.class)</span><br><span class="line">  <span class="meta">@NotBlank</span>(message = <span class="string">"sex不能为空"</span>, groups = ISexFilter.class)</span><br><span class="line">  <span class="keyword">private</span> Byte sex;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 没有标明groups参数时, 默认属于Default组</span></span><br><span class="line">  <span class="meta">@NotBlank</span>(message = <span class="string">"time不能为空"</span>)</span><br><span class="line">  <span class="keyword">private</span> String time;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>修改Controller<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping</span></span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="comment">// 如果没有传入要校验的组, Validator默认校验Default组的参数</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">validateTest</span><span class="params">(@Validated Param param)</span></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">"success"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@GetMapping</span>(<span class="string">"/get"</span>)</span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">get</span><span class="params">(@Validated(value = &#123;IGet.class, ISexFilter.class&#125;)</span> Param param)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> service.get(param.getId());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@GetMapping</span>(<span class="string">"/list"</span>)</span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="comment">// 这里虽然只指定了校验 IList组 和 ISexFilter组,</span></span><br><span class="line"><span class="comment">// 但由于 ISexFilter组 继承了 Default组,</span></span><br><span class="line"><span class="comment">// 所以实际上是校验属于 IList组, ISexFilter组, Default组 的参数.</span></span><br><span class="line"><span class="comment">// 且由于 time 字段没有指明所属组, 所以 time字段 默认属于 Default组,</span></span><br><span class="line"><span class="comment">// 故而 id(IList组), sex(ISexFilter组), time(Default组) 字段都会被校验.</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> List&lt;Object&gt; <span class="title">list</span><span class="params">(@Validated(&#123;IList.class, ISexFilter.class&#125;)</span> Param param)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> service.list();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@PostMapping</span>(<span class="string">"/add"</span>)</span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">add</span><span class="params">(@Validated(value = IAdd.class)</span> @RequestBody Param param)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">"success"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@PatchMapping</span>(<span class="string">"/edit"</span>)</span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">edit</span><span class="params">(@Validated(IEdit.class)</span> @RequestBody Param param)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">"success"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@DeleteMapping</span>(<span class="string">"/delete"</span>)</span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">delete</span><span class="params">(@Validated(IDelete.class)</span> @RequestBody IndexParam param)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">"success"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="定义Validator校验顺序"><a href="#定义Validator校验顺序" class="headerlink" title="定义Validator校验顺序"></a>定义Validator校验顺序</h2><blockquote>
+<p>默认情况下, 不同组别的约束验证是无序的, 然而在某些情况下, 约束验证的顺序却很重要. 例如:</p>
+<ul>
+<li>第二个组中的校验依赖于一个稳定状态, 而这个稳定状态是由第一个组来进行校验的.</li>
+<li>某个组的校验比较耗时, 最优的选择是将其放在最后进行验证.</li>
+</ul>
+</blockquote>
+<p>定义分组接口<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IFirstValidate</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ISecondValidate</span> </span>&#123;&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="定义分组校验顺序"><a href="#定义分组校验顺序" class="headerlink" title="定义分组校验顺序"></a>定义分组校验顺序</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GroupSequence</span>(&#123;</span><br><span class="line">  IFirstValidate.class,</span><br><span class="line">  ISecondValidate.class</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IValidateGroup</span> </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>参数实体类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EditParam</span> </span>&#123;</span><br><span class="line">  <span class="meta">@NotNull</span>(message = <span class="string">"id不能为空"</span>, groups = IFirstValidate.class)</span><br><span class="line">  <span class="keyword">private</span> Integer id;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@NotNull</span>(message = <span class="string">"detail不能为空"</span>, groups = IFirstValidate.class)</span><br><span class="line">  <span class="meta">@Size</span>(min = <span class="number">1024</span>, message = <span class="string">"detail不能小于1024"</span>, groups = ISecondValidate.class)</span><br><span class="line">  <span class="keyword">private</span> List&lt;Object&gt; detail;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在控制器中使用<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PutMapping</span>(<span class="string">"/edit"</span>)</span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">edit</span><span class="params">(@Validated(IValidateGroup.class)</span> @RequestBody EditParam param)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">"success"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chaosalphard.github.io/2020/11/08/Validate参数统一校验/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ilirus">
+      <meta itemprop="description" content="兴趣使然的个人博客<br/>若图片无法加载请点击<a href=" https: erina.gitee.io blog">这里前往国内站点">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ilirus">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2020/11/08/Validate参数统一校验/" class="post-title-link" itemprop="url">使用Validate实现参数统一校验以及自定义校验规则</a>
               
             
           </h1>
@@ -261,7 +608,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-11-09 23:11:31" itemprop="dateModified" datetime="2020-11-09T23:11:31+08:00">2020-11-09</time>
+                <time title="修改时间：2021-01-10 01:01:29" itemprop="dateModified" datetime="2021-01-10T01:01:29+08:00">2021-01-10</time>
               </span>
             
           
@@ -301,7 +648,7 @@
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/2020/11/08/使用Validate实现参数统一校验以及自定义校验规则/#more" rel="contents">
+              <a class="btn" href="/2020/11/08/Validate参数统一校验/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1087,359 +1434,6 @@
   </article>
 
     
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://chaosalphard.github.io/2020/04/04/SpringSecurity使用注解进行授权控制/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ilirus">
-      <meta itemprop="description" content="兴趣使然的个人博客<br/>若图片无法加载请点击<a href=" https: erina.gitee.io blog">这里前往国内站点">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ilirus">
-    </span>
-      <header class="post-header">
-
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2020/04/04/SpringSecurity使用注解进行授权控制/" class="post-title-link" itemprop="url">SpringSecurity使用注解进行授权控制</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2020-04-04 02:10:29" itemprop="dateCreated datePublished" datetime="2020-04-04T02:10:29+08:00">2020-04-04</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2020-04-14 00:34:05" itemprop="dateModified" datetime="2020-04-14T00:34:05+08:00">2020-04-14</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/SpringSecurity/" itemprop="url" rel="index"><span itemprop="name">SpringSecurity</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          <br>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="使用注解进行授权控制"><a href="#使用注解进行授权控制" class="headerlink" title="使用注解进行授权控制"></a>使用注解进行授权控制</h1><blockquote>
-<p>从<code>SpringSecurity</code>2.0版本开始，支持服务层方法的安全性支持，目前有<code>@Secured</code>，<code>@PreAuthorize</code>，<code>@PostAuthorize</code>三类注解</p>
-</blockquote>
-<p>在<code>@Configuration</code>实例上使用<code>@EnableGlobalMethodSecurity</code>注解来启用基于注解的授权控制<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableWebSecurity</span></span><br><span class="line"><span class="comment">// 启用方法授权</span></span><br><span class="line"><span class="meta">@EnableGlobalMethodSecurity</span>(</span><br><span class="line">    <span class="comment">// 启用@Secured注解</span></span><br><span class="line">    securedEnabled = <span class="keyword">true</span>,</span><br><span class="line">    <span class="comment">// 启用@PreAuthorize和@PostAuthorize注解</span></span><br><span class="line">    prePostEnabled = <span class="keyword">true</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SecurityConfig</span> <span class="keyword">extends</span> <span class="title">WebSecurityConfigurerAdapter</span> </span>&#123; ... &#125;</span><br></pre></td></tr></table></figure></p>
-<p>之后向方法(类、方法或者接口)添加注解就会限制对该方法的访问</p>
-<h2 id="Secured注解"><a href="#Secured注解" class="headerlink" title="@Secured注解"></a>@Secured注解</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IndexController</span> </span>&#123;</span><br><span class="line">    <span class="comment">// IS_AUTHENTICATED_ANONYMOUSLY: 表示可以匿名访问</span></span><br><span class="line">    <span class="meta">@Secured</span>(<span class="string">"IS_AUTHENTICATED_ANONYMOUSLY"</span>)</span><br><span class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/r"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">resource</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> getUserName()+<span class="string">"访问资源"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ROLE_USER: 表示需要有USER权限才能访问</span></span><br><span class="line">    <span class="meta">@Secured</span>(<span class="string">"ROLE_USER"</span>)</span><br><span class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/r1"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">resource1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> getUserName()+<span class="string">"访问资源1"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2020/04/04/SpringSecurity使用注解进行授权控制/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://chaosalphard.github.io/2020/04/03/SpringSecurity会话管理/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ilirus">
-      <meta itemprop="description" content="兴趣使然的个人博客<br/>若图片无法加载请点击<a href=" https: erina.gitee.io blog">这里前往国内站点">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ilirus">
-    </span>
-      <header class="post-header">
-
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2020/04/03/SpringSecurity会话管理/" class="post-title-link" itemprop="url">SpringSecurity会话管理</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2020-04-03 01:00:28" itemprop="dateCreated datePublished" datetime="2020-04-03T01:00:28+08:00">2020-04-03</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2020-04-14 00:32:21" itemprop="dateModified" datetime="2020-04-14T00:32:21+08:00">2020-04-14</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/SpringSecurity/" itemprop="url" rel="index"><span itemprop="name">SpringSecurity</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          <br>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-            <h1 id="在Controller中获取认证信息"><a href="#在Controller中获取认证信息" class="headerlink" title="在Controller中获取认证信息"></a>在Controller中获取认证信息</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IndexController</span> </span>&#123;</span><br><span class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/user"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">user</span><span class="params">(Model model)</span> </span>&#123;</span><br><span class="line">        String username = getUserName();</span><br><span class="line">        model.addAttribute(<span class="string">"username"</span>,username);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"user"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">getUserName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 获取认证信息</span></span><br><span class="line">        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 检查用户是否认证</span></span><br><span class="line">        <span class="keyword">if</span>(authentication == <span class="keyword">null</span> || !authentication.isAuthenticated()) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"游客"</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Object principal = authentication.getPrincipal();</span><br><span class="line">        <span class="keyword">if</span>(principal <span class="keyword">instanceof</span> UserDetails) &#123;</span><br><span class="line">            <span class="keyword">return</span> ((UserDetails) principal).getUsername();</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> principal.toString();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="会话控制"><a href="#会话控制" class="headerlink" title="会话控制"></a>会话控制</h1><p>在配置类中通过下列选项控制会话何时创建以及Spring Security 如何与之交互</p>
-<ul>
-<li><code>always</code>: 如果没有session, 则创建一个</li>
-<li><code>ifRequired</code>: 如果需要, 则创建一个. (默认)</li>
-<li><code>never</code>: Spring Security 不会主动创建session 但如果应用中其他地方创建了session 那么Spring Security 将会使用session</li>
-<li><code>stateless</code>: Spring Security 将不会创建session, 也不会使用session</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableWebSecurity</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SecurityConfig</span> <span class="keyword">extends</span> <span class="title">WebSecurityConfigurerAdapter</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(HttpSecurity http)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        http.sessionManagement()</span><br><span class="line">            .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://chaosalphard.github.io/2020/03/31/SpringSecurity自定义登录与注销/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ilirus">
-      <meta itemprop="description" content="兴趣使然的个人博客<br/>若图片无法加载请点击<a href=" https: erina.gitee.io blog">这里前往国内站点">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ilirus">
-    </span>
-      <header class="post-header">
-
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2020/03/31/SpringSecurity自定义登录与注销/" class="post-title-link" itemprop="url">SpringSecurity自定义登录与注销</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2020-03-31 22:34:17" itemprop="dateCreated datePublished" datetime="2020-03-31T22:34:17+08:00">2020-03-31</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2020-04-14 00:34:30" itemprop="dateModified" datetime="2020-04-14T00:34:30+08:00">2020-04-14</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/SpringSecurity/" itemprop="url" rel="index"><span itemprop="name">SpringSecurity</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          <br>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="自定义登录页"><a href="#自定义登录页" class="headerlink" title="自定义登录页"></a>自定义登录页</h1><p>修改配置<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableWebSecurity</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SecurityConfig</span> <span class="keyword">extends</span> <span class="title">WebSecurityConfigurerAdapter</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(HttpSecurity http)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        http.authorizeRequests()</span><br><span class="line">            .antMatchers(<span class="string">"/"</span>,<span class="string">"/index"</span>,<span class="string">"/error"</span>,<span class="string">"/identify"</span>).permitAll()</span><br><span class="line">            .antMatchers(<span class="string">"/user/**"</span>).hasRole(<span class="string">"USER"</span>)</span><br><span class="line">            .and().formLogin()</span><br><span class="line">            <span class="comment">// 自定义登录页面地址</span></span><br><span class="line">            .loginPage(<span class="string">"/login"</span>)</span><br><span class="line">            <span class="comment">// 指定处理登录请求的url, 即登录表单的action对应的地址</span></span><br><span class="line">            .loginProcessingUrl(<span class="string">"/identify/login"</span>)</span><br><span class="line">            <span class="comment">// 成功后默认跳转到的url</span></span><br><span class="line">            .defaultSuccessUrl(<span class="string">"/user"</span>)</span><br><span class="line">            .and()</span><br><span class="line">            <span class="comment">// 禁用跨域请求验证</span></span><br><span class="line">            .csrf().disable();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>映射路径<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// RequestMapping 的路径, 即为配置类中loginPage设置的路径</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(<span class="string">"/login"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">login</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"login"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>页面编写<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span> <span class="attr">xmlns:th</span>=<span class="string">"http://www.thymeleaf.org"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>Login<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- action中的url即为配置类中, loginProcessingUrl项设置的url --&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 登录请求一律用post发送, 不能用get --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">"post"</span> <span class="attr">action</span>=<span class="string">"/identify/login"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h2</span>&gt;</span>Please sign in<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"username"</span>&gt;</span>Username<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"username"</span> <span class="attr">name</span>=<span class="string">"username"</span> <span class="attr">placeholder</span>=<span class="string">"Username"</span> <span class="attr">required</span> <span class="attr">autofocus</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"password"</span>&gt;</span>Password<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"password"</span> <span class="attr">id</span>=<span class="string">"password"</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">placeholder</span>=<span class="string">"Password"</span> <span class="attr">required</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 如果没有在配置类中关闭csrf验证, 则需要在表单中加入下面的表单项 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"hidden"</span> <span class="attr">th:if</span>=<span class="string">"$&#123;_csrf != null&#125;"</span> <span class="attr">th:name</span>=<span class="string">"$&#123;_csrf.parameterName&#125;"</span> <span class="attr">th:value</span>=<span class="string">"$&#123;_csrf.token&#125;"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"submit"</span>&gt;</span>Sign in<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2020/03/31/SpringSecurity自定义登录与注销/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
   </section>
 
   
@@ -1477,7 +1471,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-count">55</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1642,7 +1636,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
