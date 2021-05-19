@@ -212,6 +212,155 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chaosalphard.github.io/2021/05/20/Minecraft-Mod开发手册00-开发环境搭建/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ilirus">
+      <meta itemprop="description" content="兴趣使然的个人博客<br/>若图片无法加载请点击<a href=" https: erina.gitee.io blog">这里前往国内站点">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ilirus">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2021/05/20/Minecraft-Mod开发手册00-开发环境搭建/" class="post-title-link" itemprop="url">Minecraft Mod 开发手册00: 开发环境搭建</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2021-05-20 00:02:00" itemprop="dateCreated datePublished" datetime="2021-05-20T00:02:00+08:00">2021-05-20</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2021-05-19 22:23:54" itemprop="dateModified" datetime="2021-05-19T22:23:54+08:00">2021-05-19</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习笔记/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习笔记/Fabric/" itemprop="url" rel="index"><span itemprop="name">Fabric</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          <br>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Fabric开发环境搭建"><a href="#Fabric开发环境搭建" class="headerlink" title="Fabric开发环境搭建"></a>Fabric开发环境搭建</h1><p>Minecraft目前有<a href="https://forums.minecraftforge.net/" target="_blank" rel="noopener"><code>Forge</code></a>和<a href="https://fabricmc.net/" target="_blank" rel="noopener"><code>Fabric</code></a>两大Mod平台，这里我选择使用较新的<code>Fabric</code>平台。</p>
+<h2 id="开发工具"><a href="#开发工具" class="headerlink" title="开发工具"></a>开发工具</h2><ul>
+<li>jdk8以上</li>
+<li>任意IDE</li>
+</ul>
+<h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><ul>
+<li>下载<code>Fabric</code>官方的<a href="https://github.com/FabricMC/fabric-example-mod/" target="_blank" rel="noopener">项目初始模板</a>，<code>Kotlin</code>开发人员可以下载<a href="https://github.com/natanfudge/fabric-example-mod-kotlin" target="_blank" rel="noopener">Kotlin版</a></li>
+<li>修改<code>gradle.properties</code> 文件<ul>
+<li>修改<code>maven_group</code> 为你的组织名(类似于Maven中的GroupId)</li>
+<li>修改<code>archives_base_name</code> 为你的模组名(类似于Maven中的ArtifactId)</li>
+<li>修改<code>minecraft_version</code> 为你的模组的目标版本(你要为哪个Minecraft版本开发Mod)</li>
+<li>修改<code>yarn_mappings</code>、<code>loader_version</code> 与<code>fabric_version</code> 为<code>minecraft_version</code> 对应的版本，版本对应关系可在<a href="https://fabricmc.net/versions.html" target="_blank" rel="noopener">这里</a>查看</li>
+</ul>
+</li>
+<li>修改<code>src</code>目录下的目录名称，对应到你的<code>maven_group</code>与<code>archives_base_name</code></li>
+<li>修改<code>src/resources/fabric.mod.json</code><ul>
+<li><code>id</code> 为你的模组的命名空间</li>
+<li><code>entrypoints.main</code> 为你的模组的入口(main方法所在类)</li>
+<li><code>mixins</code> 为<code>mixins.json</code> 所在位置</li>
+</ul>
+</li>
+<li>修改<code>&lt;modid&gt;.mixins.json</code>(modid为你的模组的命名空间, fabric.mod.json中id对应的值)<ul>
+<li><code>package</code> 为mixin所在的包名</li>
+<li><code>client</code> 为mixin的类名</li>
+</ul>
+</li>
+<li>最后，将修改好的项目导入到你的IDE中</li>
+</ul>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2021/05/20/Minecraft-Mod开发手册00-开发环境搭建/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://chaosalphard.github.io/2021/01/10/使用ControllerAdvice统一封装Controller返回数据/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1300,140 +1449,6 @@
   </article>
 
     
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://chaosalphard.github.io/2020/04/07/OAuth2-0简介/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ilirus">
-      <meta itemprop="description" content="兴趣使然的个人博客<br/>若图片无法加载请点击<a href=" https: erina.gitee.io blog">这里前往国内站点">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ilirus">
-    </span>
-      <header class="post-header">
-
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2020/04/07/OAuth2-0简介/" class="post-title-link" itemprop="url">OAuth2.0简介</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2020-04-07 03:14:56 / 修改时间：04:09:32" itemprop="dateCreated datePublished" datetime="2020-04-07T03:14:56+08:00">2020-04-07</time>
-            </span>
-          
-            
-
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/OAuth/" itemprop="url" rel="index"><span itemprop="name">OAuth</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          <br>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="什么是OAuth"><a href="#什么是OAuth" class="headerlink" title="什么是OAuth"></a>什么是OAuth</h1><blockquote>
-<p>OAuth(开放授权)是一个开放标准，允许用户让<strong>第三方应用</strong>访问该用户在某一网站上存储的<strong>私密的资源</strong>(如照片，视频，联系人列表)，而无需将用户名和密码提供给第三方应用。</p>
-</blockquote>
-<p>举个例子: 用户借助<strong>QQ认证</strong>去登录<strong>网站A</strong>，如果认证通过了，就不需要用户手动在网站A注册账户了。</p>
-<p>那么怎么样才算认证通过？网站A成功从QQ获取用户信息则认为认证成功了。那么如何从QQ那里获取用户的身份信息呢？用户信息的拥有者是用户本人，QQ需要经过用户同意才可以为网站A生成令牌，而网站A拿到此令牌才可从QQ获取用户信息。</p>
-<h1 id="OAuth的思路"><a href="#OAuth的思路" class="headerlink" title="OAuth的思路"></a>OAuth的思路</h1><blockquote>
-<p>OAuth在”第三方应用程序”与”服务提供商”之间，设置了一个授权层(authorization layer)。”第三方应用程序”不能直接登录”服务提供商”，只能登录授权层，以此将用户与第三方应用程序区分开来。”第三方应用程序”登录授权层所用的令牌(token)，与用户的密码不同。用户可以在登录的时候，指定授权层令牌的权限范围和有效期。</p>
-</blockquote>
-<p>“第三方应用程序”登录授权层以后，”服务提供商”根据令牌的权限范围和有效期，向”第三方应用程序”开放用户储存的资料。</p>
-<h1 id="运行流程"><a href="#运行流程" class="headerlink" title="运行流程"></a>运行流程</h1><ul>
-<li><code>Third-party application</code>: 第三方应用程序，也可称为”客户端”，即例子中的”网站A”。它本身不储存资源，需要通过资源所有者的授权去请求资源服务器的资源。</li>
-<li><code>HTTP service</code>: HTTP服务提供商，即例子中的QQ。</li>
-<li><code>Resource Owner</code>: 资源所有者，也就是用户。</li>
-<li><code>User Agent</code>: 用户代理，一般是指浏览器。</li>
-<li><code>Authorization server</code>: 认证服务器，即服务提供商用来处理认证的服务器，用于服务提供商对资源拥有者的身份进行认证、对资源访问进行授权、认证成功后给客户端发放令牌(Access Token, 客户端访问资源服务器的凭据)。</li>
-<li><code>Resource server</code>: 资源服务器，即服务提供商存放用户资源的服务器。</li>
-</ul>
-<blockquote>
-<p>认证服务器与资源服务器，它们可以是同一台服务器，也可以是不同的服务器。</p>
-</blockquote>
-<p><img src="https://hbimg.huabanimg.com/da0e66ef1c6536b0602a374fff92f85fa8106e562a54-ROlZR6" alt="运行流程"></p>
-<ol>
-<li>用户打开<code>第三方应用程序</code>以后，<code>第三方应用程序</code>要求<code>用户</code>给予授权。</li>
-<li><code>用户</code>同意给予<code>第三方应用程序</code>授权。</li>
-<li><code>第三方应用程序</code>使用上一步获得的授权，向<code>认证服务器</code>申请令牌。</li>
-<li><code>认证服务器</code>对<code>第三方应用程序</code>进行认证以后，确认无误，同意发放令牌。</li>
-<li><code>第三方应用程序</code>使用令牌，向<code>资源服务器</code>申请获取资源。</li>
-<li><code>资源服务器</code>确认令牌无误，同意向<code>第三方应用程序</code>开放资源。</li>
-<li><code>第三方应用程序</code>拿到资源后，即可得知认证通过。</li>
-</ol>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2020/04/07/OAuth2-0简介/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
   </section>
 
   
@@ -1471,7 +1486,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-count">56</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1526,7 +1541,9 @@
         
           
         
-        <span class="site-state-item-count">20</span>
+          
+        
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
@@ -1601,7 +1618,9 @@
         
           
         
-        <span class="site-state-item-count">27</span>
+          
+        
+        <span class="site-state-item-count">28</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
