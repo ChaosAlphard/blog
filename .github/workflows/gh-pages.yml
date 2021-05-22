@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+    pull-request:
 
 jobs:
   deploy:
@@ -27,6 +28,7 @@ jobs:
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3.7.3
         with:
-          github_token: ${{ secrets.ACTIONS_DEPLOY_KEY  }}
+          github_token: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           publish_branch: gh-pages
+          publish_dir: ./public
           exclude_assets: '.github'
