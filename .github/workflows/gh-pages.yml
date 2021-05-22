@@ -1,0 +1,33 @@
+name: Deploy to gh-pages
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+          fetch-depth: 0
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2.4.13
+        with:
+          hugo-version: '0.83.1'
+          extended: true
+
+      - name: Build
+        run: hugo --gc --minify --cleanDestinationDir
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3.7.3
+        if: github.ref == 'refs/heads/main'
+        with:
+          github_token: ${{ secrets.ACTIONS_DEPLOY_KEY  }}
+          publish_branch: gh-pages
+          exclude_assets: '.github'
