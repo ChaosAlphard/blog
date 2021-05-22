@@ -2,6 +2,7 @@
 title: 在Windows的UAC授权中增加密码验证
 date: 2019-09-11 23:50:21
 tags: [Windows]
+categories: [其他]
 ---
 
 # 在Windows的UAC授权中增加密码验证
