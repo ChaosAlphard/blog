@@ -2,7 +2,6 @@
 title: CSS蛇形边框
 date: 2019-08-27 02:27:56
 tags: [HTML,CSS]
-categories: [CSS]
 ---
 
 # 成果展示
@@ -71,8 +70,6 @@ categories: [CSS]
 }
 ```
 <iframe src="https://erina.gitee.io/ilirus/CSS%E8%9B%87%E5%BD%A2%E8%BE%B9%E6%A1%86/02.html" frameborder="0" width="200" height="300"></iframe>
-
-<!-- more -->
 
 使用`animation`实现动画效果
 ```css

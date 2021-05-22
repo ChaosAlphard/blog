@@ -2,7 +2,6 @@
 title: 在Windows的UAC授权中增加密码验证
 date: 2019-09-11 23:50:21
 tags: [Windows]
-categories: [Windows]
 ---
 
 # 在Windows的UAC授权中增加密码验证
@@ -20,5 +19,3 @@ categories: [Windows]
 - 将其属性更改为`提示凭据` 或者 `在安全桌面上提示凭据` 即可
 
 ![UAC](https://s2.ax1x.com/2019/09/12/nwbxdH.jpg)
-
-<!-- more -->
