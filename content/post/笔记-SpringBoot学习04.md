@@ -2,7 +2,7 @@
 title: '[笔记]SpringBoot学习04'
 date: 2018-10-16 09:10:46
 tags: [Java,SpringBoot]
-categories: [编码]
+categories: [编程,SpringBoot]
 ---
 
 # Spring打包和自定义日志

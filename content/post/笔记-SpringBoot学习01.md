@@ -2,7 +2,7 @@
 title: '[笔记]SpringBoot学习01'
 date: 2018-09-11 10:08:00
 tags: [Java,SpringBoot]
-categories: [编码]
+categories: [编程,SpringBoot]
 ---
 
 # Spring学习笔记

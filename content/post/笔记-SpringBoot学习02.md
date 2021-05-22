@@ -1,8 +1,8 @@
 ---
 title: '[笔记]SpringBoot学习02'
 date: 2018-09-20 11:34:24
-tags: [Java,SpringBoot]
-categories: [编码]
+tags: [Java,SpringBoot,Jpa]
+categories: [编程,SpringBoot]
 ---
 
 # 使用JPA来链接数据库

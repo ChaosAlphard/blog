@@ -1,8 +1,8 @@
 ---
 title: '[笔记]SpringBoot学习03'
 date: 2018-09-28 10:23:40
-tags: [Java,SpringBoot]
-categories: [编码]
+tags: [Java,SpringBoot,Thymeleaf]
+categories: [编程,SpringBoot]
 ---
 
 # Thymeleaf网页模板

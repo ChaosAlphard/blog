@@ -2,7 +2,7 @@
 title: '[笔记]SpringBoot学习05'
 date: 2018-10-19 08:52:40
 tags: [Java,SpringBoot]
-categories: [编码]
+categories: [编程,SpringBoot]
 ---
 
 # 使用JUnit进行单元测试
