@@ -1,4 +1,4 @@
-name: Deploy to gh-pages
+name: Deploy Github Page
 
 on:
   push:
@@ -8,8 +8,10 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-20.04
+    environment:
+      name: gh-pages
     steps:
-      - name: Checkout repo
+      - name: Checkout Repo
         uses: actions/checkout@v2
         with:
           submodules: true
