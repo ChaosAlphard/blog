@@ -1,7 +1,7 @@
 ---
 title: 'Minecraft Mod 开发手册00: 开发环境搭建'
 date: 2021-05-20 00:02:00
-tags: [Minecraft]
+tags: [Java,Minecraft]
 categories: [编程,Minecraft]
 ---
 

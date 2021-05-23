@@ -1,7 +1,7 @@
 ---
 title: Maven中dependencyManagement元素的使用
 date: 2020-03-12 17:16:24
-tags: [Maven]
+tags: [Java,Maven]
 categories: [编程,Maven]
 ---
 

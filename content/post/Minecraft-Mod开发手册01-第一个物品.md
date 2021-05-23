@@ -1,7 +1,7 @@
 ---
 title: 'Minecraft Mod 开发手册01: 第一个物品'
 date: 2021-05-21 21:13:06
-tags: [Minecraft]
+tags: [Java,Minecraft]
 categories: [编程,Minecraft]
 ---
 
