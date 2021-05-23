@@ -3,6 +3,7 @@ title: 使用ControllerAdvice统一封装Controller返回数据
 date: 2021-01-10 08:02:12
 tags: [Java,SpringBoot]
 categories: [编程,SpringBoot]
+image: title.jpg
 ---
 
 在给前端提供Api接口时，通常会约定好一个统一返回格式，这样方便前端处理返回结果
@@ -105,7 +106,7 @@ public class IndexController {
 }
 ```
 
-![01](https://erina.gitee.io/blog/img/202012/01.png)
+![01](01.png)
 
 等会，还没完，转换其他类型的时候都是正常的，但是如果遇到String类型，就会报错 `R cannot be cast to class String`
 
@@ -141,6 +142,6 @@ public class WebConfiguration implements WebMvcConfigurer {
 }
 ```
 
-![02](https://erina.gitee.io/blog/img/202012/02.png)
+![02](02.png)
 
 到此为止才算完成了

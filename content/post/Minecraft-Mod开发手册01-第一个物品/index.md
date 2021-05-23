@@ -3,6 +3,7 @@ title: 'Minecraft Mod 开发手册01: 第一个物品'
 date: 2021-05-21 21:13:06
 tags: [Java,Minecraft]
 categories: [编程,Minecraft]
+image: 01.png
 ---
 
 # 向Minecraft中添加物品
@@ -85,7 +86,7 @@ fun init() {
 ```
 
 之后运行runClient 启动Minecraft，在创造模式的杂项选项卡中，即可看到我们添加的物品
-![00](/blog/img/202105/00.png)
+![00](00.png)
 
 可以看到，虽然物品添加成功了，但是没有材质和名称，接下来我们就为其添加名称和材质。
 
@@ -132,4 +133,4 @@ Minecraft在找不到对应语言的翻译文件时，会默认使用`en_us.json
 ```
 
 再重新启动游戏，可以看到效果
-![01](/blog/img/202105/01.png)
+![01](01.png)

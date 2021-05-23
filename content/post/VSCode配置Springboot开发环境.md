@@ -61,8 +61,6 @@ categories: [编程,软件,VSCode]
 }
 ```
 
-![Config](https://s2.ax1x.com/2019/10/03/u0IyhF.jpg)
-
 # 使用方式
 按下`F1`，输入`spring initializr`，选择`Generate a Maven Project`选项即可。
 

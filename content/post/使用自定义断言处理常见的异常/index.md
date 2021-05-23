@@ -3,6 +3,7 @@ title: 使用自定义断言处理常见的异常
 date: 2020-10-19 23:37:23
 tags: [Java]
 categories: [编程,Java]
+image: title.jpg
 ---
 
 　　`Java`中空判断随处可见，通常我们都是手动判断是否为空，然后再抛出自定义异常以及记录信息，例如:
@@ -142,7 +143,7 @@ var sqlExecErr = MessageFormatter.arrayFormat("新增用户失败: {}", data).ge
 Assert.SQL_EXECUTE.success(other.insert(data), sqlExecErr)
 ```
 
-![结果](https://erina.gitee.io/blog/img/20201019/01.jpg)
+![结果](01.jpg)
 
 ## 异常处理
 
