@@ -44,7 +44,7 @@ class ModIcon(settings: Settings) : Item(settings) {
         // 物品分组, 配置物品出现在创造模式物品栏的哪一个选项卡中
         .group(ItemGroup.MISC)
         // 此物品作为合成材料参与合成后返回的物品,
-        // 比如牛奶桶参与合成后会返回水桶
+        // 比如牛奶桶参与合成后会返回铁桶
         // .recipeRemainder(Items.HONEYCOMB)
         // 稀有度 (物品名的颜色)
         .rarity(Rarity.UNCOMMON)

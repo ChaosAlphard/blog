@@ -34,7 +34,7 @@ categories: [软件]
 
 之后选择一款自己喜欢的主题，地址：[https://themes.gohugo.io](https://themes.gohugo.io)，下载或者Clone 到本地，将文件夹放到hugo站点的根目录下。
 
-编辑`config.toml`|`config.yaml`|`config.json` 配置文件，修改`baseurl` 为Github 分配的博客地址，修改`theme` 为你的主题文件夹名称。
+编辑`config.toml`/`config.yaml`/`config.json` 配置文件，修改`baseurl` 为Github 分配的博客地址，修改`theme` 为你的主题文件夹名称。
 
 ## 创建文章
 
