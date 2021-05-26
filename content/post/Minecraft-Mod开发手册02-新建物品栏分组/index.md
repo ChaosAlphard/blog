@@ -19,7 +19,7 @@ class ModItemGroup {
   companion object {
     @JvmStatic
     val ITEM: ItemGroup = FabricItemGroupBuilder
-      .build(Identifier(ModConst.namespace,"item"))
+      .build(Identifier("irs_widget_pack","item"))
       { ItemStack(ModIcon.instance) }
   }
 }
