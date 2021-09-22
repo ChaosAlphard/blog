@@ -11,7 +11,7 @@ disqusShortname: hugo-theme-stack
 googleAnalytics:
 
 # Theme i18n support
-# Available values: en, fr, id, ja, ko, pt-br, zh-cn, es, de
+# Available values: en, fr, id, ja, ko, pt-br, zh-cn, es, de, nl, it
 DefaultContentLanguage: zh-cn
 
 permalinks:
@@ -37,18 +37,28 @@ params:
     emoji: 🌌
     subtitle: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
     avatar:
+      enabled: true
       local: true
       src: img/avatar.png
 
   article:
     math: false
+    toc: true
+    readingTime: false
     license:
       enabled: true
       default: Licensed under CC BY-NC-SA 4.0
 
   comments:
-    enabled: true
+    enabled: false
     provider: disqus
+
+    disqusjs:
+      shortname:
+      apiUrl:
+      apiKey:
+      admin:
+      adminLabel:
 
     utterances:
       repo:
@@ -59,6 +69,47 @@ params:
       host:
       site:
       locale:
+
+    vssue:
+      platform:
+      owner:
+      repo:
+      clientId:
+      clientSecret:
+      autoCreateIssue: false
+
+    # Waline client configuration see: https://waline.js.org/en/reference/client.html
+    waline:
+      serverURL:
+      lang:
+      visitor:
+      avatar:
+      emoji:
+        - https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo
+      requiredMeta:
+        - name
+        - email
+        - url
+      placeholder:
+      locale:
+        admin: Admin
+
+    twikoo:
+      envId:
+      region:
+      path:
+      lang:
+
+    giscus:
+      repo:
+      repoID:
+      category:
+      categoryID:
+      mapping:
+      lightTheme:
+      darkTheme:
+      reactionsEnabled: 1
+      emitMetadata: 0
 
   widgets:
     enabled:
@@ -100,7 +151,7 @@ params:
       enabled: true
 
 ### Custom menu
-### See https://docs.stack.jimmycai.com/configuration/custom-menu
+### See https://docs.stack.jimmycai.com/configuration/custom-menu.html
 ### To remove about, archive and search page menu item, remove `menu` field from their FrontMatter
 menu:
   main:
@@ -109,6 +160,9 @@ menu:
       url: /
       weight: -100
       pre: home
+      params:
+        ### For demonstration purpose, the home link will be open in a new tab
+        newTab: true
 
 related:
   includeNewer: true
@@ -122,6 +176,10 @@ related:
       weight: 200
 
 markup:
+  tableOfContents:
+    endLevel: 4
+    ordered: true
+    startLevel: 2
   highlight:
     noClasses: false
   goldmark:
