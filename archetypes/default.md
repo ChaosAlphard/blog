@@ -4,6 +4,7 @@ description:
 date: {{ .Date }}
 image:
 math:
+toc: true
 license:
 hidden: false
 comments: true
