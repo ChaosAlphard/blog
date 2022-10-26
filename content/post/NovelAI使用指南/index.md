@@ -8,7 +8,7 @@ toc: true
 license:
 hidden: false
 comments: true
-draft: true
+draft: false
 tags: [AI, NovelAI]
 categories: [软件]
 ---
