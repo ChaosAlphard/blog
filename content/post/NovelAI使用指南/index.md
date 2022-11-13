@@ -1,5 +1,5 @@
 ---
-title: "NovelAI使用指南"
+title: "StableDiffusionWebui使用指南"
 description:
 date: 2022-10-25T20:47:05+08:00
 image: title.jpg
@@ -9,18 +9,17 @@ license:
 hidden: false
 comments: true
 draft: false
-tags: [AI, NovelAI]
+tags: [AI, StableDiffusion]
 categories: [软件]
 ---
 
 ## 简介
-　　`NovelAI`是一个图像生成AI，其训练数据来源于`Danboorn`。(ps: 本篇文章封面图就是用NovelAI生成的)
+　　`StableDiffusion` 是一个图像生成AI，只需要输入一段文本或关键词，`StableDiffusion` 就可以迅速将其转换为图像。也可以传入图片，配合文本或关键词对其进行处理。通过加载不同的模型，可使`StableDiffusion` 生成不同风格的图像。(ps: 本篇文章封面图就是用StableDiffusion 生成的)
 
 ## 安装
-　　访问NovelAI [官网](https://novelai.net/)，或者使用[stable-diffusion-webui](https://github.com/AUTOMATIC1111/stable-diffusion-webui)，并使用NovelAI 的绘图模型，具体安装方法参考该项目文档
+　　访问Github项目：[stable-diffusion-webui](https://github.com/AUTOMATIC1111/stable-diffusion-webui)，具体安装方法参考该项目文档
 
 ## 使用
-> 后续所有内容，默认以`stable-diffusion-webui` 为目标做讲解
 
 ![txt2img](01.jpg)
 
@@ -47,15 +46,17 @@ categories: [软件]
     - `0.9-1.0`：基本属于推倒重画，AI基本上不对原图进行参考
 
 ### 关键词特殊用法
-- `()`: 强调符，会提升AI对该关键词的权重到原本的1.1倍，可叠加，`(())`会提升到1.1*1.1=1.21倍。NovelAI官网使用`{}`作强调符，且提升倍数为1.05倍。
+- `()`: 强调符，会提升AI对该关键词的权重到原本的1.1倍，可叠加，`(())`会提升到1.1*1.1=1.21倍。
 - `[]`: 弱化符，会降低AI对该关键词的权重到原本的1/1.1倍。
 - `|`: 连接符，对同一个物品的描述可用该符号链接，以提高准确性，例：`white dress|long dress|sleeveless dress|strapless dress` 意为：白色无袖无肩带长连衣裙。
 - `;`: 连接符，也可实现对同一个物品的描述，但是与`|`实现原理不同，例：`alloy;silver hair` 表现为：有金属光泽的银色头发。
 - `\`: 转义符，将此符号后面的一个符号转义为普通字符。例：`hihaya \(clothing\)` 这个关键词中的`()`不会被AI视为强调符。
-- `:`配合`()`可调整关键词权重，`(tag:1.2)`为提升到1.2倍，`(tag:0.95)`为降低到0.95倍。NovelAI官网目前不兼容该符号。
+- `:`配合`()`可调整关键词权重，`(tag:1.2)`为提升到1.2倍，`(tag:0.95)`为降低到0.95倍。
 - `:`与`::`配合`[]`可调整关键词的出场时机，`[tag:10]`意为在采样步数10步的时候开始进行绘制，`[tag::30]`意为在采样步数30步的时候停止进行绘制，配合使用可以达到混合的效果，例：`[window::5],[underwater:5]` 可形成通过窗户看见水下世界的画面效果。
 
+<!--
 ## 相关网站
 - NovelAI资源整合: https://www.kdocs.cn/l/cvg8ccOGj5sq
 - 元素法典: https://docs.qq.com/doc/DWHl3am5Zb05QbGVs
 - Danbooru Tag Wiki: https://danbooru.donmai.us/wiki_pages/tag_groups
+-->
