@@ -8,7 +8,7 @@ toc: true
 license:
 hidden: false
 comments: true
-draft: false
+draft: true
 tags: [AI, StableDiffusion]
 categories: [软件]
 ---
