@@ -8,9 +8,8 @@ toc: true
 license:
 hidden: false
 comments: true
-draft: true
 tags: [Java,设计模式]
-categories: [编程]
+categories: [编程,Java]
 ---
 
 # 单例模式
