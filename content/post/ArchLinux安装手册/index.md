@@ -1,7 +1,7 @@
 ---
 title: "Arch Linux 安装手册"
 description:
-date: 2024-04-10T20:30:00+08:00
+date: 2024-04-10T08:00:00+08:00
 image:
 math:
 toc: true
@@ -12,7 +12,7 @@ tags: [Linux]
 categories: [Linux]
 ---
 
-# 使用Archinstall安装Archlinux
+# Arch Linux 安装手册
 
 首先在[Arch Linux](https://archlinux.org/download)官网下载iso文件，之后使用Rufus等工具将iso文件刻录到U盘中
 
