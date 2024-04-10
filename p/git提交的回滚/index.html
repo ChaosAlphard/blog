@@ -1,0 +1,65 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="revert  git revert &amp;lt;commit&amp;gt;
+ 生成一个撤消了commit 引入的修改的新提交，然后应用到当前分支。
+commit 可以通过使用git log 来查看
+revert 是提交一个 撤销了更改的 新提交，而不是从项目历史中移除这个提交。这会避免Git丢失项目历史，是一种比较安全的方式。
+reset  git reset
+ 重设暂存区，但不改变工作区，匹配最近的一次提交。
+ git reset --hard
+ 重设暂存区和工作区，匹配最近的一次提交。
+--hard 会使git更改工作区中的文件。确定要扔掉本地的开发进度再使用。
+ git reset &amp;lt;commit&amp;gt;
+ 将暂存区重设到这个提交，但不改变工作区。
+所有commit 之后的更改会保留在工作区中，适用于重新提交更干净的项目历史。
+ git reset --hard &amp;lt;commit&amp;gt;
+ 将暂存区和工作区都重设到这个提交。
+ git reset &amp;lt;file&amp;gt;
+ 从暂存区移除某个文件，但不改变工作区。
+reset 和 revert  git revert 可以针对历史中任何一个提交，而 git reset 只能从当前提交向前回溯。比如，你想用 git reset 重设一个旧的提交，你不得不移除那个提交后的所有提交，再移除那个提交，然后重新提交后面的所有提交。
+ revert被设计为撤销公开的提交的安全方式，reset被设计为重设本地更改。
+因为两个命令的目的不同，它们的实现也不一样：reset完全地移除了一堆更改，而revert保留了原来的更改，用一个新的提交来实现撤销。
+查看之前的内容 检出提交  git checkout &amp;lt;commit&amp;gt;"><title>Git提交的回滚</title><link rel=canonical href=https://chaosalphard.github.io/p/git%E6%8F%90%E4%BA%A4%E7%9A%84%E5%9B%9E%E6%BB%9A/><link rel=stylesheet href=/scss/style.min.css><meta property="og:title" content="Git提交的回滚"><meta property="og:description" content="revert  git revert &amp;lt;commit&amp;gt;
+ 生成一个撤消了commit 引入的修改的新提交，然后应用到当前分支。
+commit 可以通过使用git log 来查看
+revert 是提交一个 撤销了更改的 新提交，而不是从项目历史中移除这个提交。这会避免Git丢失项目历史，是一种比较安全的方式。
+reset  git reset
+ 重设暂存区，但不改变工作区，匹配最近的一次提交。
+ git reset --hard
+ 重设暂存区和工作区，匹配最近的一次提交。
+--hard 会使git更改工作区中的文件。确定要扔掉本地的开发进度再使用。
+ git reset &amp;lt;commit&amp;gt;
+ 将暂存区重设到这个提交，但不改变工作区。
+所有commit 之后的更改会保留在工作区中，适用于重新提交更干净的项目历史。
+ git reset --hard &amp;lt;commit&amp;gt;
+ 将暂存区和工作区都重设到这个提交。
+ git reset &amp;lt;file&amp;gt;
+ 从暂存区移除某个文件，但不改变工作区。
+reset 和 revert  git revert 可以针对历史中任何一个提交，而 git reset 只能从当前提交向前回溯。比如，你想用 git reset 重设一个旧的提交，你不得不移除那个提交后的所有提交，再移除那个提交，然后重新提交后面的所有提交。
+ revert被设计为撤销公开的提交的安全方式，reset被设计为重设本地更改。
+因为两个命令的目的不同，它们的实现也不一样：reset完全地移除了一堆更改，而revert保留了原来的更改，用一个新的提交来实现撤销。
+查看之前的内容 检出提交  git checkout &amp;lt;commit&amp;gt;"><meta property="og:url" content="https://chaosalphard.github.io/p/git%E6%8F%90%E4%BA%A4%E7%9A%84%E5%9B%9E%E6%BB%9A/"><meta property="og:site_name" content="Ilirus"><meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="Git"><meta property="article:published_time" content="2019-09-18T17:46:03+00:00"><meta property="article:modified_time" content="2019-09-18T17:46:03+00:00"><meta name=twitter:title content="Git提交的回滚"><meta name=twitter:description content="revert  git revert &amp;lt;commit&amp;gt;
+ 生成一个撤消了commit 引入的修改的新提交，然后应用到当前分支。
+commit 可以通过使用git log 来查看
+revert 是提交一个 撤销了更改的 新提交，而不是从项目历史中移除这个提交。这会避免Git丢失项目历史，是一种比较安全的方式。
+reset  git reset
+ 重设暂存区，但不改变工作区，匹配最近的一次提交。
+ git reset --hard
+ 重设暂存区和工作区，匹配最近的一次提交。
+--hard 会使git更改工作区中的文件。确定要扔掉本地的开发进度再使用。
+ git reset &amp;lt;commit&amp;gt;
+ 将暂存区重设到这个提交，但不改变工作区。
+所有commit 之后的更改会保留在工作区中，适用于重新提交更干净的项目历史。
+ git reset --hard &amp;lt;commit&amp;gt;
+ 将暂存区和工作区都重设到这个提交。
+ git reset &amp;lt;file&amp;gt;
+ 从暂存区移除某个文件，但不改变工作区。
+reset 和 revert  git revert 可以针对历史中任何一个提交，而 git reset 只能从当前提交向前回溯。比如，你想用 git reset 重设一个旧的提交，你不得不移除那个提交后的所有提交，再移除那个提交，然后重新提交后面的所有提交。
+ revert被设计为撤销公开的提交的安全方式，reset被设计为重设本地更改。
+因为两个命令的目的不同，它们的实现也不一样：reset完全地移除了一堆更改，而revert保留了原来的更改，用一个新的提交来实现撤销。
+查看之前的内容 检出提交  git checkout &amp;lt;commit&amp;gt;"></head><body class="article-page has-toc"><script>(function(){const a='StackColorScheme';localStorage.getItem(a)||localStorage.setItem(a,"auto")})()</script><script>(function(){const b='StackColorScheme',a=localStorage.getItem(b),c=window.matchMedia('(prefers-color-scheme: dark)').matches===!0;a=='dark'||a==='auto'&&c?document.documentElement.dataset.scheme='dark':document.documentElement.dataset.scheme='light'})()</script><div class="container main-container flex
+extended"><div id=article-toolbar><a href=https://chaosalphard.github.io class=back-home><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="15 6 9 12 15 18"/></svg><span>返回</span></a></div><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/%E7%BC%96%E7%A8%8B/>编程</a></header><h2 class=article-title><a href=/p/git%E6%8F%90%E4%BA%A4%E7%9A%84%E5%9B%9E%E6%BB%9A/>Git提交的回滚</a></h2><footer class=article-time><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg><time class=article-time--published>Sep 18, 2019</time></div></footer></div></header><section class=article-content><h1 id=revert>revert</h1><blockquote><p><code>git revert &lt;commit></code></p></blockquote><p>生成一个撤消了<code>commit</code> 引入的修改的新提交，然后应用到当前分支。</p><p><code>commit</code> 可以通过使用<code>git log</code> 来查看</p><p><code>revert</code> 是提交一个 撤销了更改的 <strong>新提交</strong>，而不是从项目历史中移除这个提交。这会避免Git丢失项目历史，是一种比较安全的方式。</p><h1 id=reset>reset</h1><blockquote><p><code>git reset</code></p></blockquote><p>重设暂存区，但不改变工作区，匹配最近的一次提交。</p><blockquote><p><code>git reset --hard</code></p></blockquote><p>重设<strong>暂存区和工作区</strong>，匹配最近的一次提交。<br><code>--hard</code> 会使git更改工作区中的文件。确定要扔掉本地的开发进度再使用。</p><blockquote><p><code>git reset &lt;commit></code></p></blockquote><p>将暂存区重设到这个提交，但不改变工作区。<br>所有<code>commit</code> 之后的更改会保留在工作区中，适用于重新提交更干净的项目历史。</p><blockquote><p><code>git reset --hard &lt;commit></code></p></blockquote><p>将暂存区和工作区都重设到这个提交。</p><blockquote><p><code>git reset &lt;file></code></p></blockquote><p>从暂存区移除某个文件，但不改变工作区。</p><h1 id=reset-和-revert>reset 和 revert</h1><blockquote><p><code>git revert</code> 可以针对历史中任何一个提交，而 <code>git reset</code> 只能从当前提交向前回溯。比如，你想用 git reset 重设一个旧的提交，你不得不移除那个提交后的所有提交，再移除那个提交，然后重新提交后面的所有提交。</p></blockquote><p><code>revert</code>被设计为撤销<strong>公开</strong>的提交的安全方式，<code>reset</code>被设计为重设<strong>本地</strong>更改。<br>因为两个命令的目的不同，它们的实现也不一样：<code>reset</code>完全地移除了一堆更改，而<code>revert</code>保留了原来的更改，用一个新的提交来实现撤销。</p><h1 id=查看之前的内容>查看之前的内容</h1><h2 id=检出提交>检出提交</h2><blockquote><p><code>git checkout &lt;commit></code></p></blockquote><p>使用<code>checkout commit</code> 可以便捷地将<code>commit</code> 加载到电脑上。<br>而且<strong>检出提交</strong>是一个<strong>只读</strong>操作，在查看其他<code>commit</code>的时候不会对你当前的状态(比如master分支)产生影响。<br>在检出提交的时候，<code>HEAD</code>直接指向检出的提交。而不是指向分支。(分离HEAD)</p><h2 id=检出文件>检出文件</h2><blockquote><p><code>git checkout &lt;commit> &lt;file></code></p></blockquote><p>会将工作区中的<code>file</code>文件变成<code>commit</code>中的那个文件，并将它加入暂存区。</p><p><strong>这会对你当前的工作区中的文件产生影响。</strong></p><h1 id=参考资料>参考资料</h1><blockquote><p><a href=https://www.atlassian.com/git/tutorials/undoing-changes>https://www.atlassian.com/git/tutorials/undoing-changes</a></p></blockquote></section><footer class=article-footer><section class=article-tags><a href=/tags/git/>Git</a></section><section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg><span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><aside class=related-contents--wrapper><h2 class=section-title>相关文章</h2><div class=related-contents><div class="flex article-list--tile"><article><a href=/p/git%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/><div class=article-details><h2 class=article-title>Git常用指令</h2></div></a></article><article><a href=/p/%E5%88%A0%E9%99%A4%E6%89%80%E6%9C%89git%E6%8F%90%E4%BA%A4%E8%AE%B0%E5%BD%95/><div class=article-details><h2 class=article-title>删除所有Git提交记录</h2></div></a></article><article><a href=/p/java%E5%BC%80%E5%8F%91%E7%9F%A5%E8%AF%86%E7%82%B9%E7%AE%80%E5%8D%95%E6%80%BB%E7%BB%93-%E6%95%B0%E6%8D%AE%E5%BA%93/><div class=article-details><h2 class=article-title>Java开发知识点简单总结-数据库</h2></div></a></article><article><a href=/p/java%E5%BC%80%E5%8F%91%E7%9F%A5%E8%AF%86%E7%82%B9%E7%AE%80%E5%8D%95%E6%80%BB%E7%BB%93-spring/><div class=article-details><h2 class=article-title>Java开发知识点简单总结-Spring</h2></div></a></article><article><a href=/p/java%E5%BC%80%E5%8F%91%E7%9F%A5%E8%AF%86%E7%82%B9%E7%AE%80%E5%8D%95%E6%80%BB%E7%BB%93/><div class=article-details><h2 class=article-title>Java开发知识点简单总结</h2></div></a></article></div></div></aside><footer class=site-footer><section class=copyright>&copy;
+2020 -
+2024 Ilirus</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.2.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css integrity="sha256-c0uckgykQ9v5k+IqViZOZKc47Jn7KQil4/MP3ySA3F8=" crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE=" crossorigin=anonymous></main><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">目录</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#检出提交>检出提交</a></li><li><a href=#检出文件>检出文件</a></li></ol></nav></div></section></aside></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g=" crossorigin=anonymous defer></script><script type=text/javascript src=/ts/main.js defer></script><script>(function(){const a=document.createElement('link');a.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",a.type="text/css",a.rel="stylesheet",document.head.appendChild(a)})()</script></body></html>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Linux on Ilirus</title><link>https://chaosalphard.github.io/tags/linux/</link><description>Recent content in Linux on Ilirus</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Wed, 10 Apr 2024 14:08:24 +0800</lastBuildDate><atom:link href="https://chaosalphard.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>ArchLinux初始配置以及常用软件安装</title><link>https://chaosalphard.github.io/p/archlinux%E5%88%9D%E5%A7%8B%E9%85%8D%E7%BD%AE%E4%BB%A5%E5%8F%8A%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/</link><pubDate>Wed, 10 Apr 2024 14:08:24 +0800</pubDate><guid>https://chaosalphard.github.io/p/archlinux%E5%88%9D%E5%A7%8B%E9%85%8D%E7%BD%AE%E4%BB%A5%E5%8F%8A%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/</guid><description>ArchLinux初始配置以及常用软件安装 更换 Arch Linux 镜像源 修改 /etc/pacman.d/mirrorlist 文件, 添加国内镜像
+# China Server = https://mirrors.xjtu.edu.cn/archlinux/$repo/os/$arch Server = https://mirrors.wsyu.edu.cn/archlinux/$repo/os/$arch Server = https://mirrors.ustc.edu.cn/archlinux/$repo/os/$arch Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/$repo/os/$arch Server = https://mirrors.sjtug.sjtu.edu.cn/archlinux/$repo/os/$arch Server = https://mirrors.shanghaitech.edu.cn/archlinux/$repo/os/$arch Server = https://mirrors.qvq.net.cn/archlinux/$repo/os/$arch Server = https://mirrors.qlu.edu.cn/archlinux/$repo/os/$arch Server = https://mirrors.nju.edu.cn/archlinux/$repo/os/$arch Server = https://mirrors.neusoft.edu.cn/archlinux/$repo/os/$arch Server = https://mirrors.jxust.edu.cn/archlinux/$repo/os/$arch Server = https://mirrors.jlu.edu.cn/archlinux/$repo/os/$arch Server = https://mirrors.cqu.edu.cn/archlinux/$repo/os/$arch Server = https://mirrors.bfsu.edu.cn/archlinux/$repo/os/$arch Server = https://mirrors.aliyun.com/archlinux/$repo/os/$arch Server = https://mirror.nyist.edu.cn/archlinux/$repo/os/$arch 创建用户目录 用户目录指位于 $HOME 下的一系列常用目录, 例如 Documents, Downloads, Music, 以及 Desktop. 用户目录会在文件管理器中显示为不同的图标, 且被多种应用程序所参照.</description></item><item><title>Arch Linux 安装手册</title><link>https://chaosalphard.github.io/p/arch-linux-%E5%AE%89%E8%A3%85%E6%89%8B%E5%86%8C/</link><pubDate>Wed, 10 Apr 2024 08:00:00 +0800</pubDate><guid>https://chaosalphard.github.io/p/arch-linux-%E5%AE%89%E8%A3%85%E6%89%8B%E5%86%8C/</guid><description>Arch Linux 安装手册 首先在Arch Linux官网下载iso文件，之后使用Rufus等工具将iso文件刻录到U盘中
+输入archinstall进入安装界面
+Mirrors 选择镜像地区
+Locales Locale language如果平时使用tty就选en_US.UTF-8, 不要选zh_CN, 否则安装好后tty里面会出现方块, 但是如果要安装桌面或者不使用tty那这里就可以选zh_CN.UTF-8, 这里我选zh_CN.UTF-8因为之后要安装桌面.
+Locale encoding选UTF-8, 避免编码问题
+Disk Configuration 第一个选项是自动分区, 第二个是手动分区, 第三个是加载分区配置文件. 这里我选自动分区，格式选btrfs, 这样他就会自动帮我分好带5个子卷的btrfs分区
+如果有需要调整的地方可以在这里修改
+Disk Encryption 硬盘加密, 根据自己需要设置就行
+Boot Loader 选自己喜欢的就行, 我用Grub
+Swap 按个人喜好决定要不要启用, 这里提供的是swap on zram, 如果想使用传统的swap则需要自己手动分配
+Hostname 主机名称, 填你自己喜欢的就行, 比如Ilirus-PC
+Root Password 随便填, 不要留空就行, 不然用不了root
+User Account 按个人需要创建用户
+Profile 可以在这里选择想安装的桌面, 也可以选 Minimal 之后自己手动安装</description></item></channel></rss>

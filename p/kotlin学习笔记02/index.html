@@ -1,0 +1,183 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Kotlin基本语法 变量、常量的定义 [修饰符] &amp;lt;var|val&amp;gt; &amp;lt;名称&amp;gt; : &amp;lt;类型&amp;gt; = &amp;lt;赋值&amp;gt;
+//var 代表变量，可被更改 var age: Int = 18 //val 代表常量, 定义后不能被修改, 定义时必须赋值 val name: String = &amp;#34;Ilirus&amp;#34; 基本数据类型 var boolean:Boolean = false var char:Char = &amp;#39;a&amp;#39; var byte:Byte = 127 var short:Short = 32767 var int:Int = 2147483647 var long:Long = 9223372036854775807 var float:Float = 2.33f var double:Double = 3.1415926 类型检测与自动转换 fun getStrLength(o: Any): Int { if(o is String){ //进行类型判断后, o会自动被转换为String类型  return o."><title>Kotlin学习笔记02</title><link rel=canonical href=https://chaosalphard.github.io/p/kotlin%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B002/><link rel=stylesheet href=/scss/style.min.css><meta property="og:title" content="Kotlin学习笔记02"><meta property="og:description" content="Kotlin基本语法 变量、常量的定义 [修饰符] &amp;lt;var|val&amp;gt; &amp;lt;名称&amp;gt; : &amp;lt;类型&amp;gt; = &amp;lt;赋值&amp;gt;
+//var 代表变量，可被更改 var age: Int = 18 //val 代表常量, 定义后不能被修改, 定义时必须赋值 val name: String = &amp;#34;Ilirus&amp;#34; 基本数据类型 var boolean:Boolean = false var char:Char = &amp;#39;a&amp;#39; var byte:Byte = 127 var short:Short = 32767 var int:Int = 2147483647 var long:Long = 9223372036854775807 var float:Float = 2.33f var double:Double = 3.1415926 类型检测与自动转换 fun getStrLength(o: Any): Int { if(o is String){ //进行类型判断后, o会自动被转换为String类型  return o."><meta property="og:url" content="https://chaosalphard.github.io/p/kotlin%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B002/"><meta property="og:site_name" content="Ilirus"><meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="Kotlin"><meta property="article:published_time" content="2018-12-06T15:08:02+00:00"><meta property="article:modified_time" content="2018-12-06T15:08:02+00:00"><meta name=twitter:title content="Kotlin学习笔记02"><meta name=twitter:description content="Kotlin基本语法 变量、常量的定义 [修饰符] &amp;lt;var|val&amp;gt; &amp;lt;名称&amp;gt; : &amp;lt;类型&amp;gt; = &amp;lt;赋值&amp;gt;
+//var 代表变量，可被更改 var age: Int = 18 //val 代表常量, 定义后不能被修改, 定义时必须赋值 val name: String = &amp;#34;Ilirus&amp;#34; 基本数据类型 var boolean:Boolean = false var char:Char = &amp;#39;a&amp;#39; var byte:Byte = 127 var short:Short = 32767 var int:Int = 2147483647 var long:Long = 9223372036854775807 var float:Float = 2.33f var double:Double = 3.1415926 类型检测与自动转换 fun getStrLength(o: Any): Int { if(o is String){ //进行类型判断后, o会自动被转换为String类型  return o."></head><body class="article-page has-toc"><script>(function(){const a='StackColorScheme';localStorage.getItem(a)||localStorage.setItem(a,"auto")})()</script><script>(function(){const b='StackColorScheme',a=localStorage.getItem(b),c=window.matchMedia('(prefers-color-scheme: dark)').matches===!0;a=='dark'||a==='auto'&&c?document.documentElement.dataset.scheme='dark':document.documentElement.dataset.scheme='light'})()</script><div class="container main-container flex
+extended"><div id=article-toolbar><a href=https://chaosalphard.github.io class=back-home><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="15 6 9 12 15 18"/></svg><span>返回</span></a></div><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/%E7%BC%96%E7%A8%8B/>编程</a>
+<a href=/categories/kotlin/>Kotlin</a></header><h2 class=article-title><a href=/p/kotlin%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B002/>Kotlin学习笔记02</a></h2><footer class=article-time><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg><time class=article-time--published>Dec 06, 2018</time></div></footer></div></header><section class=article-content><h1 id=kotlin基本语法>Kotlin基本语法</h1><h2 id=变量常量的定义>变量、常量的定义</h2><p><code>[修饰符] &lt;var|val> &lt;名称> : &lt;类型> = &lt;赋值></code></p><div class=highlight><pre class=chroma><code class=language-kotlin data-lang=kotlin><span class=c1>//var 代表变量，可被更改
+</span><span class=c1></span><span class=k>var</span> <span class=py>age</span><span class=p>:</span> <span class=n>Int</span> <span class=p>=</span> <span class=m>18</span>
+<span class=c1>//val 代表常量, 定义后不能被修改, 定义时必须赋值
+</span><span class=c1></span><span class=k>val</span> <span class=py>name</span><span class=p>:</span> <span class=n>String</span> <span class=p>=</span> <span class=s2>&#34;Ilirus&#34;</span>
+</code></pre></div><h2 id=基本数据类型>基本数据类型</h2><div class=highlight><pre class=chroma><code class=language-kotlin data-lang=kotlin><span class=k>var</span> <span class=py>boolean</span><span class=p>:</span><span class=n>Boolean</span> <span class=p>=</span> <span class=k>false</span>
+<span class=k>var</span> <span class=py>char</span><span class=p>:</span><span class=n>Char</span> <span class=p>=</span> <span class=sc>&#39;a&#39;</span>
+<span class=k>var</span> <span class=py>byte</span><span class=p>:</span><span class=n>Byte</span> <span class=p>=</span> <span class=m>127</span>
+<span class=k>var</span> <span class=py>short</span><span class=p>:</span><span class=n>Short</span> <span class=p>=</span> <span class=m>32767</span>
+<span class=k>var</span> <span class=py>int</span><span class=p>:</span><span class=n>Int</span> <span class=p>=</span> <span class=m>2147483647</span>
+<span class=k>var</span> <span class=py>long</span><span class=p>:</span><span class=n>Long</span> <span class=p>=</span> <span class=m>9223372036854775807</span>
+<span class=k>var</span> <span class=py>float</span><span class=p>:</span><span class=n>Float</span> <span class=p>=</span> <span class=m>2.33f</span>
+<span class=k>var</span> <span class=py>double</span><span class=p>:</span><span class=n>Double</span> <span class=p>=</span> <span class=m>3.1415926</span>
+</code></pre></div><h2 id=类型检测与自动转换>类型检测与自动转换</h2><div class=highlight><pre class=chroma><code class=language-kotlin data-lang=kotlin><span class=k>fun</span> <span class=nf>getStrLength</span><span class=p>(</span><span class=n>o</span><span class=p>:</span> <span class=n>Any</span><span class=p>):</span> <span class=n>Int</span> <span class=p>{</span>
+    <span class=k>if</span><span class=p>(</span><span class=n>o</span> <span class=k>is</span> <span class=n>String</span><span class=p>){</span>
+        <span class=c1>//进行类型判断后, o会自动被转换为String类型
+</span><span class=c1></span>        <span class=k>return</span> <span class=n>o</span><span class=p>.</span><span class=n>length</span>
+    <span class=p>}</span>
+    <span class=k>return</span> <span class=m>0</span>
+<span class=p>}</span>
+</code></pre></div><h2 id=返回空值与空值检测>返回空值与空值检测</h2><p>如果引用或函数的返回值可能为空值，则必须显式标记nullable</p><div class=highlight><pre class=chroma><code class=language-kotlin data-lang=kotlin><span class=c1>//在类型后面加上一个问号, 表示这个对象可能为空
+</span><span class=c1>//用两个感叹号表示一定不为空
+</span><span class=c1></span><span class=k>fun</span> <span class=nf>getStuName</span><span class=p>(</span><span class=n>stu</span><span class=p>:</span> <span class=n>Any</span><span class=p>?):</span> <span class=n>String</span><span class=p>?</span> <span class=p>{</span>
+    <span class=k>if</span><span class=p>(</span><span class=n>stu</span><span class=o>!=</span><span class=k>null</span><span class=p>){</span>
+        <span class=k>return</span> <span class=n>stu</span><span class=p>.</span><span class=n>getName</span>
+    <span class=p>}</span>
+    <span class=k>return</span> <span class=k>null</span>
+<span class=p>}</span>
+</code></pre></div><p>Kotlin的空值检测能有效的避免<code>NPE</code>(NullPointException) 的出现</p><p>例如这句代码<code>student?.getName()</code>，只会在student不为空时执行<br>相反，这句代码<code>student?:student=Student()</code>，只会在student为空时执行</p><p>如果要执行代码块的话，可以这样写</p><div class=highlight><pre class=chroma><code class=language-kotlin data-lang=kotlin><span class=c1>//data不为空执行
+</span><span class=c1></span><span class=k>data</span><span class=o>?.</span><span class=n>let</span><span class=p>{</span>
+    <span class=c1>// do something
+</span><span class=c1></span><span class=p>}</span>
+
+<span class=c1>//data为空执行
+</span><span class=c1></span><span class=k>data</span><span class=o>?:</span><span class=n>let</span><span class=p>{</span>
+    <span class=c1>// do something
+</span><span class=c1></span><span class=p>}</span>
+
+<span class=c1>//或者
+</span><span class=c1></span>
+<span class=c1>//data不为空执行
+</span><span class=c1></span><span class=k>data</span><span class=o>?.</span><span class=n>run</span><span class=p>{</span>
+    <span class=c1>// do something
+</span><span class=c1></span><span class=p>}</span>
+
+<span class=c1>//data为空执行
+</span><span class=c1></span><span class=k>data</span><span class=o>?:</span><span class=n>run</span><span class=p>{</span>
+    <span class=c1>// do something
+</span><span class=c1></span><span class=p>}</span>
+</code></pre></div><h2 id=run与let>run与let</h2><div class=highlight><pre class=chroma><code class=language-kotlin data-lang=kotlin><span class=k>val</span> <span class=py>str</span><span class=p>:</span><span class=n>String</span> <span class=p>=</span> <span class=s2>&#34;Ilirus&#34;</span>
+
+<span class=n>str</span><span class=o>?.</span><span class=n>let</span><span class=p>{</span>
+    <span class=n>println</span><span class=p>(</span><span class=k>it</span><span class=p>)</span>
+<span class=p>}</span>
+<span class=n>str</span><span class=o>?.</span><span class=n>let</span><span class=p>{</span> <span class=n>s</span> <span class=o>-&gt;</span>
+    <span class=n>println</span><span class=p>(</span><span class=n>s</span><span class=p>)</span>
+<span class=p>}</span>
+<span class=n>str</span><span class=o>?.</span><span class=n>run</span><span class=p>{</span>
+    <span class=n>println</span><span class=p>(</span><span class=k>this</span><span class=p>)</span>
+<span class=p>}</span>
+</code></pre></div><h2 id=when关键词><code>when</code>关键词</h2><p>when类似于Java中的switch</p><div class=highlight><pre class=chroma><code class=language-kotlin data-lang=kotlin><span class=k>fun</span> <span class=nf>printType</span><span class=p>(</span><span class=n>o</span><span class=p>:</span><span class=n>Any</span><span class=p>)</span> <span class=p>{</span>
+    <span class=k>when</span><span class=p>(</span><span class=n>o</span><span class=p>){</span>
+        <span class=k>is</span> <span class=n>Int</span> <span class=o>-&gt;</span> <span class=p>{</span>
+            <span class=n>println</span><span class=p>(</span><span class=s2>&#34;Int&#34;</span><span class=p>)</span>
+            <span class=n>println</span><span class=p>(</span><span class=n>o</span><span class=p>)</span>
+        <span class=p>}</span>
+        <span class=k>is</span> <span class=n>String</span> <span class=o>-&gt;</span> <span class=p>{</span>
+            <span class=n>println</span><span class=p>(</span><span class=s2>&#34;String&#34;</span><span class=p>)</span>
+            <span class=n>println</span><span class=p>(</span><span class=n>o</span><span class=p>.</span><span class=n>toUpperCase</span><span class=p>())</span>
+        <span class=p>}</span>
+        <span class=k>is</span> <span class=n>Char</span> <span class=o>-&gt;</span> <span class=n>println</span><span class=p>(</span><span class=s2>&#34;Char&#34;</span><span class=p>)</span>
+        <span class=k>else</span> <span class=o>-&gt;</span> <span class=n>println</span><span class=p>(</span><span class=s2>&#34;Other&#34;</span><span class=p>)</span>
+    <span class=p>}</span>
+<span class=p>}</span>
+</code></pre></div><h2 id=in关键词><code>in</code>关键词</h2><p>判断数字是否在某一区间内</p><div class=highlight><pre class=chroma><code class=language-kotlin data-lang=kotlin><span class=k>if</span><span class=p>(</span> <span class=n>x</span> <span class=k>in</span> <span class=m>1.</span><span class=p>.</span><span class=m>100</span><span class=p>){</span>
+    <span class=n>println</span><span class=p>(</span><span class=s2>&#34;yes&#34;</span><span class=p>)</span>
+<span class=p>}</span>
+
+<span class=k>if</span><span class=p>(</span> <span class=n>x</span> <span class=o>!in</span> <span class=m>1.</span><span class=p>.</span><span class=m>100</span><span class=p>){</span>
+    <span class=n>println</span><span class=p>(</span><span class=s2>&#34;no&#34;</span><span class=p>)</span>
+<span class=p>}</span>
+</code></pre></div><p>遍历集合</p><div class=highlight><pre class=chroma><code class=language-kotlin data-lang=kotlin><span class=k>for</span><span class=p>(</span><span class=n>item</span> <span class=k>in</span> <span class=n>arr</span><span class=p>){</span>
+    <span class=n>println</span><span class=p>(</span><span class=s2>&#34;item: </span><span class=si>$item</span><span class=s2>&#34;</span><span class=p>)</span>
+<span class=p>}</span>
+
+<span class=k>for</span><span class=p>((</span><span class=n>index</span><span class=p>,</span><span class=n>item</span><span class=p>)</span> <span class=k>in</span> <span class=n>arr</span><span class=p>.</span><span class=n>withIndex</span><span class=p>()){</span>
+    <span class=n>println</span><span class=p>(</span><span class=s2>&#34;</span><span class=si>$index</span><span class=s2> - </span><span class=si>$item</span><span class=s2>&#34;</span><span class=p>)</span>
+<span class=p>}</span>
+
+<span class=c1>//判断集合中是否含有指定对象
+</span><span class=c1></span><span class=k>if</span><span class=p>(</span><span class=n>student</span> <span class=k>in</span> <span class=n>person</span><span class=p>){</span>
+    <span class=n>println</span><span class=p>(</span><span class=s2>&#34;yes&#34;</span><span class=p>)</span>
+<span class=p>}</span>
+</code></pre></div><h2 id=函数>函数</h2><h3 id=函数的声明>函数的声明</h3><div class=highlight><pre class=chroma><code class=language-kotlin data-lang=kotlin><span class=c1>//[修饰符] fun &lt;函数名&gt;([参数]) : &lt;返回类型&gt;
+</span><span class=c1></span><span class=k>fun</span> <span class=nf>sum</span><span class=p>(</span><span class=n>a</span><span class=p>:</span> <span class=n>Int</span><span class=p>,</span> <span class=n>b</span><span class=p>:</span> <span class=n>Int</span><span class=p>):</span> <span class=n>Int</span> <span class=p>{</span>
+    <span class=k>return</span> <span class=n>a</span><span class=p>+</span><span class=n>b</span>
+<span class=p>}</span>
+
+<span class=c1>//方法体只有一条语句时可简化
+</span><span class=c1></span><span class=k>fun</span> <span class=nf>sum</span><span class=p>(</span><span class=n>a</span><span class=p>:</span> <span class=n>Int</span><span class=p>,</span> <span class=n>b</span><span class=p>:</span> <span class=n>Int</span><span class=p>)</span> <span class=p>=</span> <span class=n>a</span><span class=p>+</span><span class=n>b</span>
+
+<span class=c1>//方法为public时, 必须显式声明返回类型
+</span><span class=c1></span><span class=k>public</span> <span class=k>fun</span> <span class=nf>sum</span><span class=p>(</span><span class=n>a</span><span class=p>:</span> <span class=n>Int</span><span class=p>,</span> <span class=n>b</span><span class=p>:</span> <span class=n>Int</span><span class=p>):</span> <span class=n>Int</span> <span class=p>=</span> <span class=n>a</span><span class=p>+</span><span class=n>b</span>
+</code></pre></div><p>不返回值</p><div class=highlight><pre class=chroma><code class=language-kotlin data-lang=kotlin><span class=k>fun</span> <span class=nf>printSum</span><span class=p>(</span><span class=n>a</span><span class=p>:</span> <span class=n>Int</span><span class=p>,</span> <span class=n>b</span><span class=p>:</span> <span class=n>Int</span><span class=p>):</span> <span class=n>Unit</span> <span class=p>{</span>
+    <span class=n>println</span><span class=p>(</span><span class=n>a</span><span class=p>+</span><span class=n>b</span><span class=p>)</span>
+<span class=p>}</span>
+
+<span class=c1>//可省略Unit关键词, 即使方法是public修饰的
+</span><span class=c1></span><span class=k>public</span> <span class=n>printSum</span><span class=p>(</span><span class=n>a</span><span class=p>:</span> <span class=n>Int</span><span class=p>,</span> <span class=n>b</span><span class=p>:</span> <span class=n>Int</span><span class=p>)</span> <span class=p>{</span>
+    <span class=n>println</span><span class=p>(</span><span class=n>a</span><span class=p>+</span><span class=n>b</span><span class=p>)</span>
+<span class=p>}</span>
+</code></pre></div><h3 id=函数默认参数>函数默认参数</h3><div class=highlight><pre class=chroma><code class=language-kotlin data-lang=kotlin><span class=k>fun</span> <span class=nf>hello</span><span class=p>(</span><span class=n>name</span><span class=p>:</span> <span class=n>String</span> <span class=p>=</span> <span class=s2>&#34;User&#34;</span><span class=p>):</span> <span class=n>String</span> <span class=p>=</span> <span class=s2>&#34;Hello </span><span class=si>$name</span><span class=s2>&#34;</span>
+</code></pre></div><p>直接调用<code>hello()</code>，将得到默认字符串<code>"Hello User"</code><br>也可以自己传入参数<code>hello("Ilirus")</code>，来得到<code>"Hello Ilirus"</code></p><p>如果函数有较多的参数时，可以使用多行参数的写法</p><div class=highlight><pre class=chroma><code class=language-kotlin data-lang=kotlin><span class=k>fun</span> <span class=nf>hello</span><span class=p>(</span><span class=n>name</span><span class=p>:</span> <span class=n>String</span> <span class=p>=</span> <span class=s2>&#34;User&#34;</span><span class=p>,</span>
+          <span class=n>sid</span><span class=p>:</span> <span class=n>Int</span> <span class=p>=</span> <span class=m>0</span><span class=p>):</span> <span class=n>String</span> <span class=p>{</span>
+    <span class=k>return</span> <span class=s2>&#34;Hello </span><span class=si>$name</span><span class=s2> Your SID is </span><span class=si>$sid</span><span class=s2>&#34;</span>
+<span class=p>}</span>
+</code></pre></div><h3 id=变参函数>变参函数</h3><p>使用<code>vararg</code>来表示这是一个变长参数</p><div class=highlight><pre class=chroma><code class=language-kotlin data-lang=kotlin><span class=k>fun</span> <span class=nf>hasEmpty</span><span class=p>(</span><span class=k>vararg</span> <span class=n>array</span><span class=p>:</span> <span class=n>Any</span><span class=p>?):</span> <span class=n>Boolean</span> <span class=p>{</span>
+    <span class=k>return</span> <span class=n>array</span><span class=p>.</span><span class=n>any</span><span class=p>{</span> <span class=k>it</span> <span class=o>==</span> <span class=k>null</span> <span class=o>||</span> <span class=s2>&#34;&#34;</span><span class=p>.</span><span class=n>equals</span><span class=p>(</span><span class=k>it</span><span class=p>)</span> <span class=p>}</span>
+<span class=p>}</span>
+</code></pre></div><h3 id=扩展函数>扩展函数</h3><p>给目标类添加一个方法，使其可以在当前类中被使用</p><p>receiverType: 表示函数的接收者，也就是函数扩展的对象<br>functionName: 扩展函数的名称<br>params: 扩展函数的参数，可以为NULL</p><div class=highlight><pre class=chroma><code class=language-kotlin data-lang=kotlin><span class=k>fun</span> <span class=nf>receiverType</span><span class=p>.</span><span class=n>functionName</span><span class=p>(</span><span class=n>params</span><span class=p>){</span>
+    <span class=c1>//body
+</span><span class=c1></span><span class=p>}</span>
+</code></pre></div><p>例如</p><div class=highlight><pre class=chroma><code class=language-kotlin data-lang=kotlin><span class=c1>//定义一个User类
+</span><span class=c1></span><span class=k>class</span> <span class=nc>User</span><span class=p>(</span>
+    <span class=k>var</span> <span class=py>name</span><span class=p>:</span> <span class=n>String</span><span class=p>?</span> <span class=p>=</span> <span class=k>null</span>
+<span class=p>)</span>
+
+<span class=c1>//在另一个类(当前类)中扩展User类
+</span><span class=c1></span><span class=k>fun</span> <span class=nf>User</span><span class=p>.</span><span class=n>setName</span><span class=p>(</span><span class=n>name</span><span class=p>:</span> <span class=n>String</span><span class=p>){</span>
+    <span class=k>this</span><span class=p>.</span><span class=n>name</span> <span class=p>=</span> <span class=n>name</span>
+<span class=p>}</span>
+
+<span class=k>fun</span> <span class=nf>User</span><span class=p>.</span><span class=n>getName</span><span class=p>():</span> <span class=n>String</span><span class=p>?</span> <span class=p>{</span>
+    <span class=k>return</span> <span class=k>this</span><span class=p>.</span><span class=n>name</span>
+<span class=p>}</span>
+
+<span class=c1>//在当前类中执行User类的扩展方法
+</span><span class=c1></span><span class=k>fun</span> <span class=nf>main</span><span class=p>(</span><span class=n>arg</span><span class=p>:</span><span class=n>Array</span><span class=p>&lt;</span><span class=n>String</span><span class=p>&gt;){</span>
+    <span class=k>var</span> <span class=py>usr</span> <span class=p>=</span> <span class=n>User</span><span class=p>()</span>
+    <span class=n>println</span><span class=p>(</span><span class=n>usr</span><span class=p>.</span><span class=n>setName</span><span class=p>(</span><span class=s2>&#34;Ilirus&#34;</span><span class=p>))</span>
+    <span class=n>println</span><span class=p>(</span><span class=n>usr</span><span class=p>.</span><span class=n>getName</span><span class=p>())</span>
+<span class=p>}</span>
+</code></pre></div><h4 id=注意事项>注意事项</h4><p><strong>其实扩展函数是静态解析的，而并不是真的给类添加了方法</strong></p><div class=highlight><pre class=chroma><code class=language-kotlin data-lang=kotlin><span class=k>open</span> <span class=k>class</span> <span class=nc>Animal</span><span class=p>{</span>
+    <span class=c1>//
+</span><span class=c1></span><span class=p>}</span>
+
+<span class=k>class</span> <span class=nc>Dog</span><span class=p>:</span><span class=n>Animal</span><span class=p>()</span>
+
+<span class=k>object</span> <span class=nc>Main</span> <span class=p>{</span>
+    <span class=k>fun</span> <span class=nf>Animal</span><span class=p>.</span><span class=n>bark</span><span class=p>()</span> <span class=p>=</span> <span class=s2>&#34;animal&#34;</span>
+
+    <span class=k>fun</span> <span class=nf>Dog</span><span class=p>.</span><span class=n>bark</span><span class=p>()</span> <span class=p>=</span> <span class=s2>&#34;dog&#34;</span>
+
+    <span class=k>fun</span> <span class=nf>Animal</span><span class=p>.</span><span class=n>printBark</span><span class=p>(</span><span class=n>anim</span><span class=p>:</span> <span class=n>Animal</span><span class=p>){</span>
+        <span class=n>println</span><span class=p>(</span><span class=n>anim</span><span class=p>.</span><span class=n>bark</span><span class=p>())</span>
+    <span class=p>}</span>
+
+    <span class=nd>@JvmStatic</span> <span class=k>fun</span> <span class=nf>main</span><span class=p>(</span><span class=n>args</span><span class=p>:</span> <span class=n>Array</span><span class=p>&lt;</span><span class=n>String</span><span class=p>&gt;)</span> <span class=p>{</span>
+        <span class=n>Animal</span><span class=p>().</span><span class=n>printBark</span><span class=p>(</span><span class=n>Dog</span><span class=p>())</span>
+    <span class=p>}</span>
+<span class=p>}</span>
+</code></pre></div><p>最终输出的是<code>animal</code>，而不是<code>dog</code></p><p>因为扩展方法是静态解析的，在添加扩展方法的时候类型为<code>Animal</code>，那么即便运行时传入了子类对象，也依旧会执行参数中声明时类型的方法。</p><h3 id=函数入参>函数入参</h3><p>在Kotlin中，可以将一个函数作为参数传递给另一个函数</p><div class=highlight><pre class=chroma><code class=language-kotlin data-lang=kotlin><span class=k>fun</span> <span class=nf>checkEach</span><span class=p>(</span><span class=n>array</span><span class=p>:</span> <span class=n>Array</span><span class=p>&lt;</span><span class=n>Any</span><span class=p>&gt;,</span> <span class=n>callback</span><span class=p>:</span> <span class=p>(</span><span class=n>Any</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>Unit</span><span class=p>):</span> <span class=n>Unit</span> <span class=p>{</span>
+    <span class=k>for</span><span class=p>(</span><span class=n>arr</span> <span class=k>in</span> <span class=n>array</span><span class=p>){</span>
+        <span class=n>callback</span><span class=p>(</span><span class=n>arr</span><span class=p>)</span>
+    <span class=p>}</span>
+<span class=p>}</span>
+
+<span class=k>var</span> <span class=py>method</span><span class=p>:(</span><span class=n>Any</span><span class=p>)</span><span class=o>-&gt;</span><span class=n>Unit</span> <span class=p>=</span> <span class=p>{</span>
+    <span class=n>println</span><span class=p>(</span><span class=k>it</span><span class=p>)</span>
+<span class=p>}</span>
+
+<span class=n>checkEach</span><span class=p>(</span><span class=n>array</span><span class=p>,</span> <span class=n>method</span><span class=p>)</span>
+</code></pre></div></section><footer class=article-footer><section class=article-tags><a href=/tags/kotlin/>Kotlin</a></section><section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg><span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><aside class=related-contents--wrapper><h2 class=section-title>相关文章</h2><div class=related-contents><div class="flex article-list--tile"><article><a href=/p/kotlin%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B003/><div class=article-details><h2 class=article-title>Kotlin学习笔记03</h2></div></a></article><article><a href=/p/kotlin%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B001/><div class=article-details><h2 class=article-title>Kotlin学习笔记01</h2></div></a></article><article><a href=/p/java%E5%BC%80%E5%8F%91%E7%9F%A5%E8%AF%86%E7%82%B9%E7%AE%80%E5%8D%95%E6%80%BB%E7%BB%93-%E6%95%B0%E6%8D%AE%E5%BA%93/><div class=article-details><h2 class=article-title>Java开发知识点简单总结-数据库</h2></div></a></article><article><a href=/p/java%E5%BC%80%E5%8F%91%E7%9F%A5%E8%AF%86%E7%82%B9%E7%AE%80%E5%8D%95%E6%80%BB%E7%BB%93-spring/><div class=article-details><h2 class=article-title>Java开发知识点简单总结-Spring</h2></div></a></article><article><a href=/p/java%E5%BC%80%E5%8F%91%E7%9F%A5%E8%AF%86%E7%82%B9%E7%AE%80%E5%8D%95%E6%80%BB%E7%BB%93/><div class=article-details><h2 class=article-title>Java开发知识点简单总结</h2></div></a></article></div></div></aside><footer class=site-footer><section class=copyright>&copy;
+2020 -
+2024 Ilirus</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.2.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css integrity="sha256-c0uckgykQ9v5k+IqViZOZKc47Jn7KQil4/MP3ySA3F8=" crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE=" crossorigin=anonymous></main><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">目录</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#变量常量的定义>变量、常量的定义</a></li><li><a href=#基本数据类型>基本数据类型</a></li><li><a href=#类型检测与自动转换>类型检测与自动转换</a></li><li><a href=#返回空值与空值检测>返回空值与空值检测</a></li><li><a href=#run与let>run与let</a></li><li><a href=#when关键词><code>when</code>关键词</a></li><li><a href=#in关键词><code>in</code>关键词</a></li><li><a href=#函数>函数</a><ol><li><a href=#函数的声明>函数的声明</a></li><li><a href=#函数默认参数>函数默认参数</a></li><li><a href=#变参函数>变参函数</a></li><li><a href=#扩展函数>扩展函数</a><ol><li><a href=#注意事项>注意事项</a></li></ol></li><li><a href=#函数入参>函数入参</a></li></ol></li></ol></nav></div></section></aside></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g=" crossorigin=anonymous defer></script><script type=text/javascript src=/ts/main.js defer></script><script>(function(){const a=document.createElement('link');a.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",a.type="text/css",a.rel="stylesheet",document.head.appendChild(a)})()</script></body></html>

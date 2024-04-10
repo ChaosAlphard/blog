@@ -1,0 +1,63 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="使用mysqldump/source指令备份/恢复数据库 备份数据 用法:
+mysqldump -u [用户名] -p [options] &amp;gt; [输出文件名] 示例
+mysqldump -u root -p &amp;gt; D:\SQLBak\Data.sql mysqldump常用选项  &amp;ndash;databases 指定需要备份的数据库名称
+用法:  mysqldump -u [用户名] -p --databases [dbName] &amp;gt; [输出文件名]  &amp;ndash;all-databases 备份所有的数据库
+用法:  mysqldump -u [用户名] -p --all-databases &amp;gt; [输出文件名]   &amp;ndash;tab[=dir_name] 不使用此选项，mysqldump仅输出一个sql文件。
+使用此选项，mysqldump会对每一个要备份的表输出两个文件，sql文件保存创建表时的sql语句，txt文件储存表中的数据。
+dirname即为sql和txt文件输出的路径。
+  &amp;ndash;add-drop-table 此选项会在每一个表前面加上drop table if exists 语句。
+  &amp;ndash;add-locks 此选项会在insert语句前面加上lock table 语句。
+  &amp;ndash;skip-comments 此选项会去掉输出文件中的注释
+  恢复数据 用法"><title>MySQL数据库备份与恢复</title><link rel=canonical href=https://chaosalphard.github.io/p/mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D/><link rel=stylesheet href=/scss/style.min.css><meta property="og:title" content="MySQL数据库备份与恢复"><meta property="og:description" content="使用mysqldump/source指令备份/恢复数据库 备份数据 用法:
+mysqldump -u [用户名] -p [options] &amp;gt; [输出文件名] 示例
+mysqldump -u root -p &amp;gt; D:\SQLBak\Data.sql mysqldump常用选项  &amp;ndash;databases 指定需要备份的数据库名称
+用法:  mysqldump -u [用户名] -p --databases [dbName] &amp;gt; [输出文件名]  &amp;ndash;all-databases 备份所有的数据库
+用法:  mysqldump -u [用户名] -p --all-databases &amp;gt; [输出文件名]   &amp;ndash;tab[=dir_name] 不使用此选项，mysqldump仅输出一个sql文件。
+使用此选项，mysqldump会对每一个要备份的表输出两个文件，sql文件保存创建表时的sql语句，txt文件储存表中的数据。
+dirname即为sql和txt文件输出的路径。
+  &amp;ndash;add-drop-table 此选项会在每一个表前面加上drop table if exists 语句。
+  &amp;ndash;add-locks 此选项会在insert语句前面加上lock table 语句。
+  &amp;ndash;skip-comments 此选项会去掉输出文件中的注释
+  恢复数据 用法"><meta property="og:url" content="https://chaosalphard.github.io/p/mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D/"><meta property="og:site_name" content="Ilirus"><meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="数据库"><meta property="article:published_time" content="2018-08-11T21:18:01+00:00"><meta property="article:modified_time" content="2018-08-11T21:18:01+00:00"><meta name=twitter:title content="MySQL数据库备份与恢复"><meta name=twitter:description content="使用mysqldump/source指令备份/恢复数据库 备份数据 用法:
+mysqldump -u [用户名] -p [options] &amp;gt; [输出文件名] 示例
+mysqldump -u root -p &amp;gt; D:\SQLBak\Data.sql mysqldump常用选项  &amp;ndash;databases 指定需要备份的数据库名称
+用法:  mysqldump -u [用户名] -p --databases [dbName] &amp;gt; [输出文件名]  &amp;ndash;all-databases 备份所有的数据库
+用法:  mysqldump -u [用户名] -p --all-databases &amp;gt; [输出文件名]   &amp;ndash;tab[=dir_name] 不使用此选项，mysqldump仅输出一个sql文件。
+使用此选项，mysqldump会对每一个要备份的表输出两个文件，sql文件保存创建表时的sql语句，txt文件储存表中的数据。
+dirname即为sql和txt文件输出的路径。
+  &amp;ndash;add-drop-table 此选项会在每一个表前面加上drop table if exists 语句。
+  &amp;ndash;add-locks 此选项会在insert语句前面加上lock table 语句。
+  &amp;ndash;skip-comments 此选项会去掉输出文件中的注释
+  恢复数据 用法"></head><body class="article-page has-toc"><script>(function(){const a='StackColorScheme';localStorage.getItem(a)||localStorage.setItem(a,"auto")})()</script><script>(function(){const b='StackColorScheme',a=localStorage.getItem(b),c=window.matchMedia('(prefers-color-scheme: dark)').matches===!0;a=='dark'||a==='auto'&&c?document.documentElement.dataset.scheme='dark':document.documentElement.dataset.scheme='light'})()</script><div class="container main-container flex
+extended"><div id=article-toolbar><a href=https://chaosalphard.github.io class=back-home><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="15 6 9 12 15 18"/></svg><span>返回</span></a></div><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/%E7%BC%96%E7%A8%8B/>编程</a>
+<a href=/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/>数据库</a></header><h2 class=article-title><a href=/p/mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D/>MySQL数据库备份与恢复</a></h2><footer class=article-time><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg><time class=article-time--published>Aug 11, 2018</time></div></footer></div></header><section class=article-content><h1 id=使用mysqldumpsource指令备份恢复数据库>使用mysqldump/source指令备份/恢复数据库</h1><h2 id=备份数据>备份数据</h2><p>用法:</p><pre><code>mysqldump -u [用户名] -p [options] &gt; [输出文件名]
+</code></pre><p>示例</p><pre><code>mysqldump -u root -p &gt; D:\SQLBak\Data.sql
+</code></pre><h3 id=mysqldump常用选项>mysqldump常用选项</h3><ul><li><span style=font-size:24px>&ndash;databases</span>
+指定需要备份的数据库名称<br>用法:</li></ul><pre><code>mysqldump -u [用户名] -p --databases [dbName] &gt; [输出文件名]
+</code></pre><ul><li><span style=font-size:24px>&ndash;all-databases</span>
+备份所有的数据库<br>用法:</li></ul><pre><code>mysqldump -u [用户名] -p --all-databases &gt; [输出文件名]
+</code></pre><ul><li><p><span style=font-size:24px>&ndash;tab[=dir_name]</span>
+　　不使用此选项，mysqldump仅输出一个sql文件。<br>　　使用此选项，mysqldump会对每一个要备份的表输出两个文件，sql文件保存创建表时的sql语句，txt文件储存表中的数据。<br>　　dirname即为sql和txt文件输出的路径。</p></li><li><p><span style=font-size:24px>&ndash;add-drop-table</span>
+　　此选项会在每一个表前面加上drop table if exists 语句。</p></li><li><p><span style=font-size:24px>&ndash;add-locks</span>
+　　此选项会在insert语句前面加上lock table 语句。</p></li><li><p><span style=font-size:24px>&ndash;skip-comments</span>
+　　此选项会去掉输出文件中的注释</p></li></ul><h2 id=恢复数据>恢复数据</h2><p>用法</p><pre><code>mysql -u [用户名] -p &lt; [备份文件]
+</code></pre><p>示例</p><pre><code>mysql -u root -p &lt; D:\SQLBak\Data.sql
+</code></pre><p>已登录mysql的情况下</p><pre><code>mysql&gt; source [备份文件]
+</code></pre><p>示例</p><pre><code>mysql&gt; source D:\SQLBak\Data.sql
+</code></pre><h3 id=还原--tab选项备份的文本格式的备份文件>还原&ndash;tab选项备份的文本格式的备份文件</h3><pre><code>mysql -u [用户名] -p &lt; [sql备份文件]                  #还原表结构
+mysqlimport -u [用户名] -p [数据库名] [txt备份文件]    #还原表数据
+</code></pre><p>已登录mysql的情况下</p><pre><code>source [sql备份文件];
+use [数据库名];
+mysql&gt; load data infile `[txt备份文件]` into [表名];
+</code></pre><h2 id=导出查询结果到本地文件>导出查询结果到本地文件</h2><p>用法</p><pre><code>mysql -u [用户名] -p --execute=&quot;[sql语句]&quot; [options] [数据库名] &gt; [输出文件]
+</code></pre><p>示例</p><pre><code>mysql -u root -p --execute=&quot;select * from testtab;&quot; testdb &gt; D:\SQLBak\result.txt
+</code></pre><h3 id=常用选项>常用选项</h3><ul><li><p><span style=font-size:24px>&ndash;vertical</span>
+使用&ndash;vertical选项可将每条记录分为多行显示。</p></li><li><p><span style=font-size:24px>&ndash;html</span>
+使用&ndash;html选项可将结果导出为html格式。</p></li><li><p><span style=font-size:24px>&ndash;xml</span>
+使用&ndash;xml选项可将结果导出为xml格式。</p></li></ul></section><footer class=article-footer><section class=article-tags><a href=/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/>数据库</a></section><section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg><span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><aside class=related-contents--wrapper><h2 class=section-title>相关文章</h2><div class=related-contents><div class="flex article-list--tile"><article><a href=/p/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/><div class=article-details><h2 class=article-title>数据库存储过程</h2></div></a></article><article><a href=/p/java%E5%BC%80%E5%8F%91%E7%9F%A5%E8%AF%86%E7%82%B9%E7%AE%80%E5%8D%95%E6%80%BB%E7%BB%93-%E6%95%B0%E6%8D%AE%E5%BA%93/><div class=article-details><h2 class=article-title>Java开发知识点简单总结-数据库</h2></div></a></article><article><a href=/p/java%E5%BC%80%E5%8F%91%E7%9F%A5%E8%AF%86%E7%82%B9%E7%AE%80%E5%8D%95%E6%80%BB%E7%BB%93-spring/><div class=article-details><h2 class=article-title>Java开发知识点简单总结-Spring</h2></div></a></article><article><a href=/p/java%E5%BC%80%E5%8F%91%E7%9F%A5%E8%AF%86%E7%82%B9%E7%AE%80%E5%8D%95%E6%80%BB%E7%BB%93/><div class=article-details><h2 class=article-title>Java开发知识点简单总结</h2></div></a></article><article><a href=/p/java%E4%B8%ADhashmap%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/><div class=article-details><h2 class=article-title>Java中HashMap的实现原理</h2></div></a></article></div></div></aside><footer class=site-footer><section class=copyright>&copy;
+2020 -
+2024 Ilirus</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.2.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css integrity="sha256-c0uckgykQ9v5k+IqViZOZKc47Jn7KQil4/MP3ySA3F8=" crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE=" crossorigin=anonymous></main><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">目录</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#备份数据>备份数据</a><ol><li><a href=#mysqldump常用选项>mysqldump常用选项</a></li></ol></li><li><a href=#恢复数据>恢复数据</a><ol><li><a href=#还原--tab选项备份的文本格式的备份文件>还原&ndash;tab选项备份的文本格式的备份文件</a></li></ol></li><li><a href=#导出查询结果到本地文件>导出查询结果到本地文件</a><ol><li><a href=#常用选项>常用选项</a></li></ol></li></ol></nav></div></section></aside></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g=" crossorigin=anonymous defer></script><script type=text/javascript src=/ts/main.js defer></script><script>(function(){const a=document.createElement('link');a.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",a.type="text/css",a.rel="stylesheet",document.head.appendChild(a)})()</script></body></html>
